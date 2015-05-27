@@ -1,11 +1,18 @@
 #include <windows.h>
 
-LRESULT CALLBACK 
-MainWindowCallback(HWND   Window,
-                   UINT   Message,
-                   WPARAM WParam,
-                   LPARAM LParam)
-{
+#define internal static
+#define local_persist static 
+#define global_variable static 
+
+global_variable bool Running; // TODO A Global for now
+// static variables are initialized to 0 for some reason
+
+LRESULT CALLBACK MainWindowCallback(
+    HWND   Window,
+    UINT   Message,
+    WPARAM WParam,
+    LPARAM LParam
+) {
     LRESULT Result = 0;
 
     switch(Message)
@@ -14,16 +21,18 @@ MainWindowCallback(HWND   Window,
             OutputDebugStringA("WM_SIZE\n");
         } break;
 
-        case WM_DESTROY: {
-            OutputDebugStringA("WM_DESTROY\n");
-        } break;
-
         case WM_CLOSE: {
-            OutputDebugStringA("WM_CLOSE\n");
+            // TODO Handle this with a message to the user?
+            Running = false;
         } break;
 
         case WM_ACTIVATEAPP: {
             OutputDebugStringA("WM_ACTIVATEAPP\n");
+        } break;
+
+        case WM_DESTROY: {
+            // TODO Handle this as an error - recreate window?
+            Running = false;
         } break;
 
         case WM_PAINT: {
@@ -33,7 +42,7 @@ MainWindowCallback(HWND   Window,
             int Y = Paint.rcPaint.top;
             int Height = Paint.rcPaint.bottom - Paint.rcPaint.top;
             int Width = Paint.rcPaint.right - Paint.rcPaint.left;
-            static DWORD Operation = WHITENESS;
+            local_persist DWORD Operation = WHITENESS;
             if (Operation == WHITENESS) {
                 Operation = BLACKNESS;
             }
@@ -53,12 +62,12 @@ MainWindowCallback(HWND   Window,
     return(Result);
 }
 
-int CALLBACK WinMain( HINSTANCE Instance,
-                      HINSTANCE PrevInstance,
-                      LPSTR CmdLine,
-                      int ShowCode) 
-{
-
+int CALLBACK WinMain( 
+    HINSTANCE Instance,
+    HINSTANCE PrevInstance,
+    LPSTR CmdLine,
+    int ShowCode 
+) {
     WNDCLASS WindowClass = {};
     WindowClass.style = CS_OWNDC|CS_HREDRAW|CS_VREDRAW;
     WindowClass.lpfnWndProc = MainWindowCallback;
@@ -79,10 +88,12 @@ int CALLBACK WinMain( HINSTANCE Instance,
             0,
             0,
             Instance,
-            0);
+            0
+        );
         if(WindowHandle){
             MSG Message;
-            for (;;) {
+            Running = true;
+            while (Running) {
                 BOOL MessageResult = GetMessage(&Message, 0, 0, 0);
                 if (MessageResult > 0) {
                     TranslateMessage(&Message);
@@ -100,6 +111,5 @@ int CALLBACK WinMain( HINSTANCE Instance,
     else{
         // TODO Logging
     }
-
     return(0); 
 }
