@@ -6,16 +6,14 @@ INCLUDELIB LIBCMT
 INCLUDELIB OLDNAMES
 
 CONST	SEGMENT
-$SG82478 DB	'WM_ACTIVATEAPP', 0aH, 00H
-$SG82481 DB	'WM_PAINT', 0aH, 00H
+$SG82506 DB	'WM_ACTIVATEAPP', 0aH, 00H
+$SG82509 DB	'WM_PAINT', 0aH, 00H
 	ORG $+6
-$SG82506 DB	'HandmadeHeroWindowClass', 00H
-$SG82509 DB	'Handmade Hero', 00H
+$SG82533 DB	'HandmadeHeroWindowClass', 00H
+$SG82536 DB	'Handmade Hero', 00H
 CONST	ENDS
-_DATA	SEGMENT
-?BytesPerPixel@@3HA DD 04H				; BytesPerPixel
-_DATA	ENDS
 PUBLIC	WinMain
+PUBLIC	?Win32GetWindowDimension@@YA?AUwin32_window_dimension@@PEAUHWND__@@@Z ; Win32GetWindowDimension
 PUBLIC	?Win32MainWindowCallback@@YA_JPEAUHWND__@@I_K_J@Z ; Win32MainWindowCallback
 EXTRN	__imp_OutputDebugStringA:PROC
 EXTRN	__imp_VirtualAlloc:PROC
@@ -39,992 +37,1028 @@ _BSS	SEGMENT
 ?Running@@3_NA DB 01H DUP (?)				; Running
 	ALIGN	4
 
-?BitmapInfo@@3UtagBITMAPINFO@@A DB 02cH DUP (?)		; BitmapInfo
-?BitmapMemory@@3PEAXEA DQ 01H DUP (?)			; BitmapMemory
-?BitmapWidth@@3HA DD 01H DUP (?)			; BitmapWidth
-?BitmapHeight@@3HA DD 01H DUP (?)			; BitmapHeight
+?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A DB 048H DUP (?) ; GlobalBackbuffer
 _BSS	ENDS
 pdata	SEGMENT
 $pdata$WinMain DD imagerel $LN12
-	DD	imagerel $LN12+574
+	DD	imagerel $LN12+628
 	DD	imagerel $unwind$WinMain
-$pdata$?RenderWeirdGradient@@YAXHH@Z DD imagerel ?RenderWeirdGradient@@YAXHH@Z
-	DD	imagerel ?RenderWeirdGradient@@YAXHH@Z+291
-	DD	imagerel $unwind$?RenderWeirdGradient@@YAXHH@Z
-$pdata$?Win32ResizeDIBSection@@YAXHH@Z DD imagerel ?Win32ResizeDIBSection@@YAXHH@Z
-	DD	imagerel ?Win32ResizeDIBSection@@YAXHH@Z+197
-	DD	imagerel $unwind$?Win32ResizeDIBSection@@YAXHH@Z
-$pdata$?Win32UpdateWindow@@YAXPEAUHDC__@@PEAUtagRECT@@HHHH@Z DD imagerel ?Win32UpdateWindow@@YAXPEAUHDC__@@PEAUtagRECT@@HHHH@Z
-	DD	imagerel ?Win32UpdateWindow@@YAXPEAUHDC__@@PEAUtagRECT@@HHHH@Z+198
-	DD	imagerel $unwind$?Win32UpdateWindow@@YAXPEAUHDC__@@PEAUtagRECT@@HHHH@Z
+$pdata$?Win32GetWindowDimension@@YA?AUwin32_window_dimension@@PEAUHWND__@@@Z DD imagerel $LN3
+	DD	imagerel $LN3+95
+	DD	imagerel $unwind$?Win32GetWindowDimension@@YA?AUwin32_window_dimension@@PEAUHWND__@@@Z
+$pdata$?RenderWeirdGradient@@YAXUwin32_offscreen_buffer@@HH@Z DD imagerel ?RenderWeirdGradient@@YAXUwin32_offscreen_buffer@@HH@Z
+	DD	imagerel ?RenderWeirdGradient@@YAXUwin32_offscreen_buffer@@HH@Z+272
+	DD	imagerel $unwind$?RenderWeirdGradient@@YAXUwin32_offscreen_buffer@@HH@Z
+$pdata$?Win32ResizeDIBSection@@YAXPEAUwin32_offscreen_buffer@@HH@Z DD imagerel ?Win32ResizeDIBSection@@YAXPEAUwin32_offscreen_buffer@@HH@Z
+	DD	imagerel ?Win32ResizeDIBSection@@YAXPEAUwin32_offscreen_buffer@@HH@Z+269
+	DD	imagerel $unwind$?Win32ResizeDIBSection@@YAXPEAUwin32_offscreen_buffer@@HH@Z
+$pdata$?Win32DisplayBufferInWindow@@YAXPEAUHDC__@@HHUwin32_offscreen_buffer@@HHHH@Z DD imagerel ?Win32DisplayBufferInWindow@@YAXPEAUHDC__@@HHUwin32_offscreen_buffer@@HHHH@Z
+	DD	imagerel ?Win32DisplayBufferInWindow@@YAXPEAUHDC__@@HHUwin32_offscreen_buffer@@HHHH@Z+158
+	DD	imagerel $unwind$?Win32DisplayBufferInWindow@@YAXPEAUHDC__@@HHUwin32_offscreen_buffer@@HHHH@Z
 $pdata$?Win32MainWindowCallback@@YA_JPEAUHWND__@@I_K_J@Z DD imagerel $LN11
-	DD	imagerel $LN11+484
+	DD	imagerel $LN11+471
 	DD	imagerel $unwind$?Win32MainWindowCallback@@YA_JPEAUHWND__@@I_K_J@Z
 pdata	ENDS
 xdata	SEGMENT
-$unwind$WinMain DD 032e19H
-	DD	024011cH
-	DD	07015H
+$unwind$WinMain DD 041d01H
+	DD	037011dH
+	DD	060157016H
+$unwind$?Win32GetWindowDimension@@YA?AUwin32_window_dimension@@PEAUHWND__@@@Z DD 011819H
+	DD	08209H
 	DD	imagerel __GSHandlerCheck
-	DD	0110H
-$unwind$?RenderWeirdGradient@@YAXHH@Z DD 010c01H
-	DD	0620cH
-$unwind$?Win32ResizeDIBSection@@YAXHH@Z DD 010c01H
-	DD	0620cH
-$unwind$?Win32UpdateWindow@@YAXPEAUHDC__@@PEAUtagRECT@@HHHH@Z DD 021b01H
-	DD	011011bH
-$unwind$?Win32MainWindowCallback@@YA_JPEAUHWND__@@I_K_J@Z DD 022c19H
-	DD	01d011aH
+	DD	038H
+$unwind$?RenderWeirdGradient@@YAXUwin32_offscreen_buffer@@HH@Z DD 011201H
+	DD	04212H
+$unwind$?Win32ResizeDIBSection@@YAXPEAUwin32_offscreen_buffer@@HH@Z DD 011201H
+	DD	06212H
+$unwind$?Win32DisplayBufferInWindow@@YAXPEAUHDC__@@HHUwin32_offscreen_buffer@@HHHH@Z DD 011701H
+	DD	0e217H
+$unwind$?Win32MainWindowCallback@@YA_JPEAUHWND__@@I_K_J@Z DD 042e19H
+	DD	027011cH
+	DD	060147015H
 	DD	imagerel __GSHandlerCheck
-	DD	0d0H
+	DD	0120H
 xdata	ENDS
 ; Function compile flags: /Odtp
 ; File p:\handmade\code\win32_handmade.cpp
 _TEXT	SEGMENT
-tv64 = 48
-Y$1 = 52
-X$2 = 56
-Width$3 = 60
-Height$4 = 64
-Height$5 = 68
-Width$6 = 72
-Result$ = 80
-DeviceContext$7 = 88
-ClientRect$8 = 96
-ClientRect$9 = 112
-Paint$10 = 128
-__$ArrayPad$ = 208
-Window$ = 240
-Message$ = 248
-WParam$ = 256
-LParam$ = 264
+tv64 = 64
+Width$1 = 68
+Y$2 = 72
+Height$3 = 76
+X$4 = 80
+Dimension$5 = 88
+Result$ = 96
+DeviceContext$6 = 104
+$T7 = 112
+$T8 = 128
+Paint$9 = 208
+__$ArrayPad$ = 288
+Window$ = 336
+Message$ = 344
+WParam$ = 352
+LParam$ = 360
 ?Win32MainWindowCallback@@YA_JPEAUHWND__@@I_K_J@Z PROC	; Win32MainWindowCallback
 
-; 103  : ) {
+; 125  : ) {
 
 $LN11:
   00000	4c 89 4c 24 20	 mov	 QWORD PTR [rsp+32], r9
   00005	4c 89 44 24 18	 mov	 QWORD PTR [rsp+24], r8
   0000a	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
   0000e	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00013	48 81 ec e8 00
-	00 00		 sub	 rsp, 232		; 000000e8H
-  0001a	48 8b 05 00 00
+  00013	56		 push	 rsi
+  00014	57		 push	 rdi
+  00015	48 81 ec 38 01
+	00 00		 sub	 rsp, 312		; 00000138H
+  0001c	48 8b 05 00 00
 	00 00		 mov	 rax, QWORD PTR __security_cookie
-  00021	48 33 c4	 xor	 rax, rsp
-  00024	48 89 84 24 d0
-	00 00 00	 mov	 QWORD PTR __$ArrayPad$[rsp], rax
+  00023	48 33 c4	 xor	 rax, rsp
+  00026	48 89 84 24 20
+	01 00 00	 mov	 QWORD PTR __$ArrayPad$[rsp], rax
 
-; 104  :     LRESULT Result = 0;
+; 126  :     LRESULT Result = 0;
 
-  0002c	48 c7 44 24 50
+  0002e	48 c7 44 24 60
 	00 00 00 00	 mov	 QWORD PTR Result$[rsp], 0
 
-; 105  : 
-; 106  :     switch(Message)
+; 127  : 
+; 128  :     switch(Message)
 
-  00035	8b 84 24 f8 00
+  00037	8b 84 24 58 01
 	00 00		 mov	 eax, DWORD PTR Message$[rsp]
-  0003c	89 44 24 30	 mov	 DWORD PTR tv64[rsp], eax
-  00040	83 7c 24 30 02	 cmp	 DWORD PTR tv64[rsp], 2
-  00045	0f 84 88 00 00
-	00		 je	 $LN7@Win32MainW
-  0004b	83 7c 24 30 05	 cmp	 DWORD PTR tv64[rsp], 5
-  00050	74 1e		 je	 SHORT $LN4@Win32MainW
-  00052	83 7c 24 30 0f	 cmp	 DWORD PTR tv64[rsp], 15
-  00057	0f 84 82 00 00
-	00		 je	 $LN8@Win32MainW
-  0005d	83 7c 24 30 10	 cmp	 DWORD PTR tv64[rsp], 16
-  00062	74 51		 je	 SHORT $LN5@Win32MainW
-  00064	83 7c 24 30 1c	 cmp	 DWORD PTR tv64[rsp], 28
-  00069	74 56		 je	 SHORT $LN6@Win32MainW
-  0006b	e9 2d 01 00 00	 jmp	 $LN9@Win32MainW
+  0003e	89 44 24 40	 mov	 DWORD PTR tv64[rsp], eax
+  00042	83 7c 24 40 02	 cmp	 DWORD PTR tv64[rsp], 2
+  00047	74 44		 je	 SHORT $LN7@Win32MainW
+  00049	83 7c 24 40 05	 cmp	 DWORD PTR tv64[rsp], 5
+  0004e	74 1a		 je	 SHORT $LN4@Win32MainW
+  00050	83 7c 24 40 0f	 cmp	 DWORD PTR tv64[rsp], 15
+  00055	74 42		 je	 SHORT $LN8@Win32MainW
+  00057	83 7c 24 40 10	 cmp	 DWORD PTR tv64[rsp], 16
+  0005c	74 11		 je	 SHORT $LN5@Win32MainW
+  0005e	83 7c 24 40 1c	 cmp	 DWORD PTR tv64[rsp], 28
+  00063	74 16		 je	 SHORT $LN6@Win32MainW
+  00065	e9 24 01 00 00	 jmp	 $LN9@Win32MainW
 $LN4@Win32MainW:
 
-; 107  :     {
-; 108  :         case WM_SIZE: {
-; 109  :             RECT ClientRect;
-; 110  :             GetClientRect(Window, &ClientRect);
+; 129  :     {
+; 130  :         case WM_SIZE: {
+; 131  :         } break;
 
-  00070	48 8d 54 24 60	 lea	 rdx, QWORD PTR ClientRect$8[rsp]
-  00075	48 8b 8c 24 f0
-	00 00 00	 mov	 rcx, QWORD PTR Window$[rsp]
-  0007d	ff 15 00 00 00
-	00		 call	 QWORD PTR __imp_GetClientRect
-
-; 111  :             int Width = ClientRect.right - ClientRect.left;
-
-  00083	8b 44 24 60	 mov	 eax, DWORD PTR ClientRect$8[rsp]
-  00087	8b 4c 24 68	 mov	 ecx, DWORD PTR ClientRect$8[rsp+8]
-  0008b	2b c8		 sub	 ecx, eax
-  0008d	8b c1		 mov	 eax, ecx
-  0008f	89 44 24 48	 mov	 DWORD PTR Width$6[rsp], eax
-
-; 112  :             int Height = ClientRect.bottom - ClientRect.top;
-
-  00093	8b 44 24 64	 mov	 eax, DWORD PTR ClientRect$8[rsp+4]
-  00097	8b 4c 24 6c	 mov	 ecx, DWORD PTR ClientRect$8[rsp+12]
-  0009b	2b c8		 sub	 ecx, eax
-  0009d	8b c1		 mov	 eax, ecx
-  0009f	89 44 24 40	 mov	 DWORD PTR Height$4[rsp], eax
-
-; 113  :             Win32ResizeDIBSection(Width, Height);
-
-  000a3	8b 54 24 40	 mov	 edx, DWORD PTR Height$4[rsp]
-  000a7	8b 4c 24 48	 mov	 ecx, DWORD PTR Width$6[rsp]
-  000ab	e8 00 00 00 00	 call	 ?Win32ResizeDIBSection@@YAXHH@Z ; Win32ResizeDIBSection
-
-; 114  :         } break;
-
-  000b0	e9 12 01 00 00	 jmp	 $LN2@Win32MainW
+  0006a	e9 49 01 00 00	 jmp	 $LN2@Win32MainW
 $LN5@Win32MainW:
 
-; 115  : 
-; 116  :         case WM_CLOSE: {
-; 117  :             // TODO Handle this with a message to the user?
-; 118  :             Running = false;
+; 132  : 
+; 133  :         case WM_CLOSE: {
+; 134  :             // TODO Handle this with a message to the user?
+; 135  :             Running = false;
 
-  000b5	c6 05 00 00 00
+  0006f	c6 05 00 00 00
 	00 00		 mov	 BYTE PTR ?Running@@3_NA, 0
 
-; 119  :         } break;
+; 136  :         } break;
 
-  000bc	e9 06 01 00 00	 jmp	 $LN2@Win32MainW
+  00076	e9 3d 01 00 00	 jmp	 $LN2@Win32MainW
 $LN6@Win32MainW:
 
-; 120  : 
-; 121  :         case WM_ACTIVATEAPP: {
-; 122  :             OutputDebugStringA("WM_ACTIVATEAPP\n");
+; 137  : 
+; 138  :         case WM_ACTIVATEAPP: {
+; 139  :             OutputDebugStringA("WM_ACTIVATEAPP\n");
 
-  000c1	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG82478
-  000c8	ff 15 00 00 00
+  0007b	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:$SG82506
+  00082	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_OutputDebugStringA
 
-; 123  :         } break;
+; 140  :         } break;
 
-  000ce	e9 f4 00 00 00	 jmp	 $LN2@Win32MainW
+  00088	e9 2b 01 00 00	 jmp	 $LN2@Win32MainW
 $LN7@Win32MainW:
 
-; 124  : 
-; 125  :         case WM_DESTROY: {
-; 126  :             // TODO Handle this as an error - recreate window?
-; 127  :             Running = false;
+; 141  : 
+; 142  :         case WM_DESTROY: {
+; 143  :             // TODO Handle this as an error - recreate window?
+; 144  :             Running = false;
 
-  000d3	c6 05 00 00 00
+  0008d	c6 05 00 00 00
 	00 00		 mov	 BYTE PTR ?Running@@3_NA, 0
 
-; 128  :         } break;
+; 145  :         } break;
 
-  000da	e9 e8 00 00 00	 jmp	 $LN2@Win32MainW
+  00094	e9 1f 01 00 00	 jmp	 $LN2@Win32MainW
 $LN8@Win32MainW:
 
-; 129  : 
-; 130  :         case WM_PAINT: {
-; 131  :             OutputDebugStringA("WM_PAINT\n");
+; 146  : 
+; 147  :         case WM_PAINT: {
+; 148  :             OutputDebugStringA("WM_PAINT\n");
 
-  000df	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG82481
-  000e6	ff 15 00 00 00
+  00099	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:$SG82509
+  000a0	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_OutputDebugStringA
 
-; 132  :             PAINTSTRUCT Paint;
-; 133  :             HDC DeviceContext = BeginPaint(Window, &Paint);
+; 149  :             PAINTSTRUCT Paint;
+; 150  :             HDC DeviceContext = BeginPaint(Window, &Paint);
 
-  000ec	48 8d 94 24 80
-	00 00 00	 lea	 rdx, QWORD PTR Paint$10[rsp]
-  000f4	48 8b 8c 24 f0
-	00 00 00	 mov	 rcx, QWORD PTR Window$[rsp]
-  000fc	ff 15 00 00 00
+  000a6	48 8d 94 24 d0
+	00 00 00	 lea	 rdx, QWORD PTR Paint$9[rsp]
+  000ae	48 8b 8c 24 50
+	01 00 00	 mov	 rcx, QWORD PTR Window$[rsp]
+  000b6	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_BeginPaint
-  00102	48 89 44 24 58	 mov	 QWORD PTR DeviceContext$7[rsp], rax
+  000bc	48 89 44 24 68	 mov	 QWORD PTR DeviceContext$6[rsp], rax
 
-; 134  :             int X = Paint.rcPaint.left;
+; 151  :             int X = Paint.rcPaint.left;
 
-  00107	8b 84 24 8c 00
-	00 00		 mov	 eax, DWORD PTR Paint$10[rsp+12]
-  0010e	89 44 24 38	 mov	 DWORD PTR X$2[rsp], eax
+  000c1	8b 84 24 dc 00
+	00 00		 mov	 eax, DWORD PTR Paint$9[rsp+12]
+  000c8	89 44 24 50	 mov	 DWORD PTR X$4[rsp], eax
 
-; 135  :             int Y = Paint.rcPaint.top;
+; 152  :             int Y = Paint.rcPaint.top;
 
-  00112	8b 84 24 90 00
-	00 00		 mov	 eax, DWORD PTR Paint$10[rsp+16]
-  00119	89 44 24 34	 mov	 DWORD PTR Y$1[rsp], eax
+  000cc	8b 84 24 e0 00
+	00 00		 mov	 eax, DWORD PTR Paint$9[rsp+16]
+  000d3	89 44 24 48	 mov	 DWORD PTR Y$2[rsp], eax
 
-; 136  :             int Width = Paint.rcPaint.right - Paint.rcPaint.left;
+; 153  :             int Width = Paint.rcPaint.right - Paint.rcPaint.left;
 
-  0011d	8b 84 24 8c 00
-	00 00		 mov	 eax, DWORD PTR Paint$10[rsp+12]
-  00124	8b 8c 24 94 00
-	00 00		 mov	 ecx, DWORD PTR Paint$10[rsp+20]
-  0012b	2b c8		 sub	 ecx, eax
-  0012d	8b c1		 mov	 eax, ecx
-  0012f	89 44 24 3c	 mov	 DWORD PTR Width$3[rsp], eax
+  000d7	8b 84 24 dc 00
+	00 00		 mov	 eax, DWORD PTR Paint$9[rsp+12]
+  000de	8b 8c 24 e4 00
+	00 00		 mov	 ecx, DWORD PTR Paint$9[rsp+20]
+  000e5	2b c8		 sub	 ecx, eax
+  000e7	8b c1		 mov	 eax, ecx
+  000e9	89 44 24 44	 mov	 DWORD PTR Width$1[rsp], eax
 
-; 137  :             int Height = Paint.rcPaint.bottom - Paint.rcPaint.top;
+; 154  :             int Height = Paint.rcPaint.bottom - Paint.rcPaint.top;
 
-  00133	8b 84 24 90 00
-	00 00		 mov	 eax, DWORD PTR Paint$10[rsp+16]
-  0013a	8b 8c 24 98 00
-	00 00		 mov	 ecx, DWORD PTR Paint$10[rsp+24]
-  00141	2b c8		 sub	 ecx, eax
-  00143	8b c1		 mov	 eax, ecx
-  00145	89 44 24 44	 mov	 DWORD PTR Height$5[rsp], eax
+  000ed	8b 84 24 e0 00
+	00 00		 mov	 eax, DWORD PTR Paint$9[rsp+16]
+  000f4	8b 8c 24 e8 00
+	00 00		 mov	 ecx, DWORD PTR Paint$9[rsp+24]
+  000fb	2b c8		 sub	 ecx, eax
+  000fd	8b c1		 mov	 eax, ecx
+  000ff	89 44 24 4c	 mov	 DWORD PTR Height$3[rsp], eax
 
-; 138  : 
-; 139  :             RECT ClientRect;
-; 140  :             GetClientRect(Window, &ClientRect);
+; 155  : 
+; 156  : 
+; 157  :             win32_window_dimension Dimension = Win32GetWindowDimension(Window);
 
-  00149	48 8d 54 24 70	 lea	 rdx, QWORD PTR ClientRect$9[rsp]
-  0014e	48 8b 8c 24 f0
-	00 00 00	 mov	 rcx, QWORD PTR Window$[rsp]
-  00156	ff 15 00 00 00
-	00		 call	 QWORD PTR __imp_GetClientRect
+  00103	48 8b 8c 24 50
+	01 00 00	 mov	 rcx, QWORD PTR Window$[rsp]
+  0010b	e8 00 00 00 00	 call	 ?Win32GetWindowDimension@@YA?AUwin32_window_dimension@@PEAUHWND__@@@Z ; Win32GetWindowDimension
+  00110	48 89 44 24 70	 mov	 QWORD PTR $T7[rsp], rax
+  00115	48 8b 44 24 70	 mov	 rax, QWORD PTR $T7[rsp]
+  0011a	48 89 44 24 58	 mov	 QWORD PTR Dimension$5[rsp], rax
 
-; 141  : 
-; 142  :             Win32UpdateWindow(DeviceContext, &ClientRect, X, Y, Width, Height);
+; 158  :             Win32DisplayBufferInWindow(DeviceContext, Dimension.Width, Dimension.Height, GlobalBackbuffer, X, Y, Width, Height);
 
-  0015c	8b 44 24 44	 mov	 eax, DWORD PTR Height$5[rsp]
-  00160	89 44 24 28	 mov	 DWORD PTR [rsp+40], eax
-  00164	8b 44 24 3c	 mov	 eax, DWORD PTR Width$3[rsp]
-  00168	89 44 24 20	 mov	 DWORD PTR [rsp+32], eax
-  0016c	44 8b 4c 24 34	 mov	 r9d, DWORD PTR Y$1[rsp]
-  00171	44 8b 44 24 38	 mov	 r8d, DWORD PTR X$2[rsp]
-  00176	48 8d 54 24 70	 lea	 rdx, QWORD PTR ClientRect$9[rsp]
-  0017b	48 8b 4c 24 58	 mov	 rcx, QWORD PTR DeviceContext$7[rsp]
-  00180	e8 00 00 00 00	 call	 ?Win32UpdateWindow@@YAXPEAUHDC__@@PEAUtagRECT@@HHHH@Z ; Win32UpdateWindow
+  0011f	48 8d 84 24 80
+	00 00 00	 lea	 rax, QWORD PTR $T8[rsp]
+  00127	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A
+  0012e	48 8b f8	 mov	 rdi, rax
+  00131	48 8b f1	 mov	 rsi, rcx
+  00134	b9 48 00 00 00	 mov	 ecx, 72			; 00000048H
+  00139	f3 a4		 rep movsb
+  0013b	8b 44 24 4c	 mov	 eax, DWORD PTR Height$3[rsp]
+  0013f	89 44 24 38	 mov	 DWORD PTR [rsp+56], eax
+  00143	8b 44 24 44	 mov	 eax, DWORD PTR Width$1[rsp]
+  00147	89 44 24 30	 mov	 DWORD PTR [rsp+48], eax
+  0014b	8b 44 24 48	 mov	 eax, DWORD PTR Y$2[rsp]
+  0014f	89 44 24 28	 mov	 DWORD PTR [rsp+40], eax
+  00153	8b 44 24 50	 mov	 eax, DWORD PTR X$4[rsp]
+  00157	89 44 24 20	 mov	 DWORD PTR [rsp+32], eax
+  0015b	4c 8d 8c 24 80
+	00 00 00	 lea	 r9, QWORD PTR $T8[rsp]
+  00163	44 8b 44 24 5c	 mov	 r8d, DWORD PTR Dimension$5[rsp+4]
+  00168	8b 54 24 58	 mov	 edx, DWORD PTR Dimension$5[rsp]
+  0016c	48 8b 4c 24 68	 mov	 rcx, QWORD PTR DeviceContext$6[rsp]
+  00171	e8 00 00 00 00	 call	 ?Win32DisplayBufferInWindow@@YAXPEAUHDC__@@HHUwin32_offscreen_buffer@@HHHH@Z ; Win32DisplayBufferInWindow
 
-; 143  :             EndPaint(Window, &Paint);
+; 159  :             EndPaint(Window, &Paint);
 
-  00185	48 8d 94 24 80
-	00 00 00	 lea	 rdx, QWORD PTR Paint$10[rsp]
-  0018d	48 8b 8c 24 f0
-	00 00 00	 mov	 rcx, QWORD PTR Window$[rsp]
-  00195	ff 15 00 00 00
+  00176	48 8d 94 24 d0
+	00 00 00	 lea	 rdx, QWORD PTR Paint$9[rsp]
+  0017e	48 8b 8c 24 50
+	01 00 00	 mov	 rcx, QWORD PTR Window$[rsp]
+  00186	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_EndPaint
 
-; 144  :         } break;
+; 160  :         } break;
 
-  0019b	eb 2a		 jmp	 SHORT $LN2@Win32MainW
+  0018c	eb 2a		 jmp	 SHORT $LN2@Win32MainW
 $LN9@Win32MainW:
 
-; 145  : 
-; 146  :         default: {
-; 147  :             // OutputDebugStringA("default\n");
-; 148  :             Result = DefWindowProc(Window, Message, WParam, LParam);
+; 161  : 
+; 162  :         default: {
+; 163  :             // OutputDebugStringA("default\n");
+; 164  :             Result = DefWindowProc(Window, Message, WParam, LParam);
 
-  0019d	4c 8b 8c 24 08
+  0018e	4c 8b 8c 24 68
 	01 00 00	 mov	 r9, QWORD PTR LParam$[rsp]
-  001a5	4c 8b 84 24 00
+  00196	4c 8b 84 24 60
 	01 00 00	 mov	 r8, QWORD PTR WParam$[rsp]
-  001ad	8b 94 24 f8 00
+  0019e	8b 94 24 58 01
 	00 00		 mov	 edx, DWORD PTR Message$[rsp]
-  001b4	48 8b 8c 24 f0
-	00 00 00	 mov	 rcx, QWORD PTR Window$[rsp]
-  001bc	ff 15 00 00 00
+  001a5	48 8b 8c 24 50
+	01 00 00	 mov	 rcx, QWORD PTR Window$[rsp]
+  001ad	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_DefWindowProcA
-  001c2	48 89 44 24 50	 mov	 QWORD PTR Result$[rsp], rax
+  001b3	48 89 44 24 60	 mov	 QWORD PTR Result$[rsp], rax
 $LN2@Win32MainW:
 
-; 149  :         } break;
-; 150  :     }
-; 151  : 
-; 152  :     return(Result);
+; 165  :         } break;
+; 166  :     }
+; 167  : 
+; 168  :     return(Result);
 
-  001c7	48 8b 44 24 50	 mov	 rax, QWORD PTR Result$[rsp]
+  001b8	48 8b 44 24 60	 mov	 rax, QWORD PTR Result$[rsp]
 
-; 153  : }
+; 169  : }
 
-  001cc	48 8b 8c 24 d0
-	00 00 00	 mov	 rcx, QWORD PTR __$ArrayPad$[rsp]
-  001d4	48 33 cc	 xor	 rcx, rsp
-  001d7	e8 00 00 00 00	 call	 __security_check_cookie
-  001dc	48 81 c4 e8 00
-	00 00		 add	 rsp, 232		; 000000e8H
-  001e3	c3		 ret	 0
+  001bd	48 8b 8c 24 20
+	01 00 00	 mov	 rcx, QWORD PTR __$ArrayPad$[rsp]
+  001c5	48 33 cc	 xor	 rcx, rsp
+  001c8	e8 00 00 00 00	 call	 __security_check_cookie
+  001cd	48 81 c4 38 01
+	00 00		 add	 rsp, 312		; 00000138H
+  001d4	5f		 pop	 rdi
+  001d5	5e		 pop	 rsi
+  001d6	c3		 ret	 0
 ?Win32MainWindowCallback@@YA_JPEAUHWND__@@I_K_J@Z ENDP	; Win32MainWindowCallback
 _TEXT	ENDS
 ; Function compile flags: /Odtp
 ; File p:\handmade\code\win32_handmade.cpp
 _TEXT	SEGMENT
-WindowHeight$ = 112
-WindowWidth$ = 116
-DeviceContext$ = 144
-ClientRect$ = 152
+DeviceContext$ = 128
+WindowWidth$ = 136
+WindowHeight$ = 144
+Buffer$ = 152
 X$ = 160
 Y$ = 168
 Width$ = 176
 Height$ = 184
-?Win32UpdateWindow@@YAXPEAUHDC__@@PEAUtagRECT@@HHHH@Z PROC ; Win32UpdateWindow
+?Win32DisplayBufferInWindow@@YAXPEAUHDC__@@HHUwin32_offscreen_buffer@@HHHH@Z PROC ; Win32DisplayBufferInWindow
 
-; 80   : ) {
+; 107  : ) {
 
-  00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
+  00000	4c 89 4c 24 20	 mov	 QWORD PTR [rsp+32], r9
   00005	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
-  0000a	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
-  0000f	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00014	48 81 ec 88 00
-	00 00		 sub	 rsp, 136		; 00000088H
+  0000a	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
+  0000e	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00013	48 83 ec 78	 sub	 rsp, 120		; 00000078H
 
-; 81   :     int WindowWidth = ClientRect->right - ClientRect->left;
+; 108  :     // TODO aspect ration correction
+; 109  :     StretchDIBits(
 
-  0001b	48 8b 84 24 98
-	00 00 00	 mov	 rax, QWORD PTR ClientRect$[rsp]
-  00023	48 8b 8c 24 98
-	00 00 00	 mov	 rcx, QWORD PTR ClientRect$[rsp]
-  0002b	8b 09		 mov	 ecx, DWORD PTR [rcx]
-  0002d	8b 40 08	 mov	 eax, DWORD PTR [rax+8]
-  00030	2b c1		 sub	 eax, ecx
-  00032	89 44 24 74	 mov	 DWORD PTR WindowWidth$[rsp], eax
-
-; 82   :     int WindowHeight = ClientRect->bottom - ClientRect->top;
-
-  00036	48 8b 84 24 98
-	00 00 00	 mov	 rax, QWORD PTR ClientRect$[rsp]
-  0003e	48 8b 8c 24 98
-	00 00 00	 mov	 rcx, QWORD PTR ClientRect$[rsp]
-  00046	8b 49 04	 mov	 ecx, DWORD PTR [rcx+4]
-  00049	8b 40 0c	 mov	 eax, DWORD PTR [rax+12]
-  0004c	2b c1		 sub	 eax, ecx
-  0004e	89 44 24 70	 mov	 DWORD PTR WindowHeight$[rsp], eax
-
-; 83   :     StretchDIBits(
-
-  00052	c7 44 24 60 20
+  00017	48 8b 84 24 98
+	00 00 00	 mov	 rax, QWORD PTR Buffer$[rsp]
+  0001f	c7 44 24 60 20
 	00 cc 00	 mov	 DWORD PTR [rsp+96], 13369376 ; 00cc0020H
-  0005a	c7 44 24 58 00
+  00027	c7 44 24 58 00
 	00 00 00	 mov	 DWORD PTR [rsp+88], 0
-  00062	48 8d 05 00 00
-	00 00		 lea	 rax, OFFSET FLAT:?BitmapInfo@@3UtagBITMAPINFO@@A
-  00069	48 89 44 24 50	 mov	 QWORD PTR [rsp+80], rax
-  0006e	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR ?BitmapMemory@@3PEAXEA
-  00075	48 89 44 24 48	 mov	 QWORD PTR [rsp+72], rax
-  0007a	8b 44 24 70	 mov	 eax, DWORD PTR WindowHeight$[rsp]
-  0007e	89 44 24 40	 mov	 DWORD PTR [rsp+64], eax
-  00082	8b 44 24 74	 mov	 eax, DWORD PTR WindowWidth$[rsp]
-  00086	89 44 24 38	 mov	 DWORD PTR [rsp+56], eax
-  0008a	c7 44 24 30 00
+  0002f	48 89 44 24 50	 mov	 QWORD PTR [rsp+80], rax
+  00034	48 8b 84 24 98
+	00 00 00	 mov	 rax, QWORD PTR Buffer$[rsp]
+  0003c	48 8b 40 30	 mov	 rax, QWORD PTR [rax+48]
+  00040	48 89 44 24 48	 mov	 QWORD PTR [rsp+72], rax
+  00045	48 8b 84 24 98
+	00 00 00	 mov	 rax, QWORD PTR Buffer$[rsp]
+  0004d	8b 40 3c	 mov	 eax, DWORD PTR [rax+60]
+  00050	89 44 24 40	 mov	 DWORD PTR [rsp+64], eax
+  00054	48 8b 84 24 98
+	00 00 00	 mov	 rax, QWORD PTR Buffer$[rsp]
+  0005c	8b 40 38	 mov	 eax, DWORD PTR [rax+56]
+  0005f	89 44 24 38	 mov	 DWORD PTR [rsp+56], eax
+  00063	c7 44 24 30 00
 	00 00 00	 mov	 DWORD PTR [rsp+48], 0
-  00092	c7 44 24 28 00
+  0006b	c7 44 24 28 00
 	00 00 00	 mov	 DWORD PTR [rsp+40], 0
-  0009a	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR ?BitmapHeight@@3HA
-  000a0	89 44 24 20	 mov	 DWORD PTR [rsp+32], eax
-  000a4	44 8b 0d 00 00
-	00 00		 mov	 r9d, DWORD PTR ?BitmapWidth@@3HA
-  000ab	45 33 c0	 xor	 r8d, r8d
-  000ae	33 d2		 xor	 edx, edx
-  000b0	48 8b 8c 24 90
+  00073	8b 84 24 90 00
+	00 00		 mov	 eax, DWORD PTR WindowHeight$[rsp]
+  0007a	89 44 24 20	 mov	 DWORD PTR [rsp+32], eax
+  0007e	44 8b 8c 24 88
+	00 00 00	 mov	 r9d, DWORD PTR WindowWidth$[rsp]
+  00086	45 33 c0	 xor	 r8d, r8d
+  00089	33 d2		 xor	 edx, edx
+  0008b	48 8b 8c 24 80
 	00 00 00	 mov	 rcx, QWORD PTR DeviceContext$[rsp]
-  000b8	ff 15 00 00 00
+  00093	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_StretchDIBits
 
-; 84   :         DeviceContext,
-; 85   :         /*
-; 86   :         X, Y, Width, Height,
-; 87   :         X, Y, Width, Height,
-; 88   :         */
-; 89   :         0, 0, BitmapWidth, BitmapHeight,
-; 90   :         0, 0, WindowWidth, WindowHeight,
-; 91   :         BitmapMemory,
-; 92   :         &BitmapInfo,
-; 93   :         DIB_RGB_COLORS, SRCCOPY
-; 94   :     );
-; 95   : }
+; 110  :         DeviceContext,
+; 111  :         0, 0, WindowWidth, WindowHeight,
+; 112  :         0, 0, Buffer.Width, Buffer.Height,
+; 113  :         Buffer.Memory,
+; 114  :         &Buffer.Info,
+; 115  :         DIB_RGB_COLORS, SRCCOPY
+; 116  :     );
+; 117  : }
 
-  000be	48 81 c4 88 00
-	00 00		 add	 rsp, 136		; 00000088H
-  000c5	c3		 ret	 0
-?Win32UpdateWindow@@YAXPEAUHDC__@@PEAUtagRECT@@HHHH@Z ENDP ; Win32UpdateWindow
+  00099	48 83 c4 78	 add	 rsp, 120		; 00000078H
+  0009d	c3		 ret	 0
+?Win32DisplayBufferInWindow@@YAXPEAUHDC__@@HHUwin32_offscreen_buffer@@HHHH@Z ENDP ; Win32DisplayBufferInWindow
 _TEXT	ENDS
 ; Function compile flags: /Odtp
 ; File p:\handmade\code\win32_handmade.cpp
 _TEXT	SEGMENT
 BitmapMemorySize$ = 32
-Width$ = 64
-Height$ = 72
-?Win32ResizeDIBSection@@YAXHH@Z PROC			; Win32ResizeDIBSection
+Buffer$ = 64
+Width$ = 72
+Height$ = 80
+?Win32ResizeDIBSection@@YAXPEAUwin32_offscreen_buffer@@HH@Z PROC ; Win32ResizeDIBSection
 
-; 52   : Win32ResizeDIBSection(int Width, int Height) {
+; 73   : Win32ResizeDIBSection(win32_offscreen_buffer *Buffer, int Width, int Height) {
 
-  00000	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
-  00004	89 4c 24 08	 mov	 DWORD PTR [rsp+8], ecx
-  00008	48 83 ec 38	 sub	 rsp, 56			; 00000038H
+  00000	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
+  00005	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
+  00009	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  0000e	48 83 ec 38	 sub	 rsp, 56			; 00000038H
 
-; 53   :     // TODO Bulletproof this
-; 54   :     // Maybe don't free first, free after, then free first if that fails
-; 55   : 
-; 56   :     if(BitmapMemory) {
+; 74   :     // TODO Bulletproof this
+; 75   :     // Maybe don't free first, free after, then free first if that fails
+; 76   : 
+; 77   :     if(Buffer->Memory) {
 
-  0000c	48 83 3d 00 00
-	00 00 00	 cmp	 QWORD PTR ?BitmapMemory@@3PEAXEA, 0
-  00014	74 15		 je	 SHORT $LN2@Win32Resiz
+  00012	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
+  00017	48 83 78 30 00	 cmp	 QWORD PTR [rax+48], 0
+  0001c	74 17		 je	 SHORT $LN2@Win32Resiz
 
-; 57   :         VirtualFree(BitmapMemory, 0, MEM_RELEASE);
+; 78   :         VirtualFree(Buffer->Memory, 0, MEM_RELEASE);
 
-  00016	41 b8 00 80 00
+  0001e	41 b8 00 80 00
 	00		 mov	 r8d, 32768		; 00008000H
-  0001c	33 d2		 xor	 edx, edx
-  0001e	48 8b 0d 00 00
-	00 00		 mov	 rcx, QWORD PTR ?BitmapMemory@@3PEAXEA
-  00025	ff 15 00 00 00
+  00024	33 d2		 xor	 edx, edx
+  00026	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
+  0002b	48 8b 48 30	 mov	 rcx, QWORD PTR [rax+48]
+  0002f	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_VirtualFree
 $LN2@Win32Resiz:
 
-; 58   :     }
-; 59   : 
-; 60   :     BitmapWidth = Width;
+; 79   :     }
+; 80   : 
+; 81   :     Buffer->Width = Width;
 
-  0002b	8b 44 24 40	 mov	 eax, DWORD PTR Width$[rsp]
-  0002f	89 05 00 00 00
-	00		 mov	 DWORD PTR ?BitmapWidth@@3HA, eax
+  00035	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
+  0003a	8b 4c 24 48	 mov	 ecx, DWORD PTR Width$[rsp]
+  0003e	89 48 38	 mov	 DWORD PTR [rax+56], ecx
 
-; 61   :     BitmapHeight = Height;
+; 82   :     Buffer->Height = Height;
 
-  00035	8b 44 24 48	 mov	 eax, DWORD PTR Height$[rsp]
-  00039	89 05 00 00 00
-	00		 mov	 DWORD PTR ?BitmapHeight@@3HA, eax
+  00041	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
+  00046	8b 4c 24 50	 mov	 ecx, DWORD PTR Height$[rsp]
+  0004a	89 48 3c	 mov	 DWORD PTR [rax+60], ecx
 
-; 62   :     
-; 63   :     BitmapInfo.bmiHeader.biSize = sizeof(BitmapInfo.bmiHeader);
+; 83   :     Buffer->BytesPerPixel = 4;
 
-  0003f	c7 05 00 00 00
-	00 28 00 00 00	 mov	 DWORD PTR ?BitmapInfo@@3UtagBITMAPINFO@@A, 40 ; 00000028H
+  0004d	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
+  00052	c7 40 44 04 00
+	00 00		 mov	 DWORD PTR [rax+68], 4
 
-; 64   :     BitmapInfo.bmiHeader.biWidth = BitmapWidth;
+; 84   : 
+; 85   :     Buffer->Info.bmiHeader.biSize = sizeof(Buffer->Info.bmiHeader);
 
-  00049	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR ?BitmapWidth@@3HA
-  0004f	89 05 04 00 00
-	00		 mov	 DWORD PTR ?BitmapInfo@@3UtagBITMAPINFO@@A+4, eax
+  00059	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
+  0005e	c7 00 28 00 00
+	00		 mov	 DWORD PTR [rax], 40	; 00000028H
 
-; 65   :     BitmapInfo.bmiHeader.biHeight = -BitmapHeight;
+; 86   :     Buffer->Info.bmiHeader.biWidth = Buffer->Width;
 
-  00055	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR ?BitmapHeight@@3HA
-  0005b	f7 d8		 neg	 eax
-  0005d	89 05 08 00 00
-	00		 mov	 DWORD PTR ?BitmapInfo@@3UtagBITMAPINFO@@A+8, eax
+  00064	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
+  00069	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
+  0006e	8b 49 38	 mov	 ecx, DWORD PTR [rcx+56]
+  00071	89 48 04	 mov	 DWORD PTR [rax+4], ecx
 
-; 66   :     BitmapInfo.bmiHeader.biPlanes = 1;
+; 87   :     Buffer->Info.bmiHeader.biHeight = -Buffer->Height;
 
-  00063	b8 01 00 00 00	 mov	 eax, 1
-  00068	66 89 05 0c 00
-	00 00		 mov	 WORD PTR ?BitmapInfo@@3UtagBITMAPINFO@@A+12, ax
+  00074	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
+  00079	8b 40 3c	 mov	 eax, DWORD PTR [rax+60]
+  0007c	f7 d8		 neg	 eax
+  0007e	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
+  00083	89 41 08	 mov	 DWORD PTR [rcx+8], eax
 
-; 67   :     BitmapInfo.bmiHeader.biBitCount = 32;
+; 88   :     Buffer->Info.bmiHeader.biPlanes = 1;
 
-  0006f	b8 20 00 00 00	 mov	 eax, 32			; 00000020H
-  00074	66 89 05 0e 00
-	00 00		 mov	 WORD PTR ?BitmapInfo@@3UtagBITMAPINFO@@A+14, ax
+  00086	b8 01 00 00 00	 mov	 eax, 1
+  0008b	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
+  00090	66 89 41 0c	 mov	 WORD PTR [rcx+12], ax
 
-; 68   :     BitmapInfo.bmiHeader.biCompression = BI_RGB;
+; 89   :     Buffer->Info.bmiHeader.biBitCount = 32;
 
-  0007b	c7 05 10 00 00
-	00 00 00 00 00	 mov	 DWORD PTR ?BitmapInfo@@3UtagBITMAPINFO@@A+16, 0
+  00094	b8 20 00 00 00	 mov	 eax, 32			; 00000020H
+  00099	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
+  0009e	66 89 41 0e	 mov	 WORD PTR [rcx+14], ax
 
-; 69   : 
-; 70   :     // NOTE: Thanks Chris Hecker for clarifying StretchDIBits/BitBlt
-; 71   :     int BitmapMemorySize = (BitmapWidth*BitmapHeight)*BytesPerPixel;
+; 90   :     Buffer->Info.bmiHeader.biCompression = BI_RGB;
 
-  00085	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR ?BitmapWidth@@3HA
-  0008b	0f af 05 00 00
-	00 00		 imul	 eax, DWORD PTR ?BitmapHeight@@3HA
-  00092	0f af 05 00 00
-	00 00		 imul	 eax, DWORD PTR ?BytesPerPixel@@3HA
-  00099	89 44 24 20	 mov	 DWORD PTR BitmapMemorySize$[rsp], eax
+  000a2	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
+  000a7	c7 40 10 00 00
+	00 00		 mov	 DWORD PTR [rax+16], 0
 
-; 72   :     BitmapMemory = VirtualAlloc(0, BitmapMemorySize, MEM_COMMIT, PAGE_READWRITE);
+; 91   : 
+; 92   :     // NOTE: Thanks Chris Hecker for clarifying StretchDIBits/BitBlt
+; 93   :     int BitmapMemorySize = (Buffer->Width*Buffer->Height)*Buffer->BytesPerPixel;
 
-  0009d	48 63 44 24 20	 movsxd	 rax, DWORD PTR BitmapMemorySize$[rsp]
-  000a2	41 b9 04 00 00
+  000ae	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
+  000b3	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
+  000b8	8b 40 38	 mov	 eax, DWORD PTR [rax+56]
+  000bb	0f af 41 3c	 imul	 eax, DWORD PTR [rcx+60]
+  000bf	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
+  000c4	0f af 41 44	 imul	 eax, DWORD PTR [rcx+68]
+  000c8	89 44 24 20	 mov	 DWORD PTR BitmapMemorySize$[rsp], eax
+
+; 94   :     Buffer->Memory = VirtualAlloc(0, BitmapMemorySize, MEM_COMMIT, PAGE_READWRITE);
+
+  000cc	48 63 44 24 20	 movsxd	 rax, DWORD PTR BitmapMemorySize$[rsp]
+  000d1	41 b9 04 00 00
 	00		 mov	 r9d, 4
-  000a8	41 b8 00 10 00
+  000d7	41 b8 00 10 00
 	00		 mov	 r8d, 4096		; 00001000H
-  000ae	48 8b d0	 mov	 rdx, rax
-  000b1	33 c9		 xor	 ecx, ecx
-  000b3	ff 15 00 00 00
+  000dd	48 8b d0	 mov	 rdx, rax
+  000e0	33 c9		 xor	 ecx, ecx
+  000e2	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_VirtualAlloc
-  000b9	48 89 05 00 00
-	00 00		 mov	 QWORD PTR ?BitmapMemory@@3PEAXEA, rax
+  000e8	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
+  000ed	48 89 41 30	 mov	 QWORD PTR [rcx+48], rax
 
-; 73   : 
-; 74   :     // TODO probably clear to black
-; 75   : }
+; 95   : 
+; 96   :     // TODO probably clear to black
+; 97   : 
+; 98   :     Buffer->Pitch = Width*Buffer->BytesPerPixel;
 
-  000c0	48 83 c4 38	 add	 rsp, 56			; 00000038H
-  000c4	c3		 ret	 0
-?Win32ResizeDIBSection@@YAXHH@Z ENDP			; Win32ResizeDIBSection
+  000f1	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
+  000f6	8b 4c 24 48	 mov	 ecx, DWORD PTR Width$[rsp]
+  000fa	0f af 48 44	 imul	 ecx, DWORD PTR [rax+68]
+  000fe	8b c1		 mov	 eax, ecx
+  00100	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
+  00105	89 41 40	 mov	 DWORD PTR [rcx+64], eax
+
+; 99   : }
+
+  00108	48 83 c4 38	 add	 rsp, 56			; 00000038H
+  0010c	c3		 ret	 0
+?Win32ResizeDIBSection@@YAXPEAUwin32_offscreen_buffer@@HH@Z ENDP ; Win32ResizeDIBSection
 _TEXT	ENDS
 ; Function compile flags: /Odtp
 ; File p:\handmade\code\win32_handmade.cpp
 _TEXT	SEGMENT
-Blue$1 = 0
-Red$2 = 1
-Green$3 = 2
+Red$1 = 0
+Green$2 = 1
+Blue$3 = 2
 X$4 = 4
 Y$5 = 8
-Width$ = 12
-Pitch$ = 16
-tv70 = 20
+tv72 = 12
+Pixel$6 = 16
 Row$ = 24
-Pixel$6 = 32
-Height$ = 40
-XOffset$ = 64
-YOffset$ = 72
-?RenderWeirdGradient@@YAXHH@Z PROC			; RenderWeirdGradient
+Buffer$ = 48
+BlueOffset$ = 56
+GreenOffset$ = 64
+?RenderWeirdGradient@@YAXUwin32_offscreen_buffer@@HH@Z PROC ; RenderWeirdGradient
 
-; 33   : RenderWeirdGradient(int XOffset, int YOffset) {
+; 56   : ) {
 
-  00000	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
-  00004	89 4c 24 08	 mov	 DWORD PTR [rsp+8], ecx
-  00008	48 83 ec 38	 sub	 rsp, 56			; 00000038H
+  00000	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
+  00005	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
+  00009	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  0000e	48 83 ec 28	 sub	 rsp, 40			; 00000028H
 
-; 34   :     int Width = BitmapWidth;
+; 57   :     // TODO lets see which is better
+; 58   :     uint8 *Row = (uint8 *)Buffer.Memory;
 
-  0000c	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR ?BitmapWidth@@3HA
-  00012	89 44 24 0c	 mov	 DWORD PTR Width$[rsp], eax
+  00012	48 8b 44 24 30	 mov	 rax, QWORD PTR Buffer$[rsp]
+  00017	48 8b 40 30	 mov	 rax, QWORD PTR [rax+48]
+  0001b	48 89 44 24 18	 mov	 QWORD PTR Row$[rsp], rax
 
-; 35   :     int Height = BitmapHeight;
+; 59   :     for( int Y = 0 ; Y < Buffer.Height ; ++Y ) {
 
-  00016	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR ?BitmapHeight@@3HA
-  0001c	89 44 24 28	 mov	 DWORD PTR Height$[rsp], eax
-
-; 36   :     int Pitch = Width*BytesPerPixel;
-
-  00020	8b 44 24 0c	 mov	 eax, DWORD PTR Width$[rsp]
-  00024	0f af 05 00 00
-	00 00		 imul	 eax, DWORD PTR ?BytesPerPixel@@3HA
-  0002b	89 44 24 10	 mov	 DWORD PTR Pitch$[rsp], eax
-
-; 37   :     uint8 *Row = (uint8 *)BitmapMemory;
-
-  0002f	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR ?BitmapMemory@@3PEAXEA
-  00036	48 89 44 24 18	 mov	 QWORD PTR Row$[rsp], rax
-
-; 38   :     for( int Y = 0 ; Y < BitmapHeight ; ++Y ) {
-
-  0003b	c7 44 24 08 00
+  00020	c7 44 24 08 00
 	00 00 00	 mov	 DWORD PTR Y$5[rsp], 0
-  00043	eb 0a		 jmp	 SHORT $LN4@RenderWeir
+  00028	eb 0a		 jmp	 SHORT $LN4@RenderWeir
 $LN2@RenderWeir:
-  00045	8b 44 24 08	 mov	 eax, DWORD PTR Y$5[rsp]
-  00049	ff c0		 inc	 eax
-  0004b	89 44 24 08	 mov	 DWORD PTR Y$5[rsp], eax
+  0002a	8b 44 24 08	 mov	 eax, DWORD PTR Y$5[rsp]
+  0002e	ff c0		 inc	 eax
+  00030	89 44 24 08	 mov	 DWORD PTR Y$5[rsp], eax
 $LN4@RenderWeir:
-  0004f	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR ?BitmapHeight@@3HA
-  00055	39 44 24 08	 cmp	 DWORD PTR Y$5[rsp], eax
-  00059	0f 8d bf 00 00
+  00034	48 8b 44 24 30	 mov	 rax, QWORD PTR Buffer$[rsp]
+  00039	8b 40 3c	 mov	 eax, DWORD PTR [rax+60]
+  0003c	39 44 24 08	 cmp	 DWORD PTR Y$5[rsp], eax
+  00040	0f 8d c5 00 00
 	00		 jge	 $LN3@RenderWeir
 
-; 39   :         uint32 *Pixel = (uint32 *)Row;
+; 60   :         uint32 *Pixel = (uint32 *)Row;
 
-  0005f	48 8b 44 24 18	 mov	 rax, QWORD PTR Row$[rsp]
-  00064	48 89 44 24 20	 mov	 QWORD PTR Pixel$6[rsp], rax
+  00046	48 8b 44 24 18	 mov	 rax, QWORD PTR Row$[rsp]
+  0004b	48 89 44 24 10	 mov	 QWORD PTR Pixel$6[rsp], rax
 
-; 40   :         for( int X = 0 ; X < BitmapWidth ; ++X ) {
+; 61   :         for( int X = 0 ; X < Buffer.Width ; ++X ) {
 
-  00069	c7 44 24 04 00
+  00050	c7 44 24 04 00
 	00 00 00	 mov	 DWORD PTR X$4[rsp], 0
-  00071	eb 0a		 jmp	 SHORT $LN7@RenderWeir
+  00058	eb 0a		 jmp	 SHORT $LN7@RenderWeir
 $LN5@RenderWeir:
-  00073	8b 44 24 04	 mov	 eax, DWORD PTR X$4[rsp]
-  00077	ff c0		 inc	 eax
-  00079	89 44 24 04	 mov	 DWORD PTR X$4[rsp], eax
+  0005a	8b 44 24 04	 mov	 eax, DWORD PTR X$4[rsp]
+  0005e	ff c0		 inc	 eax
+  00060	89 44 24 04	 mov	 DWORD PTR X$4[rsp], eax
 $LN7@RenderWeir:
-  0007d	8b 05 00 00 00
-	00		 mov	 eax, DWORD PTR ?BitmapWidth@@3HA
-  00083	39 44 24 04	 cmp	 DWORD PTR X$4[rsp], eax
-  00087	7d 7b		 jge	 SHORT $LN6@RenderWeir
+  00064	48 8b 44 24 30	 mov	 rax, QWORD PTR Buffer$[rsp]
+  00069	8b 40 38	 mov	 eax, DWORD PTR [rax+56]
+  0006c	39 44 24 04	 cmp	 DWORD PTR X$4[rsp], eax
+  00070	7d 7b		 jge	 SHORT $LN6@RenderWeir
 
-; 41   :             uint8 Blue = 0; //(X + XOffset);
+; 62   :             uint8 Blue = 0; //(X + BlueOffset);
 
-  00089	c6 04 24 00	 mov	 BYTE PTR Blue$1[rsp], 0
+  00072	c6 44 24 02 00	 mov	 BYTE PTR Blue$3[rsp], 0
 
-; 42   :             uint8 Green = 0; //(Y + YOffset);
+; 63   :             uint8 Green = 0; //(Y + GreenOffset);
 
-  0008d	c6 44 24 02 00	 mov	 BYTE PTR Green$3[rsp], 0
+  00077	c6 44 24 01 00	 mov	 BYTE PTR Green$2[rsp], 0
 
-; 43   : 			uint8 Red = ((X - (YOffset/2))*(Y + (XOffset/4))/8);
+; 64   : 			uint8 Red = ((X - (GreenOffset/2))*(Y + (BlueOffset/4))/8);
 
-  00092	8b 44 24 48	 mov	 eax, DWORD PTR YOffset$[rsp]
-  00096	99		 cdq
-  00097	2b c2		 sub	 eax, edx
-  00099	d1 f8		 sar	 eax, 1
-  0009b	8b 4c 24 04	 mov	 ecx, DWORD PTR X$4[rsp]
-  0009f	2b c8		 sub	 ecx, eax
-  000a1	8b c1		 mov	 eax, ecx
-  000a3	89 44 24 14	 mov	 DWORD PTR tv70[rsp], eax
-  000a7	8b 44 24 40	 mov	 eax, DWORD PTR XOffset$[rsp]
-  000ab	99		 cdq
-  000ac	83 e2 03	 and	 edx, 3
-  000af	03 c2		 add	 eax, edx
-  000b1	c1 f8 02	 sar	 eax, 2
-  000b4	8b 4c 24 08	 mov	 ecx, DWORD PTR Y$5[rsp]
-  000b8	03 c8		 add	 ecx, eax
-  000ba	8b c1		 mov	 eax, ecx
-  000bc	8b 4c 24 14	 mov	 ecx, DWORD PTR tv70[rsp]
-  000c0	0f af c8	 imul	 ecx, eax
-  000c3	8b c1		 mov	 eax, ecx
-  000c5	99		 cdq
-  000c6	83 e2 07	 and	 edx, 7
-  000c9	03 c2		 add	 eax, edx
-  000cb	c1 f8 03	 sar	 eax, 3
-  000ce	88 44 24 01	 mov	 BYTE PTR Red$2[rsp], al
+  0007c	8b 44 24 40	 mov	 eax, DWORD PTR GreenOffset$[rsp]
+  00080	99		 cdq
+  00081	2b c2		 sub	 eax, edx
+  00083	d1 f8		 sar	 eax, 1
+  00085	8b 4c 24 04	 mov	 ecx, DWORD PTR X$4[rsp]
+  00089	2b c8		 sub	 ecx, eax
+  0008b	8b c1		 mov	 eax, ecx
+  0008d	89 44 24 0c	 mov	 DWORD PTR tv72[rsp], eax
+  00091	8b 44 24 38	 mov	 eax, DWORD PTR BlueOffset$[rsp]
+  00095	99		 cdq
+  00096	83 e2 03	 and	 edx, 3
+  00099	03 c2		 add	 eax, edx
+  0009b	c1 f8 02	 sar	 eax, 2
+  0009e	8b 4c 24 08	 mov	 ecx, DWORD PTR Y$5[rsp]
+  000a2	03 c8		 add	 ecx, eax
+  000a4	8b c1		 mov	 eax, ecx
+  000a6	8b 4c 24 0c	 mov	 ecx, DWORD PTR tv72[rsp]
+  000aa	0f af c8	 imul	 ecx, eax
+  000ad	8b c1		 mov	 eax, ecx
+  000af	99		 cdq
+  000b0	83 e2 07	 and	 edx, 7
+  000b3	03 c2		 add	 eax, edx
+  000b5	c1 f8 03	 sar	 eax, 3
+  000b8	88 04 24	 mov	 BYTE PTR Red$1[rsp], al
 
-; 44   : 			*Pixel++ = ((Red << 16) | (Green << 8) | Blue);
+; 65   : 			*Pixel++ = ((Red << 16) | (Green << 8) | Blue);
 
-  000d2	0f b6 44 24 01	 movzx	 eax, BYTE PTR Red$2[rsp]
-  000d7	c1 e0 10	 shl	 eax, 16
-  000da	0f b6 4c 24 02	 movzx	 ecx, BYTE PTR Green$3[rsp]
-  000df	c1 e1 08	 shl	 ecx, 8
-  000e2	0b c1		 or	 eax, ecx
-  000e4	0f b6 0c 24	 movzx	 ecx, BYTE PTR Blue$1[rsp]
-  000e8	0b c1		 or	 eax, ecx
-  000ea	48 8b 4c 24 20	 mov	 rcx, QWORD PTR Pixel$6[rsp]
-  000ef	89 01		 mov	 DWORD PTR [rcx], eax
-  000f1	48 8b 44 24 20	 mov	 rax, QWORD PTR Pixel$6[rsp]
-  000f6	48 83 c0 04	 add	 rax, 4
-  000fa	48 89 44 24 20	 mov	 QWORD PTR Pixel$6[rsp], rax
+  000bb	0f b6 04 24	 movzx	 eax, BYTE PTR Red$1[rsp]
+  000bf	c1 e0 10	 shl	 eax, 16
+  000c2	0f b6 4c 24 01	 movzx	 ecx, BYTE PTR Green$2[rsp]
+  000c7	c1 e1 08	 shl	 ecx, 8
+  000ca	0b c1		 or	 eax, ecx
+  000cc	0f b6 4c 24 02	 movzx	 ecx, BYTE PTR Blue$3[rsp]
+  000d1	0b c1		 or	 eax, ecx
+  000d3	48 8b 4c 24 10	 mov	 rcx, QWORD PTR Pixel$6[rsp]
+  000d8	89 01		 mov	 DWORD PTR [rcx], eax
+  000da	48 8b 44 24 10	 mov	 rax, QWORD PTR Pixel$6[rsp]
+  000df	48 83 c0 04	 add	 rax, 4
+  000e3	48 89 44 24 10	 mov	 QWORD PTR Pixel$6[rsp], rax
 
-; 45   : 		}
+; 66   : 		}
 
-  000ff	e9 6f ff ff ff	 jmp	 $LN5@RenderWeir
+  000e8	e9 6d ff ff ff	 jmp	 $LN5@RenderWeir
 $LN6@RenderWeir:
 
-; 46   : 
-; 47   :         Row += Pitch;
+; 67   : 
+; 68   :         Row += Buffer.Pitch;
 
-  00104	48 63 44 24 10	 movsxd	 rax, DWORD PTR Pitch$[rsp]
-  00109	48 8b 4c 24 18	 mov	 rcx, QWORD PTR Row$[rsp]
-  0010e	48 03 c8	 add	 rcx, rax
-  00111	48 8b c1	 mov	 rax, rcx
-  00114	48 89 44 24 18	 mov	 QWORD PTR Row$[rsp], rax
+  000ed	48 8b 44 24 30	 mov	 rax, QWORD PTR Buffer$[rsp]
+  000f2	48 63 40 40	 movsxd	 rax, DWORD PTR [rax+64]
+  000f6	48 8b 4c 24 18	 mov	 rcx, QWORD PTR Row$[rsp]
+  000fb	48 03 c8	 add	 rcx, rax
+  000fe	48 8b c1	 mov	 rax, rcx
+  00101	48 89 44 24 18	 mov	 QWORD PTR Row$[rsp], rax
 
-; 48   :     }
+; 69   :     }
 
-  00119	e9 27 ff ff ff	 jmp	 $LN2@RenderWeir
+  00106	e9 1f ff ff ff	 jmp	 $LN2@RenderWeir
 $LN3@RenderWeir:
 
-; 49   : }
+; 70   : }
 
-  0011e	48 83 c4 38	 add	 rsp, 56			; 00000038H
-  00122	c3		 ret	 0
-?RenderWeirdGradient@@YAXHH@Z ENDP			; RenderWeirdGradient
+  0010b	48 83 c4 28	 add	 rsp, 40			; 00000028H
+  0010f	c3		 ret	 0
+?RenderWeirdGradient@@YAXUwin32_offscreen_buffer@@HH@Z ENDP ; RenderWeirdGradient
 _TEXT	ENDS
 ; Function compile flags: /Odtp
 ; File p:\handmade\code\win32_handmade.cpp
 _TEXT	SEGMENT
-XOffset$1 = 96
-YOffset$2 = 100
-Window$3 = 104
-WindowWidth$4 = 112
-WindowHeight$5 = 116
-DeviceContext$6 = 120
-Message$7 = 128
-WindowClass$ = 176
-ClientRect$8 = 256
-__$ArrayPad$ = 272
-Instance$ = 304
-PrevInstance$ = 312
-CmdLine$ = 320
-ShowCode$ = 328
+Result$ = 32
+ClientRect$ = 40
+__$ArrayPad$ = 56
+Window$ = 80
+?Win32GetWindowDimension@@YA?AUwin32_window_dimension@@PEAUHWND__@@@Z PROC ; Win32GetWindowDimension
+
+; 42   : win32_window_dimension Win32GetWindowDimension(HWND Window) {
+
+$LN3:
+  00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  00005	48 83 ec 48	 sub	 rsp, 72			; 00000048H
+  00009	48 8b 05 00 00
+	00 00		 mov	 rax, QWORD PTR __security_cookie
+  00010	48 33 c4	 xor	 rax, rsp
+  00013	48 89 44 24 38	 mov	 QWORD PTR __$ArrayPad$[rsp], rax
+
+; 43   :     win32_window_dimension Result;
+; 44   : 
+; 45   :     RECT ClientRect;
+; 46   :     GetClientRect(Window, &ClientRect);
+
+  00018	48 8d 54 24 28	 lea	 rdx, QWORD PTR ClientRect$[rsp]
+  0001d	48 8b 4c 24 50	 mov	 rcx, QWORD PTR Window$[rsp]
+  00022	ff 15 00 00 00
+	00		 call	 QWORD PTR __imp_GetClientRect
+
+; 47   :     Result.Width = ClientRect.right - ClientRect.left;
+
+  00028	8b 44 24 28	 mov	 eax, DWORD PTR ClientRect$[rsp]
+  0002c	8b 4c 24 30	 mov	 ecx, DWORD PTR ClientRect$[rsp+8]
+  00030	2b c8		 sub	 ecx, eax
+  00032	8b c1		 mov	 eax, ecx
+  00034	89 44 24 20	 mov	 DWORD PTR Result$[rsp], eax
+
+; 48   :     Result.Height = ClientRect.bottom - ClientRect.top;
+
+  00038	8b 44 24 2c	 mov	 eax, DWORD PTR ClientRect$[rsp+4]
+  0003c	8b 4c 24 34	 mov	 ecx, DWORD PTR ClientRect$[rsp+12]
+  00040	2b c8		 sub	 ecx, eax
+  00042	8b c1		 mov	 eax, ecx
+  00044	89 44 24 24	 mov	 DWORD PTR Result$[rsp+4], eax
+
+; 49   : 
+; 50   :     return(Result);
+
+  00048	48 8b 44 24 20	 mov	 rax, QWORD PTR Result$[rsp]
+
+; 51   : }
+
+  0004d	48 8b 4c 24 38	 mov	 rcx, QWORD PTR __$ArrayPad$[rsp]
+  00052	48 33 cc	 xor	 rcx, rsp
+  00055	e8 00 00 00 00	 call	 __security_check_cookie
+  0005a	48 83 c4 48	 add	 rsp, 72			; 00000048H
+  0005e	c3		 ret	 0
+?Win32GetWindowDimension@@YA?AUwin32_window_dimension@@PEAUHWND__@@@Z ENDP ; Win32GetWindowDimension
+_TEXT	ENDS
+; Function compile flags: /Odtp
+; File p:\handmade\code\win32_handmade.cpp
+_TEXT	SEGMENT
+GreenOffset$1 = 96
+BlueOffset$2 = 100
+Dimension$3 = 104
+Window$4 = 112
+DeviceContext$5 = 120
+$T6 = 128
+WindowClass$ = 144
+Message$7 = 224
+$T8 = 272
+$T9 = 352
+Instance$ = 464
+PrevInstance$ = 472
+CmdLine$ = 480
+ShowCode$ = 488
 WinMain	PROC
 
-; 161  : ) {
+; 177  : ) {
 
 $LN12:
   00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
   00005	4c 89 44 24 18	 mov	 QWORD PTR [rsp+24], r8
   0000a	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
   0000f	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00014	57		 push	 rdi
-  00015	48 81 ec 20 01
-	00 00		 sub	 rsp, 288		; 00000120H
-  0001c	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR __security_cookie
-  00023	48 33 c4	 xor	 rax, rsp
-  00026	48 89 84 24 10
-	01 00 00	 mov	 QWORD PTR __$ArrayPad$[rsp], rax
+  00014	56		 push	 rsi
+  00015	57		 push	 rdi
+  00016	48 81 ec b8 01
+	00 00		 sub	 rsp, 440		; 000001b8H
 
-; 162  :     WNDCLASS WindowClass = {};
+; 178  :     WNDCLASS WindowClass = {};
 
-  0002e	48 8d 84 24 b0
+  0001d	48 8d 84 24 90
 	00 00 00	 lea	 rax, QWORD PTR WindowClass$[rsp]
-  00036	48 8b f8	 mov	 rdi, rax
-  00039	33 c0		 xor	 eax, eax
-  0003b	b9 48 00 00 00	 mov	 ecx, 72			; 00000048H
-  00040	f3 aa		 rep stosb
+  00025	48 8b f8	 mov	 rdi, rax
+  00028	33 c0		 xor	 eax, eax
+  0002a	b9 48 00 00 00	 mov	 ecx, 72			; 00000048H
+  0002f	f3 aa		 rep stosb
 
-; 163  :     
-; 164  :     // TODO(casey): Check if HREDRAW/VREDRAW/OWNDC still matter
-; 165  :     WindowClass.lpfnWndProc = Win32MainWindowCallback;
+; 179  : 
+; 180  :     Win32ResizeDIBSection(&GlobalBackbuffer, 1280, 720);
 
-  00042	48 8d 05 00 00
+  00031	41 b8 d0 02 00
+	00		 mov	 r8d, 720		; 000002d0H
+  00037	ba 00 05 00 00	 mov	 edx, 1280		; 00000500H
+  0003c	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A
+  00043	e8 00 00 00 00	 call	 ?Win32ResizeDIBSection@@YAXPEAUwin32_offscreen_buffer@@HH@Z ; Win32ResizeDIBSection
+
+; 181  :     
+; 182  :     WindowClass.style = CS_HREDRAW|CS_VREDRAW;
+
+  00048	c7 84 24 90 00
+	00 00 03 00 00
+	00		 mov	 DWORD PTR WindowClass$[rsp], 3
+
+; 183  :     WindowClass.lpfnWndProc = Win32MainWindowCallback;
+
+  00053	48 8d 05 00 00
 	00 00		 lea	 rax, OFFSET FLAT:?Win32MainWindowCallback@@YA_JPEAUHWND__@@I_K_J@Z ; Win32MainWindowCallback
-  00049	48 89 84 24 b8
+  0005a	48 89 84 24 98
 	00 00 00	 mov	 QWORD PTR WindowClass$[rsp+8], rax
 
-; 166  :     WindowClass.hInstance = Instance;
+; 184  :     WindowClass.hInstance = Instance;
 
-  00051	48 8b 84 24 30
+  00062	48 8b 84 24 d0
 	01 00 00	 mov	 rax, QWORD PTR Instance$[rsp]
-  00059	48 89 84 24 c8
+  0006a	48 89 84 24 a8
 	00 00 00	 mov	 QWORD PTR WindowClass$[rsp+24], rax
 
-; 167  : //    WindowClass.hIcon;
-; 168  :     WindowClass.lpszClassName = "HandmadeHeroWindowClass";
+; 185  : //    WindowClass.hIcon;
+; 186  :     WindowClass.lpszClassName = "HandmadeHeroWindowClass";
 
-  00061	48 8d 05 00 00
-	00 00		 lea	 rax, OFFSET FLAT:$SG82506
-  00068	48 89 84 24 f0
+  00072	48 8d 05 00 00
+	00 00		 lea	 rax, OFFSET FLAT:$SG82533
+  00079	48 89 84 24 d0
 	00 00 00	 mov	 QWORD PTR WindowClass$[rsp+64], rax
 
-; 169  : 
-; 170  :     if (RegisterClass(&WindowClass)) {
+; 187  : 
+; 188  :     if (RegisterClass(&WindowClass)) {
 
-  00070	48 8d 8c 24 b0
+  00081	48 8d 8c 24 90
 	00 00 00	 lea	 rcx, QWORD PTR WindowClass$[rsp]
-  00078	ff 15 00 00 00
+  00089	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_RegisterClassA
-  0007e	0f b7 c0	 movzx	 eax, ax
-  00081	85 c0		 test	 eax, eax
-  00083	0f 84 9a 01 00
+  0008f	0f b7 c0	 movzx	 eax, ax
+  00092	85 c0		 test	 eax, eax
+  00094	0f 84 ce 01 00
 	00		 je	 $LN6@WinMain
 
-; 171  :         HWND Window = CreateWindowExA(
+; 189  :         HWND Window = CreateWindowExA(
 
-  00089	48 c7 44 24 58
+  0009a	48 c7 44 24 58
 	00 00 00 00	 mov	 QWORD PTR [rsp+88], 0
-  00092	48 8b 84 24 30
+  000a3	48 8b 84 24 d0
 	01 00 00	 mov	 rax, QWORD PTR Instance$[rsp]
-  0009a	48 89 44 24 50	 mov	 QWORD PTR [rsp+80], rax
-  0009f	48 c7 44 24 48
+  000ab	48 89 44 24 50	 mov	 QWORD PTR [rsp+80], rax
+  000b0	48 c7 44 24 48
 	00 00 00 00	 mov	 QWORD PTR [rsp+72], 0
-  000a8	48 c7 44 24 40
+  000b9	48 c7 44 24 40
 	00 00 00 00	 mov	 QWORD PTR [rsp+64], 0
-  000b1	c7 44 24 38 00
+  000c2	c7 44 24 38 00
 	00 00 80	 mov	 DWORD PTR [rsp+56], -2147483648 ; ffffffff80000000H
-  000b9	c7 44 24 30 00
+  000ca	c7 44 24 30 00
 	00 00 80	 mov	 DWORD PTR [rsp+48], -2147483648 ; ffffffff80000000H
-  000c1	c7 44 24 28 00
+  000d2	c7 44 24 28 00
 	00 00 80	 mov	 DWORD PTR [rsp+40], -2147483648 ; ffffffff80000000H
-  000c9	c7 44 24 20 00
+  000da	c7 44 24 20 00
 	00 00 80	 mov	 DWORD PTR [rsp+32], -2147483648 ; ffffffff80000000H
-  000d1	41 b9 00 00 cf
+  000e2	41 b9 00 00 cf
 	10		 mov	 r9d, 282001408		; 10cf0000H
-  000d7	4c 8d 05 00 00
-	00 00		 lea	 r8, OFFSET FLAT:$SG82509
-  000de	48 8b 94 24 f0
+  000e8	4c 8d 05 00 00
+	00 00		 lea	 r8, OFFSET FLAT:$SG82536
+  000ef	48 8b 94 24 d0
 	00 00 00	 mov	 rdx, QWORD PTR WindowClass$[rsp+64]
-  000e6	33 c9		 xor	 ecx, ecx
-  000e8	ff 15 00 00 00
+  000f7	33 c9		 xor	 ecx, ecx
+  000f9	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_CreateWindowExA
-  000ee	48 89 44 24 68	 mov	 QWORD PTR Window$3[rsp], rax
+  000ff	48 89 44 24 70	 mov	 QWORD PTR Window$4[rsp], rax
 
-; 172  :             0,
-; 173  :             WindowClass.lpszClassName,
-; 174  :             "Handmade Hero",
-; 175  :             WS_OVERLAPPEDWINDOW|WS_VISIBLE,
-; 176  :             CW_USEDEFAULT,
-; 177  :             CW_USEDEFAULT,
-; 178  :             CW_USEDEFAULT,
-; 179  :             CW_USEDEFAULT,
-; 180  :             0,
-; 181  :             0,
-; 182  :             Instance,
-; 183  :             0
-; 184  :         );
-; 185  :         if(Window){
+; 190  :             0,
+; 191  :             WindowClass.lpszClassName,
+; 192  :             "Handmade Hero",
+; 193  :             WS_OVERLAPPEDWINDOW|WS_VISIBLE,
+; 194  :             CW_USEDEFAULT,
+; 195  :             CW_USEDEFAULT,
+; 196  :             CW_USEDEFAULT,
+; 197  :             CW_USEDEFAULT,
+; 198  :             0,
+; 199  :             0,
+; 200  :             Instance,
+; 201  :             0
+; 202  :         );
+; 203  :         if(Window){
 
-  000f3	48 83 7c 24 68
-	00		 cmp	 QWORD PTR Window$3[rsp], 0
-  000f9	0f 84 24 01 00
+  00104	48 83 7c 24 70
+	00		 cmp	 QWORD PTR Window$4[rsp], 0
+  0010a	0f 84 58 01 00
 	00		 je	 $LN8@WinMain
 
-; 186  :             Running = true;
+; 204  :             Running = true;
 
-  000ff	c6 05 00 00 00
+  00110	c6 05 00 00 00
 	00 01		 mov	 BYTE PTR ?Running@@3_NA, 1
 
-; 187  :             int XOffset = 0;
+; 205  :             int BlueOffset = 0;
 
-  00106	c7 44 24 60 00
-	00 00 00	 mov	 DWORD PTR XOffset$1[rsp], 0
+  00117	c7 44 24 64 00
+	00 00 00	 mov	 DWORD PTR BlueOffset$2[rsp], 0
 
-; 188  :             int YOffset = 0;
+; 206  :             int GreenOffset = 0;
 
-  0010e	c7 44 24 64 00
-	00 00 00	 mov	 DWORD PTR YOffset$2[rsp], 0
+  0011f	c7 44 24 60 00
+	00 00 00	 mov	 DWORD PTR GreenOffset$1[rsp], 0
 $LN2@WinMain:
 
-; 189  :             while (Running) {
+; 207  :             while (Running) {
 
-  00116	0f b6 05 00 00
+  00127	0f b6 05 00 00
 	00 00		 movzx	 eax, BYTE PTR ?Running@@3_NA
-  0011d	85 c0		 test	 eax, eax
-  0011f	0f 84 fe 00 00
+  0012e	85 c0		 test	 eax, eax
+  00130	0f 84 32 01 00
 	00		 je	 $LN3@WinMain
 $LN4@WinMain:
 
-; 190  :                 MSG Message;
-; 191  :                 while (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)) {
+; 208  :                 MSG Message;
+; 209  :                 while (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)) {
 
-  00125	c7 44 24 20 01
+  00136	c7 44 24 20 01
 	00 00 00	 mov	 DWORD PTR [rsp+32], 1
-  0012d	45 33 c9	 xor	 r9d, r9d
-  00130	45 33 c0	 xor	 r8d, r8d
-  00133	33 d2		 xor	 edx, edx
-  00135	48 8d 8c 24 80
+  0013e	45 33 c9	 xor	 r9d, r9d
+  00141	45 33 c0	 xor	 r8d, r8d
+  00144	33 d2		 xor	 edx, edx
+  00146	48 8d 8c 24 e0
 	00 00 00	 lea	 rcx, QWORD PTR Message$7[rsp]
-  0013d	ff 15 00 00 00
+  0014e	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_PeekMessageA
-  00143	85 c0		 test	 eax, eax
-  00145	74 2f		 je	 SHORT $LN5@WinMain
+  00154	85 c0		 test	 eax, eax
+  00156	74 2f		 je	 SHORT $LN5@WinMain
 
-; 192  :                     if(Message.message == WM_QUIT) {
+; 210  :                     if(Message.message == WM_QUIT) {
 
-  00147	83 bc 24 88 00
+  00158	83 bc 24 e8 00
 	00 00 12	 cmp	 DWORD PTR Message$7[rsp+8], 18
-  0014f	75 07		 jne	 SHORT $LN10@WinMain
+  00160	75 07		 jne	 SHORT $LN10@WinMain
 
-; 193  :                         Running = false;
+; 211  :                         Running = false;
 
-  00151	c6 05 00 00 00
+  00162	c6 05 00 00 00
 	00 00		 mov	 BYTE PTR ?Running@@3_NA, 0
 $LN10@WinMain:
 
-; 194  :                     }
-; 195  :                     TranslateMessage(&Message);
+; 212  :                     }
+; 213  :                     TranslateMessage(&Message);
 
-  00158	48 8d 8c 24 80
+  00169	48 8d 8c 24 e0
 	00 00 00	 lea	 rcx, QWORD PTR Message$7[rsp]
-  00160	ff 15 00 00 00
+  00171	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_TranslateMessage
 
-; 196  :                     DispatchMessageA(&Message);
+; 214  :                     DispatchMessageA(&Message);
 
-  00166	48 8d 8c 24 80
+  00177	48 8d 8c 24 e0
 	00 00 00	 lea	 rcx, QWORD PTR Message$7[rsp]
-  0016e	ff 15 00 00 00
+  0017f	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_DispatchMessageA
 
-; 197  :                 }
+; 215  :                 }
 
-  00174	eb af		 jmp	 SHORT $LN4@WinMain
+  00185	eb af		 jmp	 SHORT $LN4@WinMain
 $LN5@WinMain:
 
-; 198  : 
-; 199  :                 RenderWeirdGradient(XOffset, YOffset);
+; 216  : 
+; 217  :                 RenderWeirdGradient(GlobalBackbuffer, BlueOffset, GreenOffset);
 
-  00176	8b 54 24 64	 mov	 edx, DWORD PTR YOffset$2[rsp]
-  0017a	8b 4c 24 60	 mov	 ecx, DWORD PTR XOffset$1[rsp]
-  0017e	e8 00 00 00 00	 call	 ?RenderWeirdGradient@@YAXHH@Z ; RenderWeirdGradient
+  00187	48 8d 84 24 10
+	01 00 00	 lea	 rax, QWORD PTR $T8[rsp]
+  0018f	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A
+  00196	48 8b f8	 mov	 rdi, rax
+  00199	48 8b f1	 mov	 rsi, rcx
+  0019c	b9 48 00 00 00	 mov	 ecx, 72			; 00000048H
+  001a1	f3 a4		 rep movsb
+  001a3	44 8b 44 24 60	 mov	 r8d, DWORD PTR GreenOffset$1[rsp]
+  001a8	8b 54 24 64	 mov	 edx, DWORD PTR BlueOffset$2[rsp]
+  001ac	48 8d 8c 24 10
+	01 00 00	 lea	 rcx, QWORD PTR $T8[rsp]
+  001b4	e8 00 00 00 00	 call	 ?RenderWeirdGradient@@YAXUwin32_offscreen_buffer@@HH@Z ; RenderWeirdGradient
 
-; 200  :                 HDC DeviceContext = GetDC(Window);
+; 218  :                 HDC DeviceContext = GetDC(Window);
 
-  00183	48 8b 4c 24 68	 mov	 rcx, QWORD PTR Window$3[rsp]
-  00188	ff 15 00 00 00
+  001b9	48 8b 4c 24 70	 mov	 rcx, QWORD PTR Window$4[rsp]
+  001be	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_GetDC
-  0018e	48 89 44 24 78	 mov	 QWORD PTR DeviceContext$6[rsp], rax
+  001c4	48 89 44 24 78	 mov	 QWORD PTR DeviceContext$5[rsp], rax
 
-; 201  :                 RECT ClientRect;
-; 202  :                 GetClientRect(Window, &ClientRect);
+; 219  :                 win32_window_dimension Dimension = Win32GetWindowDimension(Window);
 
-  00193	48 8d 94 24 00
-	01 00 00	 lea	 rdx, QWORD PTR ClientRect$8[rsp]
-  0019b	48 8b 4c 24 68	 mov	 rcx, QWORD PTR Window$3[rsp]
-  001a0	ff 15 00 00 00
-	00		 call	 QWORD PTR __imp_GetClientRect
+  001c9	48 8b 4c 24 70	 mov	 rcx, QWORD PTR Window$4[rsp]
+  001ce	e8 00 00 00 00	 call	 ?Win32GetWindowDimension@@YA?AUwin32_window_dimension@@PEAUHWND__@@@Z ; Win32GetWindowDimension
+  001d3	48 89 84 24 80
+	00 00 00	 mov	 QWORD PTR $T6[rsp], rax
+  001db	48 8b 84 24 80
+	00 00 00	 mov	 rax, QWORD PTR $T6[rsp]
+  001e3	48 89 44 24 68	 mov	 QWORD PTR Dimension$3[rsp], rax
 
-; 203  :                 int WindowWidth = ClientRect.right - ClientRect.left;
+; 220  :                 Win32DisplayBufferInWindow(DeviceContext, Dimension.Width, Dimension.Height, GlobalBackbuffer, 0, 0, Dimension.Width, Dimension.Height);
 
-  001a6	8b 84 24 00 01
-	00 00		 mov	 eax, DWORD PTR ClientRect$8[rsp]
-  001ad	8b 8c 24 08 01
-	00 00		 mov	 ecx, DWORD PTR ClientRect$8[rsp+8]
-  001b4	2b c8		 sub	 ecx, eax
-  001b6	8b c1		 mov	 eax, ecx
-  001b8	89 44 24 70	 mov	 DWORD PTR WindowWidth$4[rsp], eax
+  001e8	48 8d 84 24 60
+	01 00 00	 lea	 rax, QWORD PTR $T9[rsp]
+  001f0	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A
+  001f7	48 8b f8	 mov	 rdi, rax
+  001fa	48 8b f1	 mov	 rsi, rcx
+  001fd	b9 48 00 00 00	 mov	 ecx, 72			; 00000048H
+  00202	f3 a4		 rep movsb
+  00204	8b 44 24 6c	 mov	 eax, DWORD PTR Dimension$3[rsp+4]
+  00208	89 44 24 38	 mov	 DWORD PTR [rsp+56], eax
+  0020c	8b 44 24 68	 mov	 eax, DWORD PTR Dimension$3[rsp]
+  00210	89 44 24 30	 mov	 DWORD PTR [rsp+48], eax
+  00214	c7 44 24 28 00
+	00 00 00	 mov	 DWORD PTR [rsp+40], 0
+  0021c	c7 44 24 20 00
+	00 00 00	 mov	 DWORD PTR [rsp+32], 0
+  00224	4c 8d 8c 24 60
+	01 00 00	 lea	 r9, QWORD PTR $T9[rsp]
+  0022c	44 8b 44 24 6c	 mov	 r8d, DWORD PTR Dimension$3[rsp+4]
+  00231	8b 54 24 68	 mov	 edx, DWORD PTR Dimension$3[rsp]
+  00235	48 8b 4c 24 78	 mov	 rcx, QWORD PTR DeviceContext$5[rsp]
+  0023a	e8 00 00 00 00	 call	 ?Win32DisplayBufferInWindow@@YAXPEAUHDC__@@HHUwin32_offscreen_buffer@@HHHH@Z ; Win32DisplayBufferInWindow
 
-; 204  :                 int WindowHeight = ClientRect.bottom - ClientRect.top;
+; 221  :                 ReleaseDC(Window, DeviceContext);
 
-  001bc	8b 84 24 04 01
-	00 00		 mov	 eax, DWORD PTR ClientRect$8[rsp+4]
-  001c3	8b 8c 24 0c 01
-	00 00		 mov	 ecx, DWORD PTR ClientRect$8[rsp+12]
-  001ca	2b c8		 sub	 ecx, eax
-  001cc	8b c1		 mov	 eax, ecx
-  001ce	89 44 24 74	 mov	 DWORD PTR WindowHeight$5[rsp], eax
-
-; 205  :                 Win32UpdateWindow(DeviceContext, &ClientRect, 0, 0, WindowWidth, WindowHeight);
-
-  001d2	8b 44 24 74	 mov	 eax, DWORD PTR WindowHeight$5[rsp]
-  001d6	89 44 24 28	 mov	 DWORD PTR [rsp+40], eax
-  001da	8b 44 24 70	 mov	 eax, DWORD PTR WindowWidth$4[rsp]
-  001de	89 44 24 20	 mov	 DWORD PTR [rsp+32], eax
-  001e2	45 33 c9	 xor	 r9d, r9d
-  001e5	45 33 c0	 xor	 r8d, r8d
-  001e8	48 8d 94 24 00
-	01 00 00	 lea	 rdx, QWORD PTR ClientRect$8[rsp]
-  001f0	48 8b 4c 24 78	 mov	 rcx, QWORD PTR DeviceContext$6[rsp]
-  001f5	e8 00 00 00 00	 call	 ?Win32UpdateWindow@@YAXPEAUHDC__@@PEAUtagRECT@@HHHH@Z ; Win32UpdateWindow
-
-; 206  :                 ReleaseDC(Window, DeviceContext);
-
-  001fa	48 8b 54 24 78	 mov	 rdx, QWORD PTR DeviceContext$6[rsp]
-  001ff	48 8b 4c 24 68	 mov	 rcx, QWORD PTR Window$3[rsp]
-  00204	ff 15 00 00 00
+  0023f	48 8b 54 24 78	 mov	 rdx, QWORD PTR DeviceContext$5[rsp]
+  00244	48 8b 4c 24 70	 mov	 rcx, QWORD PTR Window$4[rsp]
+  00249	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_ReleaseDC
 
-; 207  : 
-; 208  :                 ++XOffset;
+; 222  : 
+; 223  :                 ++BlueOffset;
 
-  0020a	8b 44 24 60	 mov	 eax, DWORD PTR XOffset$1[rsp]
-  0020e	ff c0		 inc	 eax
-  00210	89 44 24 60	 mov	 DWORD PTR XOffset$1[rsp], eax
+  0024f	8b 44 24 64	 mov	 eax, DWORD PTR BlueOffset$2[rsp]
+  00253	ff c0		 inc	 eax
+  00255	89 44 24 64	 mov	 DWORD PTR BlueOffset$2[rsp], eax
 
-; 209  : 				++YOffset;
+; 224  : 				++GreenOffset;
 
-  00214	8b 44 24 64	 mov	 eax, DWORD PTR YOffset$2[rsp]
-  00218	ff c0		 inc	 eax
-  0021a	89 44 24 64	 mov	 DWORD PTR YOffset$2[rsp], eax
+  00259	8b 44 24 60	 mov	 eax, DWORD PTR GreenOffset$1[rsp]
+  0025d	ff c0		 inc	 eax
+  0025f	89 44 24 60	 mov	 DWORD PTR GreenOffset$1[rsp], eax
 
-; 210  :             }
+; 225  :             }
 
-  0021e	e9 f3 fe ff ff	 jmp	 $LN2@WinMain
+  00263	e9 bf fe ff ff	 jmp	 $LN2@WinMain
 $LN3@WinMain:
 $LN8@WinMain:
 $LN6@WinMain:
 
-; 211  :         }
-; 212  :         else {
-; 213  :             // TODO Logging
-; 214  :         }
-; 215  :     }
-; 216  :     else{
-; 217  :         // TODO Logging
-; 218  :     }
-; 219  :     return(0); 
+; 226  :         }
+; 227  :         else {
+; 228  :             // TODO Logging
+; 229  :         }
+; 230  :     }
+; 231  :     else{
+; 232  :         // TODO Logging
+; 233  :     }
+; 234  :     return(0); 
 
-  00223	33 c0		 xor	 eax, eax
+  00268	33 c0		 xor	 eax, eax
 
-; 220  : }
+; 235  : }
 
-  00225	48 8b 8c 24 10
-	01 00 00	 mov	 rcx, QWORD PTR __$ArrayPad$[rsp]
-  0022d	48 33 cc	 xor	 rcx, rsp
-  00230	e8 00 00 00 00	 call	 __security_check_cookie
-  00235	48 81 c4 20 01
-	00 00		 add	 rsp, 288		; 00000120H
-  0023c	5f		 pop	 rdi
-  0023d	c3		 ret	 0
+  0026a	48 81 c4 b8 01
+	00 00		 add	 rsp, 440		; 000001b8H
+  00271	5f		 pop	 rdi
+  00272	5e		 pop	 rsi
+  00273	c3		 ret	 0
 WinMain	ENDP
 _TEXT	ENDS
 END
