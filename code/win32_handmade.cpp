@@ -5,6 +5,7 @@
 
 #include <windows.h>
 #include <stdint.h>
+#include <xinput.h>
 
 #define internal static
 #define local_persist static 
@@ -210,6 +211,40 @@ WinMain(
                     if(Message.message == WM_QUIT) {
                         GlobalRunning = false;
                     }
+
+                    // TODO Should we poll this more frequently?
+                    for(
+                        DWORD ControllerIndex = 0;
+                        ControllerIndex < XUSER_MAX_COUNT;
+                        ++ControllerIndex
+                    ) {
+                        XINPUT_STATE ControllerState;
+                        if(XInputGetState(ControllerIndex1, &ControllerState) == ERROR_SUCCESS) {
+                            // NOTE Controller is plugged in
+                            // TODO See if ControllerState.dwPacketNumber increments
+                            XINPUT_GAMEPAD *Pad = &ControllerState.Gamepad;
+
+                            bool Up = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_UP);
+                            bool Down = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
+                            bool Left = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
+                            bool Right = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
+                            bool Start = (Pad->wButtons & XINPUT_GAMEPAD_START);
+                            bool Back = (Pad->wButtons & XINPUT_GAMEPAD_BACK);
+                            bool LeftShoulder = (Pad->wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER);
+                            bool RightShoulder = (Pad->wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER);
+                            bool AButton = (Pad->wButtons & XINPUT_GAMEPAD_A);
+                            bool BButton = (Pad->wButtons & XINPUT_GAMEPAD_B);
+                            bool XButton = (Pad->wButtons & XINPUT_GAMEPAD_X);
+                            bool YButton = (Pad->wButtons & XINPUT_GAMEPAD_Y);
+                            
+                            int16 StickX = Pad->sThumbLX;
+                            int16 Sticky = Pad->sThumbLY;
+                        }
+                        else {
+                            // NOTE Controller is not available
+                        }
+                    }
+
                     TranslateMessage(&Message);
                     DispatchMessageA(&Message);
                 }
