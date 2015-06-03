@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <stdint.h>
 #include <xinput.h>
+#include <dsound.h>
 
 #define internal static
 #define local_persist static 
@@ -15,6 +16,8 @@ typedef int8_t int8;
 typedef int16_t int16;
 typedef int32_t int32;
 typedef int64_t int64;
+
+typedef int32 bool32;
 
 typedef uint8_t uint8;
 typedef uint16_t uint16;
@@ -44,7 +47,7 @@ struct win32_window_dimension {
 #define X_INPUT_GET_STATE(name) DWORD WINAPI name(DWORD dwUserIndex, XINPUT_STATE *pState)
 typedef X_INPUT_GET_STATE(x_input_get_state);
 X_INPUT_GET_STATE(XInputGetStateStub) {
-    return(0);
+    return(ERROR_DEVICE_NOT_CONNECTED);
 }
 global_variable x_input_get_state *XInputGetState_ = XInputGetStateStub;
 #define XInputGetState XInputGetState_
@@ -53,23 +56,101 @@ global_variable x_input_get_state *XInputGetState_ = XInputGetStateStub;
 #define X_INPUT_SET_STATE(name) DWORD WINAPI name(DWORD dwUserIndex, XINPUT_VIBRATION *pVibration)
 typedef X_INPUT_SET_STATE(x_input_set_state);
 X_INPUT_SET_STATE(XInputSetStateStub) {
-    return(0);
+    return(ERROR_DEVICE_NOT_CONNECTED);
 }
 global_variable x_input_set_state *XInputSetState_ = XInputSetStateStub;
 #define XInputSetState XInputSetState_
 
+#define DIRECT_SOUND_CREATE(name) HRESULT WINAPI name(LPCGUID pcGuidDevice, LPDIRECTSOUND *ppDS, LPUNKNOWN pUnkOuter)
+typedef DIRECT_SOUND_CREATE(direct_sound_create);
+
 internal void
 Wind32LoadXInput(void) {
-    HMODULE XInputLibrary = LoadLibraryA("xinput1_3.dll");
+    // TODO Test on windows 8
+    HMODULE XInputLibrary = LoadLibraryA("xinput1_4.dll");
+    if(!XInputLibrary) {
+        // TODO Diagnostic
+        HMODULE XInputLibrary = LoadLibraryA("xinput1_3.dll");
+    }
     if(XInputLibrary) {
         XInputGetState = (x_input_get_state *)GetProcAddress(XInputLibrary, "XInputGetState" );
+        if(!XInputGetState) {XInputGetState = XInputGetStateStub;}
         XInputSetState = (x_input_set_state *)GetProcAddress(XInputLibrary, "XInputSetState" );
+        if(!XInputSetState) {XInputSetState = XInputSetStateStub;}
+
+        // TODO Diagnostic
+    }
+    else {
+        // TODO Diagnostic
     }
 }
 
+internal void
+Win32InitDSound(HWND Window, int32 SamplesPerSecond, int32 BufferSize) {
+    // load the library
+    HMODULE DSoundLibrary = LoadLibraryA("dsound.dll");
+
+    if(DSoundLibrary) {
+        // get a DirectSound object
+        direct_sound_create *DirectSoundCreate = (direct_sound_create *)GetProcAddress(DSoundLibrary, "DirectSoundCreate");
+        // TODO double-check that this works on XP -- 7 or 8?
+        LPDIRECTSOUND DirectSound;
+        if(DirectSoundCreate && SUCCEEDED(DirectSoundCreate(0, &DirectSound, 0))) {
+            WAVEFORMATEX WaveFormat = {};
+            WaveFormat.wFormatTag = WAVE_FORMAT_PCM;
+            WaveFormat.nChannels = 2;
+            WaveFormat.nSamplesPerSec = SamplesPerSecond;
+            WaveFormat.wBitsPerSample = 16;
+            WaveFormat.nBlockAlign = (WaveFormat.nChannels*WaveFormat.wBitsPerSample) / 8;
+            WaveFormat.nAvgBytesPerSec = WaveFormat.nSamplesPerSec*WaveFormat.nBlockAlign;
+            WaveFormat.cbSize = 0;
+
+            if(SUCCEEDED(DirectSound->SetCooperativeLevel(Window, DSSCL_PRIORITY))) {
+                DSBUFFERDESC BufferDescription = {0};
+                BufferDescription.dwSize = sizeof(BufferDescription);
+                BufferDescription.dwFlags = DSBCAPS_PRIMARYBUFFER;
+                // TODO DSBCAPS_GLOBALFOCUS?
+
+                LPDIRECTSOUNDBUFFER PrimaryBuffer;
+
+                if (SUCCEEDED(DirectSound->CreateSoundBuffer(&BufferDescription, &PrimaryBuffer, 0))) {
+                    HRESULT Error = PrimaryBuffer->SetFormat(&WaveFormat);
+                    if(SUCCEEDED(Error)) {
+                        OutputDebugStringA("Primary buffer format was set.\n");
+                    }
+                    else {
+                        // TODO Diagnostic
+                    }
+                }
+                else {
+                    // TODO Diagnostic
+                }
+            }
+            else {
+                // TODO Diagnostic
+            }
+            // create a secondary buffer
+            // TODO DSBCAPS_GETCURENTPOSITION2?
+            DSBUFFERDESC BufferDescription = {0};
+            BufferDescription.dwSize = sizeof(BufferDescription);
+            BufferDescription.dwFlags = 0;
+            BufferDescription.dwBufferBytes = BufferSize;
+            BufferDescription.lpwfxFormat = &WaveFormat;
+            LPDIRECTSOUNDBUFFER SecondaryBuffer;
+            HRESULT Error = DirectSound->CreateSoundBuffer(&BufferDescription, &SecondaryBuffer, 0);
+
+            if(SUCCEEDED(Error)) {
+                OutputDebugStringA("Secondary buffer created successfuly\n");
+            }
 
 
 
+        }
+        else {
+            // TODO Diagnositc
+        }
+    }
+}
 
 internal win32_window_dimension Win32GetWindowDimension(HWND Window) {
     win32_window_dimension Result;
@@ -123,7 +204,7 @@ Win32ResizeDIBSection(win32_offscreen_buffer *Buffer, int Width, int Height) {
 
     // NOTE: Thanks Chris Hecker for clarifying StretchDIBits/BitBlt
     int BitmapMemorySize = (Buffer->Width*Buffer->Height)*Buffer->BytesPerPixel;
-    Buffer->Memory = VirtualAlloc(0, BitmapMemorySize, MEM_COMMIT, PAGE_READWRITE);
+    Buffer->Memory = VirtualAlloc(0, BitmapMemorySize, MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
 
     // TODO probably clear to black
 
@@ -219,6 +300,10 @@ Win32MainWindowCallback(
                 }
             }
 
+            if((LParam & (1 << 29)) && VKCode == VK_F4) { //Alt+F4
+                GlobalRunning = false;
+            }
+
         } break;
 
         case WM_PAINT: {
@@ -281,9 +366,13 @@ WinMain(
             0
         );
         if(Window){
-            GlobalRunning = true;
             int BlueOffset = 0;
             int GreenOffset = 0;
+
+            Win32InitDSound(Window, 48000, 48000*sizeof(int16)*2);
+
+            
+            GlobalRunning = true;
             while (GlobalRunning) {
                 MSG Message;
                 while (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)) {
