@@ -64,6 +64,8 @@ global_variable x_input_set_state *XInputSetState_ = XInputSetStateStub;
 #define DIRECT_SOUND_CREATE(name) HRESULT WINAPI name(LPCGUID pcGuidDevice, LPDIRECTSOUND *ppDS, LPUNKNOWN pUnkOuter)
 typedef DIRECT_SOUND_CREATE(direct_sound_create);
 
+
+
 internal void
 Wind32LoadXInput(void) {
     // TODO Test on windows 8
@@ -84,6 +86,8 @@ Wind32LoadXInput(void) {
         // TODO Diagnostic
     }
 }
+
+
 
 internal void
 Win32InitDSound(HWND Window, int32 SamplesPerSecond, int32 BufferSize) {
@@ -149,6 +153,8 @@ Win32InitDSound(HWND Window, int32 SamplesPerSecond, int32 BufferSize) {
     }
 }
 
+
+
 internal win32_window_dimension Win32GetWindowDimension(HWND Window) {
     win32_window_dimension Result;
 
@@ -160,24 +166,28 @@ internal win32_window_dimension Win32GetWindowDimension(HWND Window) {
     return(Result);
 }
 
+
+
 internal void
 RenderWeirdGradient(
-    win32_offscreen_buffer *Buffer, int BlueOffset, int GreenOffset
+    win32_offscreen_buffer *Buffer, int XOffset, int YOffset
 ) {
     // TODO lets see which is better
     uint8 *Row = (uint8 *)Buffer->Memory;
     for( int Y = 0 ; Y < Buffer->Height ; ++Y ) {
         uint32 *Pixel = (uint32 *)Row;
         for( int X = 0 ; X < Buffer->Width ; ++X ) {
-            uint8 Blue = 0; //(X + BlueOffset);
-            uint8 Green = 0; //(Y + GreenOffset);
-			uint8 Red = ((X - (GreenOffset/2))*(Y + (BlueOffset/4))/8);
+            uint8 Blue = (X - XOffset);
+            uint8 Green = (Y + YOffset);
+			uint8 Red = ((X - (XOffset/4))*(Y + (YOffset/4))/8);
 			*Pixel++ = ((Red << 16) | (Green << 8) | Blue);
 		}
 
         Row += Buffer->Pitch;
     }
 }
+
+
 
 internal void
 Win32ResizeDIBSection(win32_offscreen_buffer *Buffer, int Width, int Height) {
@@ -208,12 +218,13 @@ Win32ResizeDIBSection(win32_offscreen_buffer *Buffer, int Width, int Height) {
     Buffer->Pitch = Width*Buffer->BytesPerPixel;
 }
 
+
+
 internal void 
 Win32DisplayBufferInWindow(
-    HDC DeviceContext, 
-    int WindowWidth, int WindowHeight, 
     win32_offscreen_buffer *Buffer,
-    int X, int Y, int Width, int Height
+    HDC DeviceContext, 
+    int WindowWidth, int WindowHeight 
 ) {
     // TODO aspect ration correction
     StretchDIBits(
@@ -225,6 +236,8 @@ Win32DisplayBufferInWindow(
         DIB_RGB_COLORS, SRCCOPY
     );
 }
+
+
 
 internal LRESULT CALLBACK
 Win32MainWindowCallback(
@@ -314,7 +327,7 @@ Win32MainWindowCallback(
 
 
             win32_window_dimension Dimension = Win32GetWindowDimension(Window);
-            Win32DisplayBufferInWindow(DeviceContext, Dimension.Width, Dimension.Height, &GlobalBackbuffer, X, Y, Width, Height);
+            Win32DisplayBufferInWindow(&GlobalBackbuffer, DeviceContext, Dimension.Width, Dimension.Height);
             EndPaint(Window, &Paint);
         } break;
 
@@ -325,7 +338,9 @@ Win32MainWindowCallback(
     }
 
     return(Result);
-}
+} 
+
+
 
 int CALLBACK
 WinMain( 
@@ -363,9 +378,9 @@ WinMain(
             0
         );
         if(Window){
-            int BlueOffset = 0;
-            int GreenOffset = 0;
-
+            HDC DeviceContext = GetDC(Window);
+            int XOffset = 0;
+            int YOffset = 0;
             Win32InitDSound(Window, 48000, 48000*sizeof(int16)*2);
 
             
@@ -408,10 +423,10 @@ WinMain(
                         bool YButton = (Pad->wButtons & XINPUT_GAMEPAD_Y);
                         
                         int16 StickX = Pad->sThumbLX;
-                        int16 Sticky = Pad->sThumbLY;
-                        if (AButton) {
-                            ++BlueOffset;
-                        }
+                        int16 StickY = Pad->sThumbLY;
+
+                        XOffset += StickX >> 12;
+                        YOffset += StickY >> 12;
                     }
                     else {
                         // NOTE Controller is not available
@@ -423,14 +438,16 @@ WinMain(
                 // Vibration.wRightMotorSpeed = 60000;
                 // XInputSetState(0, &Vibration);
 
-                RenderWeirdGradient(&GlobalBackbuffer, BlueOffset, GreenOffset);
-                HDC DeviceContext = GetDC(Window);
-                win32_window_dimension Dimension = Win32GetWindowDimension(Window);
-                Win32DisplayBufferInWindow(DeviceContext, Dimension.Width, Dimension.Height, &GlobalBackbuffer, 0, 0, Dimension.Width, Dimension.Height);
-                ReleaseDC(Window, DeviceContext);
+                RenderWeirdGradient(&GlobalBackbuffer, XOffset, YOffset);
 
+
+                
+                win32_window_dimension Dimension = Win32GetWindowDimension(Window);
+                Win32DisplayBufferInWindow(
+                    &GlobalBackbuffer, DeviceContext,
+                    Dimension.Width, Dimension.Height
+                );
                 // ++BlueOffset;
-				++GreenOffset;
             }
         }
         else {
