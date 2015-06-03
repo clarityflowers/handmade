@@ -70,7 +70,7 @@ Wind32LoadXInput(void) {
     HMODULE XInputLibrary = LoadLibraryA("xinput1_4.dll");
     if(!XInputLibrary) {
         // TODO Diagnostic
-        HMODULE XInputLibrary = LoadLibraryA("xinput1_3.dll");
+        XInputLibrary = LoadLibraryA("xinput1_3.dll");
     }
     if(XInputLibrary) {
         XInputGetState = (x_input_get_state *)GetProcAddress(XInputLibrary, "XInputGetState" );
@@ -142,9 +142,6 @@ Win32InitDSound(HWND Window, int32 SamplesPerSecond, int32 BufferSize) {
             if(SUCCEEDED(Error)) {
                 OutputDebugStringA("Secondary buffer created successfuly\n");
             }
-
-
-
         }
         else {
             // TODO Diagnositc
