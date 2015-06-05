@@ -5,6 +5,7 @@
 
 #include <windows.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <xinput.h>
 #include <dsound.h>
 
@@ -418,6 +419,9 @@ WinMain(
     LPSTR CmdLine,
     int ShowCode 
 ) {
+    LARGE_INTEGER PerfCountFrequencyResult;
+    QueryPerformanceFrequency(&PerfCountFrequencyResult);
+    int64 PerfCountFrequency = PerfCountFrequencyResult.QuadPart;
 
     Wind32LoadXInput();
 
@@ -430,6 +434,7 @@ WinMain(
     WindowClass.hInstance = Instance;
 //    WindowClass.hIcon;
     WindowClass.lpszClassName = "HandmadeHeroWindowClass";
+
 
     if (RegisterClass(&WindowClass)) {
         HWND Window = CreateWindowExA(
@@ -468,8 +473,15 @@ WinMain(
             GlobalSecondaryBuffer->Play(0, 0, DSBPLAY_LOOPING);
             bool SoundIsPlaying = true;
 
+
+            LARGE_INTEGER LastCounter;
+            QueryPerformanceCounter(&LastCounter);
+            int64 LastCycleCount = __rdtsc();
+
             GlobalRunning = true;
+            // game loop begin
             while (GlobalRunning) {
+
                 MSG Message;
                 while (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)) {
                     if(Message.message == WM_QUIT) {
@@ -551,21 +563,34 @@ WinMain(
 
                     // TODO More strenuous test
                     // TODO Switch to a Sine wave
-                    
                 }
 
-                // if(!SoundIsPlaying)
-                // {
-                //     GlobalSecondaryBuffer->Play(0, 0, DSBPLAY_LOOPING);
-                //     // SoundIsPlaying = true;
-                // }
-                
                 win32_window_dimension Dimension = Win32GetWindowDimension(Window);
                 Win32DisplayBufferInWindow(
                     &GlobalBackbuffer, DeviceContext,
                     Dimension.Width, Dimension.Height
                 );
+
+                int64 EndCycleCount = __rdtsc();
+
+                LARGE_INTEGER EndCounter;
+                QueryPerformanceCounter(&EndCounter);
+
+                uint64 CyclesElapsed = EndCycleCount - LastCycleCount;
+                int64 CounterElapsed = EndCounter.QuadPart - LastCounter.QuadPart;
+                real64 MSPerFrame = (((1000.0f*(real64)CounterElapsed) / (real64)PerfCountFrequency));
+                real64 FPS = (real64)PerfCountFrequency / (real64)CounterElapsed;
+                real64 MCPF = ((real64)CyclesElapsed / (1000.0f * 1000.0f));
+                
+                char Buffer[256];
+                sprintf(Buffer, "%.02fms/f,  %.02ff/s,  %.02fmc/f\n", MSPerFrame, FPS, MCPF);
+                OutputDebugStringA(Buffer);
+
+                // TODO print it
+                LastCounter = EndCounter;
+                LastCycleCount = EndCycleCount;
             }
+            //game loop end
         }
         else {
             // TODO Logging
