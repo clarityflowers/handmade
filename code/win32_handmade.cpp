@@ -3,19 +3,32 @@
 // devenv \build\win32_handmade.exe -- load VS
 //  set working directory to P:\handmade\data
 
-#include <windows.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <xinput.h>
-#include <dsound.h>
+/* TODO
+THIS IS NOT A FINAL PLATFORM LAYER!!!
+- Saved game locations
+- Getting a handle to our own .exe
+- Asset loading path
+- Threading
+- Raw Input (support for multiple keyboards)
+- Sleep/timeBeginPeriod
+- ClipCursor() (multimonitor support)
+- Fullscreen support
+- WM_SETCURSOR (control cursor visibility)
+- QueryCancelAutoplay
+- WM_ACTIVATEAPP (for when we are not the active application)
+- Blit speed improvements (BitBlt)
+- Hardware acceleration (OpenGL or Direct3D or BOTH??)
+- GetKeyboardLayout (for international keyboards)
 
-// TODO Implement sine ourselves
-#include <math.h>
+Just a partial list of stuff!!
+*/ 
+
+#include <stdint.h>
 
 #define Pi32 3.1415926539f
 #define internal static
-#define local_persist static 
-#define global_variable static 
+#define local_persist static
+#define global_variable static
 
 typedef int8_t int8;
 typedef int16_t int16;
@@ -32,6 +45,17 @@ typedef uint64_t uint64;
 typedef float real32;
 typedef double real64;
 
+#include "handmade.cpp"
+
+#include <windows.h>
+#include <stdio.h>
+#include <xinput.h>
+#include <dsound.h>
+
+// TODO Implement sine ourselves
+#include <math.h>
+
+
 
 
 struct win32_offscreen_buffer {
@@ -42,8 +66,6 @@ struct win32_offscreen_buffer {
     int Pitch;
     int BytesPerPixel;
 };
-
-
 
 struct win32_window_dimension {
     int Width;
@@ -184,24 +206,6 @@ internal win32_window_dimension Win32GetWindowDimension(HWND Window) {
 
 
 
-internal void
-RenderWeirdGradient(
-    win32_offscreen_buffer *Buffer, int XOffset, int YOffset
-) {
-    // TODO lets see which is better
-    uint8 *Row = (uint8 *)Buffer->Memory;
-    for( int Y = 0 ; Y < Buffer->Height ; ++Y ) {
-        uint32 *Pixel = (uint32 *)Row;
-        for( int X = 0 ; X < Buffer->Width ; ++X ) {
-            uint8 Blue = (X - XOffset);
-            uint8 Green = (Y + YOffset);
-			uint8 Red = ((X - (XOffset/4))*(Y + (YOffset/4))/8);
-			*Pixel++ = ((Red << 16) | (Green << 8) | Blue);
-		}
-
-        Row += Buffer->Pitch;
-    }
-}
 
 
 
@@ -412,6 +416,8 @@ win32FillSoundBuffer(win32_sound_output *SoundOutput, DWORD ByteToLock, DWORD By
     }
 }
 
+
+
 int CALLBACK
 WinMain( 
     HINSTANCE Instance,
@@ -538,7 +544,13 @@ WinMain(
                     }
                 }
 
-                RenderWeirdGradient(&GlobalBackbuffer, XOffset, YOffset);
+                game_offscreen_buffer Buffer = {};
+                Buffer.Memory = GlobalBackbuffer.Memory;
+                Buffer.Width = GlobalBackbuffer.Width;
+                Buffer.Height = GlobalBackbuffer.Height;
+                Buffer.Pitch = GlobalBackbuffer.Pitch;
+                GameUpdateAndRender(&Buffer, XOffset, YOffset);
+                // RenderWeirdGradient(&GlobalBackbuffer, XOffset, YOffset);
 
                 // directsound output test
                 DWORD PlayCursor;
@@ -547,7 +559,6 @@ WinMain(
                     DWORD ByteToLock = (SoundOutput.RunningSampleIndex*SoundOutput.BytesPerSample) % SoundOutput.SecondaryBufferSize;
                     DWORD TargetCursor = (PlayCursor + (SoundOutput.LatencySampleCount*SoundOutput.BytesPerSample)) % SoundOutput.SecondaryBufferSize;
                     DWORD BytesToWrite;
-                    // TODO Use a lower latency offset from the playcursor for sound effects
                     if(ByteToLock == TargetCursor) {
                         BytesToWrite = 0;
                     }
@@ -562,7 +573,6 @@ WinMain(
                     win32FillSoundBuffer(&SoundOutput, ByteToLock, BytesToWrite);
 
                     // TODO More strenuous test
-                    // TODO Switch to a Sine wave
                 }
 
                 win32_window_dimension Dimension = Win32GetWindowDimension(Window);
@@ -582,9 +592,10 @@ WinMain(
                 real64 FPS = (real64)PerfCountFrequency / (real64)CounterElapsed;
                 real64 MCPF = ((real64)CyclesElapsed / (1000.0f * 1000.0f));
                 
-                char Buffer[256];
-                sprintf(Buffer, "%.02fms/f,  %.02ff/s,  %.02fmc/f\n", MSPerFrame, FPS, MCPF);
-                OutputDebugStringA(Buffer);
+
+                // char Buffer[256];
+                // sprintf(Buffer, "%.02fms/f,  %.02ff/s,  %.02fmc/f\n", MSPerFrame, FPS, MCPF);
+                // OutputDebugStringA(Buffer);
 
                 // TODO print it
                 LastCounter = EndCounter;
