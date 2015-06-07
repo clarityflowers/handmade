@@ -17,8 +17,14 @@ struct game_offscreen_buffer {
     int Pitch;
 };
 
-// FOUR THINGS - timing, controller/keyboard input, bitmap buffer to use, sound buffer to u e
-void GameUpdateAndRender(game_offscreen_buffer *Buffer, int XOffset, int YOffset);
+struct game_sound_output_buffer {
+    int SamplesPerSecond;
+    int SampleCount;
+    int16 *Samples;
+};
+
+// FOUR THINGS - timing, controller/keyboard input, bitmap buffer to use, sound buffer to use
+internal void GameUpdateAndRender(game_offscreen_buffer *Buffer, int XOffset, int YOffset, game_sound_output_buffer *SoundBuffer, int ToneHz);
 
 #define HANDMADE_H
 #endif
