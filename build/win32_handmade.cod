@@ -8,47 +8,48 @@ INCLUDELIB OLDNAMES
 PUBLIC	?XInputGetStateStub@@YAKKPEAU_XINPUT_STATE@@@Z	; XInputGetStateStub
 PUBLIC	?XInputSetStateStub@@YAKKPEAU_XINPUT_VIBRATION@@@Z ; XInputSetStateStub
 CONST	SEGMENT
-$SG87564 DB	'xinput1_4.dll', 00H
+$SG87666 DB	'xinput1_4.dll', 00H
 	ORG $+2
-$SG87566 DB	'xinput9_1_0.dll', 00H
-$SG87568 DB	'xinput1_3.dll', 00H
+$SG87668 DB	'xinput9_1_0.dll', 00H
+$SG87670 DB	'xinput1_3.dll', 00H
 	ORG $+2
-$SG87571 DB	'XInputGetState', 00H
+$SG87673 DB	'XInputGetState', 00H
 	ORG $+1
-$SG87573 DB	'XInputSetState', 00H
+$SG87675 DB	'XInputSetState', 00H
 	ORG $+1
-$SG87595 DB	'dsound.dll', 00H
+$SG87697 DB	'dsound.dll', 00H
 	ORG $+1
-$SG87683 DB	0aH, 00H
+$SG87785 DB	0aH, 00H
 	ORG $+2
-$SG87597 DB	'DirectSoundCreate', 00H
+$SG87699 DB	'DirectSoundCreate', 00H
 	ORG $+2
-$SG87678 DB	'Space ', 00H
+$SG87780 DB	'Space ', 00H
 	ORG $+5
-$SG87606 DB	'Primary buffer format was set.', 0aH, 00H
-$SG87608 DB	'Secondary buffer created successfuly', 0aH, 00H
+$SG87708 DB	'Primary buffer format was set.', 0aH, 00H
+$SG87710 DB	'Secondary buffer created successfuly', 0aH, 00H
 	ORG $+2
-$SG87651 DB	'WM_ACTIVATEAPP', 0aH, 00H
-$SG87680 DB	'IsDown ', 00H
-$SG87682 DB	'WasDown ', 00H
+$SG87753 DB	'WM_ACTIVATEAPP', 0aH, 00H
+$SG87782 DB	'IsDown ', 00H
+$SG87784 DB	'WasDown ', 00H
 	ORG $+7
-$SG87686 DB	'WM_PAINT', 0aH, 00H
+$SG87788 DB	'WM_PAINT', 0aH, 00H
 	ORG $+6
-$SG87827 DB	'HandmadeHeroWindowClass', 00H
-$SG87830 DB	'Handmade Hero', 00H
+$SG87916 DB	'HandmadeHeroWindowClass', 00H
+$SG87919 DB	'Handmade Hero', 00H
 CONST	ENDS
 _DATA	SEGMENT
 ?XInputGetState_@@3P6AKKPEAU_XINPUT_STATE@@@ZEA DQ FLAT:?XInputGetStateStub@@YAKKPEAU_XINPUT_STATE@@@Z ; XInputGetState_
 ?XInputSetState_@@3P6AKKPEAU_XINPUT_VIBRATION@@@ZEA DQ FLAT:?XInputSetStateStub@@YAKKPEAU_XINPUT_VIBRATION@@@Z ; XInputSetState_
 _DATA	ENDS
 PUBLIC	WinMain
+PUBLIC	__real@40800000
 PUBLIC	__real@408f400000000000
 PUBLIC	__real@40c90fdb
 PUBLIC	__real@412e848000000000
-PUBLIC	__real@43800000
+PUBLIC	__real@43000000
 PUBLIC	__real@43f0000000000000
-PUBLIC	__real@44000000
-PUBLIC	__real@46ea6000
+PUBLIC	__real@46fffe00
+PUBLIC	__real@47000000
 EXTRN	sinf:PROC
 EXTRN	__imp_OutputDebugStringA:PROC
 EXTRN	__imp_QueryPerformanceCounter:PROC
@@ -76,6 +77,14 @@ EXTRN	_fltused:DWORD
 _BSS	SEGMENT
 ?tSine@?1??GameOutputSound@@YAXPEAUgame_sound_output_buffer@@H@Z@4MA DD 01H DUP (?) ; `GameOutputSound'::`2'::tSine
 _BSS	ENDS
+;	COMDAT ?XOffset@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA
+_BSS	SEGMENT
+?XOffset@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA DD 01H DUP (?) ; `GameUpdateAndRender'::`2'::XOffset
+_BSS	ENDS
+;	COMDAT ?YOffset@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA
+_BSS	SEGMENT
+?YOffset@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA DD 01H DUP (?) ; `GameUpdateAndRender'::`2'::YOffset
+_BSS	ENDS
 _BSS	SEGMENT
 ?GlobalRunning@@3_NA DB 01H DUP (?)			; GlobalRunning
 	ALIGN	4
@@ -86,17 +95,17 @@ _BSS	SEGMENT
 ?GlobalSecondaryBuffer@@3PEAUIDirectSoundBuffer@@EA DQ 01H DUP (?) ; GlobalSecondaryBuffer
 _BSS	ENDS
 pdata	SEGMENT
-$pdata$?GameUpdateAndRender@@YAXPEAUgame_offscreen_buffer@@HHPEAUgame_sound_output_buffer@@H@Z DD imagerel ?GameUpdateAndRender@@YAXPEAUgame_offscreen_buffer@@HHPEAUgame_sound_output_buffer@@H@Z
-	DD	imagerel ?GameUpdateAndRender@@YAXPEAUgame_offscreen_buffer@@HHPEAUgame_sound_output_buffer@@H@Z+61
-	DD	imagerel $unwind$?GameUpdateAndRender@@YAXPEAUgame_offscreen_buffer@@HHPEAUgame_sound_output_buffer@@H@Z
+$pdata$?GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z DD imagerel ?GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z
+	DD	imagerel ?GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z+194
+	DD	imagerel $unwind$?GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z
 $pdata$?GameOutputSound@@YAXPEAUgame_sound_output_buffer@@H@Z DD imagerel ?GameOutputSound@@YAXPEAUgame_sound_output_buffer@@H@Z
 	DD	imagerel ?GameOutputSound@@YAXPEAUgame_sound_output_buffer@@H@Z+249
 	DD	imagerel $unwind$?GameOutputSound@@YAXPEAUgame_sound_output_buffer@@H@Z
 $pdata$?RenderWeirdGradient@@YAXPEAUgame_offscreen_buffer@@HH@Z DD imagerel ?RenderWeirdGradient@@YAXPEAUgame_offscreen_buffer@@HH@Z
 	DD	imagerel ?RenderWeirdGradient@@YAXPEAUgame_offscreen_buffer@@HH@Z+301
 	DD	imagerel $unwind$?RenderWeirdGradient@@YAXPEAUgame_offscreen_buffer@@HH@Z
-$pdata$WinMain DD imagerel $LN47
-	DD	imagerel $LN47+2361
+$pdata$WinMain DD imagerel $LN34
+	DD	imagerel $LN34+2705
 	DD	imagerel $unwind$WinMain
 $pdata$?Wind32LoadXInput@@YAXXZ DD imagerel ?Wind32LoadXInput@@YAXXZ
 	DD	imagerel ?Wind32LoadXInput@@YAXXZ+185
@@ -122,22 +131,25 @@ $pdata$?win32ClearBuffer@@YAXPEAUwin32_sound_output@@@Z DD imagerel ?win32ClearB
 $pdata$?win32FillSoundBuffer@@YAXPEAUwin32_sound_output@@KKPEAUgame_sound_output_buffer@@@Z DD imagerel ?win32FillSoundBuffer@@YAXPEAUwin32_sound_output@@KKPEAUgame_sound_output_buffer@@@Z
 	DD	imagerel ?win32FillSoundBuffer@@YAXPEAUwin32_sound_output@@KKPEAUgame_sound_output_buffer@@@Z+539
 	DD	imagerel $unwind$?win32FillSoundBuffer@@YAXPEAUwin32_sound_output@@KKPEAUgame_sound_output_buffer@@@Z
+$pdata$?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z DD imagerel ?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z
+	DD	imagerel ?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z+120
+	DD	imagerel $unwind$?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z
 pdata	ENDS
-;	COMDAT __real@46ea6000
+;	COMDAT __real@47000000
 CONST	SEGMENT
-__real@46ea6000 DD 046ea6000r			; 30000
+__real@47000000 DD 047000000r			; 32768
 CONST	ENDS
-;	COMDAT __real@44000000
+;	COMDAT __real@46fffe00
 CONST	SEGMENT
-__real@44000000 DD 044000000r			; 512
+__real@46fffe00 DD 046fffe00r			; 32767
 CONST	ENDS
 ;	COMDAT __real@43f0000000000000
 CONST	SEGMENT
 __real@43f0000000000000 DQ 043f0000000000000r	; 1.84467e+19
 CONST	ENDS
-;	COMDAT __real@43800000
+;	COMDAT __real@43000000
 CONST	SEGMENT
-__real@43800000 DD 043800000r			; 256
+__real@43000000 DD 043000000r			; 128
 CONST	ENDS
 ;	COMDAT __real@412e848000000000
 CONST	SEGMENT
@@ -151,18 +163,26 @@ CONST	ENDS
 CONST	SEGMENT
 __real@408f400000000000 DQ 0408f400000000000r	; 1000
 CONST	ENDS
+;	COMDAT __real@40800000
+CONST	SEGMENT
+__real@40800000 DD 040800000r			; 4
+CONST	ENDS
+;	COMDAT ?ToneHz@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA
+_DATA	SEGMENT
+?ToneHz@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA DD 0100H ; `GameUpdateAndRender'::`2'::ToneHz
+_DATA	ENDS
 xdata	SEGMENT
-$unwind$?GameUpdateAndRender@@YAXPEAUgame_offscreen_buffer@@HHPEAUgame_sound_output_buffer@@H@Z DD 011701H
-	DD	04217H
+$unwind$?GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z DD 011301H
+	DD	06213H
 $unwind$?GameOutputSound@@YAXPEAUgame_sound_output_buffer@@H@Z DD 010d01H
 	DD	0820dH
 $unwind$?RenderWeirdGradient@@YAXPEAUgame_offscreen_buffer@@HH@Z DD 011201H
 	DD	04212H
 $unwind$WinMain DD 032e19H
-	DD	046011cH
+	DD	0a0011cH
 	DD	07015H
 	DD	imagerel __GSHandlerCheck
-	DD	0228H
+	DD	04f0H
 $unwind$?Wind32LoadXInput@@YAXXZ DD 010401H
 	DD	06204H
 $unwind$?Win32InitDSound@@YAXPEAUHWND__@@HH@Z DD 032819H
@@ -186,7 +206,71 @@ $unwind$?win32ClearBuffer@@YAXPEAUwin32_sound_output@@@Z DD 010901H
 	DD	0e209H
 $unwind$?win32FillSoundBuffer@@YAXPEAUwin32_sound_output@@KKPEAUgame_sound_output_buffer@@@Z DD 021a01H
 	DD	011011aH
+$unwind$?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z DD 011701H
+	DD	02217H
 xdata	ENDS
+; Function compile flags: /Odtp
+; File p:\handmade\code\win32_handmade.cpp
+_TEXT	SEGMENT
+tv67 = 0
+tv72 = 4
+XInputButtonState$ = 32
+OldState$ = 40
+NewState$ = 48
+ButtonBit$ = 56
+?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z PROC ; Win32ProcessXInputDigitalButton
+
+; 414  : Win32ProcessXInputDigitalButton(DWORD XInputButtonState, game_button_state *OldState, game_button_state *NewState, DWORD ButtonBit) {
+
+  00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
+  00005	4c 89 44 24 18	 mov	 QWORD PTR [rsp+24], r8
+  0000a	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
+  0000f	89 4c 24 08	 mov	 DWORD PTR [rsp+8], ecx
+  00013	48 83 ec 18	 sub	 rsp, 24
+
+; 415  :     NewState->EndedDown = (XInputButtonState & ButtonBit) == ButtonBit;
+
+  00017	8b 44 24 38	 mov	 eax, DWORD PTR ButtonBit$[rsp]
+  0001b	8b 4c 24 20	 mov	 ecx, DWORD PTR XInputButtonState$[rsp]
+  0001f	23 c8		 and	 ecx, eax
+  00021	8b c1		 mov	 eax, ecx
+  00023	3b 44 24 38	 cmp	 eax, DWORD PTR ButtonBit$[rsp]
+  00027	75 09		 jne	 SHORT $LN3@Win32Proce
+  00029	c7 04 24 01 00
+	00 00		 mov	 DWORD PTR tv67[rsp], 1
+  00030	eb 07		 jmp	 SHORT $LN4@Win32Proce
+$LN3@Win32Proce:
+  00032	c7 04 24 00 00
+	00 00		 mov	 DWORD PTR tv67[rsp], 0
+$LN4@Win32Proce:
+  00039	48 8b 44 24 30	 mov	 rax, QWORD PTR NewState$[rsp]
+  0003e	8b 0c 24	 mov	 ecx, DWORD PTR tv67[rsp]
+  00041	89 48 04	 mov	 DWORD PTR [rax+4], ecx
+
+; 416  :     NewState->HalfTransitionCount = (OldState->EndedDown != NewState->EndedDown) ? 1 : 0;  
+
+  00044	48 8b 44 24 28	 mov	 rax, QWORD PTR OldState$[rsp]
+  00049	48 8b 4c 24 30	 mov	 rcx, QWORD PTR NewState$[rsp]
+  0004e	8b 49 04	 mov	 ecx, DWORD PTR [rcx+4]
+  00051	39 48 04	 cmp	 DWORD PTR [rax+4], ecx
+  00054	74 0a		 je	 SHORT $LN5@Win32Proce
+  00056	c7 44 24 04 01
+	00 00 00	 mov	 DWORD PTR tv72[rsp], 1
+  0005e	eb 08		 jmp	 SHORT $LN6@Win32Proce
+$LN5@Win32Proce:
+  00060	c7 44 24 04 00
+	00 00 00	 mov	 DWORD PTR tv72[rsp], 0
+$LN6@Win32Proce:
+  00068	48 8b 44 24 30	 mov	 rax, QWORD PTR NewState$[rsp]
+  0006d	8b 4c 24 04	 mov	 ecx, DWORD PTR tv72[rsp]
+  00071	89 08		 mov	 DWORD PTR [rax], ecx
+
+; 417  : }
+
+  00073	48 83 c4 18	 add	 rsp, 24
+  00077	c3		 ret	 0
+?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z ENDP ; Win32ProcessXInputDigitalButton
+_TEXT	ENDS
 ; Function compile flags: /Odtp
 ; File p:\handmade\code\win32_handmade.cpp
 _TEXT	SEGMENT
@@ -206,7 +290,7 @@ BytesToWrite$ = 160
 SourceBuffer$ = 168
 ?win32FillSoundBuffer@@YAXPEAUwin32_sound_output@@KKPEAUgame_sound_output_buffer@@@Z PROC ; win32FillSoundBuffer
 
-; 404  : win32FillSoundBuffer(win32_sound_output *SoundOutput, DWORD ByteToLock, DWORD BytesToWrite, game_sound_output_buffer *SourceBuffer) {
+; 377  : win32FillSoundBuffer(win32_sound_output *SoundOutput, DWORD ByteToLock, DWORD BytesToWrite, game_sound_output_buffer *SourceBuffer) {
 
   00000	4c 89 4c 24 20	 mov	 QWORD PTR [rsp+32], r9
   00005	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
@@ -215,11 +299,11 @@ SourceBuffer$ = 168
   00013	48 81 ec 88 00
 	00 00		 sub	 rsp, 136		; 00000088H
 
-; 405  :     VOID *Region1;
-; 406  :     DWORD Region1Size;
-; 407  :     VOID *Region2;
-; 408  :     DWORD Region2Size;
-; 409  :     if(SUCCEEDED(GlobalSecondaryBuffer->Lock(
+; 378  :     VOID *Region1;
+; 379  :     DWORD Region1Size;
+; 380  :     VOID *Region2;
+; 381  :     DWORD Region2Size;
+; 382  :     if(SUCCEEDED(GlobalSecondaryBuffer->Lock(
 
   0001a	48 8b 05 00 00
 	00 00		 mov	 rax, QWORD PTR ?GlobalSecondaryBuffer@@3PEAUIDirectSoundBuffer@@EA
@@ -244,35 +328,35 @@ SourceBuffer$ = 168
   0006a	0f 8c a3 01 00
 	00		 jl	 $LN8@win32FillS
 
-; 410  :         ByteToLock, BytesToWrite,
-; 411  :         &Region1, &Region1Size,
-; 412  :         &Region2, &Region2Size,
-; 413  :         0
-; 414  :     ))) {
-; 415  :         //TODO Assert that Region1Size/Region2Size is valid
-; 416  :         //TODO Collapse these to loops
-; 417  :         DWORD Region1SampleCount = Region1Size/SoundOutput->BytesPerSample;
+; 383  :         ByteToLock, BytesToWrite,
+; 384  :         &Region1, &Region1Size,
+; 385  :         &Region2, &Region2Size,
+; 386  :         0
+; 387  :     ))) {
+; 388  :         //TODO Assert that Region1Size/Region2Size is valid
+; 389  :         //TODO Collapse these to loops
+; 390  :         DWORD Region1SampleCount = Region1Size/SoundOutput->BytesPerSample;
 
   00070	33 d2		 xor	 edx, edx
   00072	8b 44 24 5c	 mov	 eax, DWORD PTR Region1Size$[rsp]
   00076	48 8b 8c 24 90
 	00 00 00	 mov	 rcx, QWORD PTR SoundOutput$[rsp]
-  0007e	f7 71 14	 div	 DWORD PTR [rcx+20]
+  0007e	f7 71 08	 div	 DWORD PTR [rcx+8]
   00081	89 44 24 60	 mov	 DWORD PTR Region1SampleCount$5[rsp], eax
 
-; 418  :         int16 *DestSample = (int16 *)Region1;
+; 391  :         int16 *DestSample = (int16 *)Region1;
 
   00085	48 8b 44 24 70	 mov	 rax, QWORD PTR Region1$[rsp]
   0008a	48 89 44 24 40	 mov	 QWORD PTR DestSample$1[rsp], rax
 
-; 419  :         int16 *SourceSample = SourceBuffer->Samples;
+; 392  :         int16 *SourceSample = SourceBuffer->Samples;
 
   0008f	48 8b 84 24 a8
 	00 00 00	 mov	 rax, QWORD PTR SourceBuffer$[rsp]
   00097	48 8b 40 08	 mov	 rax, QWORD PTR [rax+8]
   0009b	48 89 44 24 48	 mov	 QWORD PTR SourceSample$2[rsp], rax
 
-; 420  :         for(DWORD SampleIndex = 0; SampleIndex < Region1SampleCount; ++SampleIndex) {
+; 393  :         for(DWORD SampleIndex = 0; SampleIndex < Region1SampleCount; ++SampleIndex) {
 
   000a0	c7 44 24 54 00
 	00 00 00	 mov	 DWORD PTR SampleIndex$4[rsp], 0
@@ -286,7 +370,7 @@ $LN4@win32FillS:
   000b8	39 44 24 54	 cmp	 DWORD PTR SampleIndex$4[rsp], eax
   000bc	73 75		 jae	 SHORT $LN3@win32FillS
 
-; 421  :             *DestSample++ = *SourceSample++;
+; 394  :             *DestSample++ = *SourceSample++;
 
   000be	48 8b 44 24 40	 mov	 rax, QWORD PTR DestSample$1[rsp]
   000c3	48 8b 4c 24 48	 mov	 rcx, QWORD PTR SourceSample$2[rsp]
@@ -299,7 +383,7 @@ $LN4@win32FillS:
   000e1	48 83 c0 02	 add	 rax, 2
   000e5	48 89 44 24 48	 mov	 QWORD PTR SourceSample$2[rsp], rax
 
-; 422  :             *DestSample++ = *SourceSample++;
+; 395  :             *DestSample++ = *SourceSample++;
 
   000ea	48 8b 44 24 40	 mov	 rax, QWORD PTR DestSample$1[rsp]
   000ef	48 8b 4c 24 48	 mov	 rcx, QWORD PTR SourceSample$2[rsp]
@@ -312,37 +396,37 @@ $LN4@win32FillS:
   0010d	48 83 c0 02	 add	 rax, 2
   00111	48 89 44 24 48	 mov	 QWORD PTR SourceSample$2[rsp], rax
 
-; 423  :             ++SoundOutput->RunningSampleIndex;
+; 396  :             ++SoundOutput->RunningSampleIndex;
 
   00116	48 8b 84 24 90
 	00 00 00	 mov	 rax, QWORD PTR SoundOutput$[rsp]
-  0011e	8b 40 0c	 mov	 eax, DWORD PTR [rax+12]
+  0011e	8b 40 04	 mov	 eax, DWORD PTR [rax+4]
   00121	ff c0		 inc	 eax
   00123	48 8b 8c 24 90
 	00 00 00	 mov	 rcx, QWORD PTR SoundOutput$[rsp]
-  0012b	89 41 0c	 mov	 DWORD PTR [rcx+12], eax
+  0012b	89 41 04	 mov	 DWORD PTR [rcx+4], eax
 
-; 424  :         }
+; 397  :         }
 
   0012e	e9 77 ff ff ff	 jmp	 $LN2@win32FillS
 $LN3@win32FillS:
 
-; 425  : 
-; 426  :         DWORD Region2SampleCount = Region2Size/SoundOutput->BytesPerSample;
+; 398  : 
+; 399  :         DWORD Region2SampleCount = Region2Size/SoundOutput->BytesPerSample;
 
   00133	33 d2		 xor	 edx, edx
   00135	8b 44 24 58	 mov	 eax, DWORD PTR Region2Size$[rsp]
   00139	48 8b 8c 24 90
 	00 00 00	 mov	 rcx, QWORD PTR SoundOutput$[rsp]
-  00141	f7 71 14	 div	 DWORD PTR [rcx+20]
+  00141	f7 71 08	 div	 DWORD PTR [rcx+8]
   00144	89 44 24 64	 mov	 DWORD PTR Region2SampleCount$6[rsp], eax
 
-; 427  :         DestSample = (int16 *)Region2;
+; 400  :         DestSample = (int16 *)Region2;
 
   00148	48 8b 44 24 68	 mov	 rax, QWORD PTR Region2$[rsp]
   0014d	48 89 44 24 40	 mov	 QWORD PTR DestSample$1[rsp], rax
 
-; 428  :         for(DWORD SampleIndex = 0; SampleIndex < Region2SampleCount; ++SampleIndex) {
+; 401  :         for(DWORD SampleIndex = 0; SampleIndex < Region2SampleCount; ++SampleIndex) {
 
   00152	c7 44 24 50 00
 	00 00 00	 mov	 DWORD PTR SampleIndex$3[rsp], 0
@@ -356,7 +440,7 @@ $LN7@win32FillS:
   0016a	39 44 24 50	 cmp	 DWORD PTR SampleIndex$3[rsp], eax
   0016e	73 75		 jae	 SHORT $LN6@win32FillS
 
-; 429  :             *DestSample++ = *SourceSample++;
+; 402  :             *DestSample++ = *SourceSample++;
 
   00170	48 8b 44 24 40	 mov	 rax, QWORD PTR DestSample$1[rsp]
   00175	48 8b 4c 24 48	 mov	 rcx, QWORD PTR SourceSample$2[rsp]
@@ -369,7 +453,7 @@ $LN7@win32FillS:
   00193	48 83 c0 02	 add	 rax, 2
   00197	48 89 44 24 48	 mov	 QWORD PTR SourceSample$2[rsp], rax
 
-; 430  :             *DestSample++ = *SourceSample++;
+; 403  :             *DestSample++ = *SourceSample++;
 
   0019c	48 8b 44 24 40	 mov	 rax, QWORD PTR DestSample$1[rsp]
   001a1	48 8b 4c 24 48	 mov	 rcx, QWORD PTR SourceSample$2[rsp]
@@ -382,23 +466,23 @@ $LN7@win32FillS:
   001bf	48 83 c0 02	 add	 rax, 2
   001c3	48 89 44 24 48	 mov	 QWORD PTR SourceSample$2[rsp], rax
 
-; 431  :             ++SoundOutput->RunningSampleIndex;
+; 404  :             ++SoundOutput->RunningSampleIndex;
 
   001c8	48 8b 84 24 90
 	00 00 00	 mov	 rax, QWORD PTR SoundOutput$[rsp]
-  001d0	8b 40 0c	 mov	 eax, DWORD PTR [rax+12]
+  001d0	8b 40 04	 mov	 eax, DWORD PTR [rax+4]
   001d3	ff c0		 inc	 eax
   001d5	48 8b 8c 24 90
 	00 00 00	 mov	 rcx, QWORD PTR SoundOutput$[rsp]
-  001dd	89 41 0c	 mov	 DWORD PTR [rcx+12], eax
+  001dd	89 41 04	 mov	 DWORD PTR [rcx+4], eax
 
-; 432  :         }
+; 405  :         }
 
   001e0	e9 77 ff ff ff	 jmp	 $LN5@win32FillS
 $LN6@win32FillS:
 
-; 433  : 
-; 434  :         GlobalSecondaryBuffer->Unlock(Region1, Region1Size, Region2, Region2Size);
+; 406  : 
+; 407  :         GlobalSecondaryBuffer->Unlock(Region1, Region1Size, Region2, Region2Size);
 
   001e5	48 8b 05 00 00
 	00 00		 mov	 rax, QWORD PTR ?GlobalSecondaryBuffer@@3PEAUIDirectSoundBuffer@@EA
@@ -414,8 +498,8 @@ $LN6@win32FillS:
 	00		 call	 QWORD PTR [rax+152]
 $LN8@win32FillS:
 
-; 435  :     }
-; 436  : }
+; 408  :     }
+; 409  : }
 
   00213	48 81 c4 88 00
 	00 00		 add	 rsp, 136		; 00000088H
@@ -435,16 +519,16 @@ Region1$ = 96
 SoundOutput$ = 128
 ?win32ClearBuffer@@YAXPEAUwin32_sound_output@@@Z PROC	; win32ClearBuffer
 
-; 377  : win32ClearBuffer(win32_sound_output *SoundOutput) {
+; 350  : win32ClearBuffer(win32_sound_output *SoundOutput) {
 
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
   00005	48 83 ec 78	 sub	 rsp, 120		; 00000078H
 
-; 378  :     VOID *Region1;
-; 379  :     DWORD Region1Size;
-; 380  :     VOID *Region2;
-; 381  :     DWORD Region2Size;
-; 382  :     if(SUCCEEDED(GlobalSecondaryBuffer->Lock(
+; 351  :     VOID *Region1;
+; 352  :     DWORD Region1Size;
+; 353  :     VOID *Region2;
+; 354  :     DWORD Region2Size;
+; 355  :     if(SUCCEEDED(GlobalSecondaryBuffer->Lock(
 
   00009	48 8b 05 00 00
 	00 00		 mov	 rax, QWORD PTR ?GlobalSecondaryBuffer@@3PEAUIDirectSoundBuffer@@EA
@@ -460,7 +544,7 @@ SoundOutput$ = 128
   00039	4c 8d 4c 24 60	 lea	 r9, QWORD PTR Region1$[rsp]
   0003e	48 8b 8c 24 80
 	00 00 00	 mov	 rcx, QWORD PTR SoundOutput$[rsp]
-  00046	44 8b 41 18	 mov	 r8d, DWORD PTR [rcx+24]
+  00046	44 8b 41 0c	 mov	 r8d, DWORD PTR [rcx+12]
   0004a	33 d2		 xor	 edx, edx
   0004c	48 8b 0d 00 00
 	00 00		 mov	 rcx, QWORD PTR ?GlobalSecondaryBuffer@@3PEAUIDirectSoundBuffer@@EA
@@ -469,18 +553,18 @@ SoundOutput$ = 128
   00058	0f 8c ac 00 00
 	00		 jl	 $LN8@win32Clear
 
-; 383  :         0, SoundOutput->SecondaryBufferSize,
-; 384  :         &Region1, &Region1Size,
-; 385  :         &Region2, &Region2Size,
-; 386  :         0
-; 387  :     ))) {
-; 388  :         // TODO Assert that Region1Size/Region2Sizse is valid
-; 389  :         uint8 *DestSample = (uint8 *)Region1;
+; 356  :         0, SoundOutput->SecondaryBufferSize,
+; 357  :         &Region1, &Region1Size,
+; 358  :         &Region2, &Region2Size,
+; 359  :         0
+; 360  :     ))) {
+; 361  :         // TODO Assert that Region1Size/Region2Sizse is valid
+; 362  :         uint8 *DestSample = (uint8 *)Region1;
 
   0005e	48 8b 44 24 60	 mov	 rax, QWORD PTR Region1$[rsp]
   00063	48 89 44 24 50	 mov	 QWORD PTR DestSample$3[rsp], rax
 
-; 390  :         for(DWORD ByteIndex = 0; ByteIndex < Region1Size; ++ByteIndex) {
+; 363  :         for(DWORD ByteIndex = 0; ByteIndex < Region1Size; ++ByteIndex) {
 
   00068	c7 44 24 40 00
 	00 00 00	 mov	 DWORD PTR ByteIndex$1[rsp], 0
@@ -494,7 +578,7 @@ $LN4@win32Clear:
   00080	39 44 24 40	 cmp	 DWORD PTR ByteIndex$1[rsp], eax
   00084	73 17		 jae	 SHORT $LN3@win32Clear
 
-; 391  :             *DestSample++ = 0;
+; 364  :             *DestSample++ = 0;
 
   00086	48 8b 44 24 50	 mov	 rax, QWORD PTR DestSample$3[rsp]
   0008b	c6 00 00	 mov	 BYTE PTR [rax], 0
@@ -502,18 +586,18 @@ $LN4@win32Clear:
   00093	48 ff c0	 inc	 rax
   00096	48 89 44 24 50	 mov	 QWORD PTR DestSample$3[rsp], rax
 
-; 392  :         }
+; 365  :         }
 
   0009b	eb d5		 jmp	 SHORT $LN2@win32Clear
 $LN3@win32Clear:
 
-; 393  : 
-; 394  :         DestSample = (uint8 *)Region2;
+; 366  : 
+; 367  :         DestSample = (uint8 *)Region2;
 
   0009d	48 8b 44 24 58	 mov	 rax, QWORD PTR Region2$[rsp]
   000a2	48 89 44 24 50	 mov	 QWORD PTR DestSample$3[rsp], rax
 
-; 395  :         for(DWORD ByteIndex = 0; ByteIndex < Region2Size; ++ByteIndex) {
+; 368  :         for(DWORD ByteIndex = 0; ByteIndex < Region2Size; ++ByteIndex) {
 
   000a7	c7 44 24 44 00
 	00 00 00	 mov	 DWORD PTR ByteIndex$2[rsp], 0
@@ -527,7 +611,7 @@ $LN7@win32Clear:
   000bf	39 44 24 44	 cmp	 DWORD PTR ByteIndex$2[rsp], eax
   000c3	73 17		 jae	 SHORT $LN6@win32Clear
 
-; 396  :             *DestSample++ = 0;
+; 369  :             *DestSample++ = 0;
 
   000c5	48 8b 44 24 50	 mov	 rax, QWORD PTR DestSample$3[rsp]
   000ca	c6 00 00	 mov	 BYTE PTR [rax], 0
@@ -535,13 +619,13 @@ $LN7@win32Clear:
   000d2	48 ff c0	 inc	 rax
   000d5	48 89 44 24 50	 mov	 QWORD PTR DestSample$3[rsp], rax
 
-; 397  :         }
+; 370  :         }
 
   000da	eb d5		 jmp	 SHORT $LN5@win32Clear
 $LN6@win32Clear:
 
-; 398  : 
-; 399  :         GlobalSecondaryBuffer->Unlock(Region1, Region1Size, Region2, Region2Size);
+; 371  : 
+; 372  :         GlobalSecondaryBuffer->Unlock(Region1, Region1Size, Region2, Region2Size);
 
   000dc	48 8b 05 00 00
 	00 00		 mov	 rax, QWORD PTR ?GlobalSecondaryBuffer@@3PEAUIDirectSoundBuffer@@EA
@@ -557,8 +641,8 @@ $LN6@win32Clear:
 	00		 call	 QWORD PTR [rax+152]
 $LN8@win32Clear:
 
-; 400  :     }
-; 401  : }
+; 373  :     }
+; 374  : }
 
   0010a	48 83 c4 78	 add	 rsp, 120		; 00000078H
   0010e	c3		 ret	 0
@@ -589,7 +673,7 @@ WParam$ = 240
 LParam$ = 248
 ?Win32MainWindowCallback@@YA_JPEAUHWND__@@I_K_J@Z PROC	; Win32MainWindowCallback
 
-; 269  : ) {
+; 253  : ) {
 
   00000	4c 89 4c 24 20	 mov	 QWORD PTR [rsp+32], r9
   00005	4c 89 44 24 18	 mov	 QWORD PTR [rsp+24], r8
@@ -603,13 +687,13 @@ LParam$ = 248
   00024	48 89 84 24 c0
 	00 00 00	 mov	 QWORD PTR __$ArrayPad$[rsp], rax
 
-; 270  :     LRESULT Result = 0;
+; 254  :     LRESULT Result = 0;
 
   0002c	48 c7 44 24 38
 	00 00 00 00	 mov	 QWORD PTR Result$[rsp], 0
 
-; 271  : 
-; 272  :     switch(Message)
+; 255  : 
+; 256  :     switch(Message)
 
   00035	8b 84 24 e8 00
 	00 00		 mov	 eax, DWORD PTR Message$[rsp]
@@ -646,65 +730,65 @@ $LN43@Win32MainW:
   000a3	e9 44 02 00 00	 jmp	 $LN37@Win32MainW
 $LN4@Win32MainW:
 
-; 273  :     {
-; 274  :         case WM_SIZE: {
-; 275  :         } break;
+; 257  :     {
+; 258  :         case WM_SIZE: {
+; 259  :         } break;
 
   000a8	e9 69 02 00 00	 jmp	 $LN2@Win32MainW
 $LN5@Win32MainW:
 
-; 276  : 
-; 277  :         case WM_CLOSE: {
-; 278  :             // TODO Handle this with a message to the user?
-; 279  :             GlobalRunning = false;
+; 260  : 
+; 261  :         case WM_CLOSE: {
+; 262  :             // TODO Handle this with a message to the user?
+; 263  :             GlobalRunning = false;
 
   000ad	c6 05 00 00 00
 	00 00		 mov	 BYTE PTR ?GlobalRunning@@3_NA, 0
 
-; 280  :         } break;
+; 264  :         } break;
 
   000b4	e9 5d 02 00 00	 jmp	 $LN2@Win32MainW
 $LN6@Win32MainW:
 
-; 281  : 
-; 282  :         case WM_ACTIVATEAPP: {
-; 283  :             OutputDebugStringA("WM_ACTIVATEAPP\n");
+; 265  : 
+; 266  :         case WM_ACTIVATEAPP: {
+; 267  :             OutputDebugStringA("WM_ACTIVATEAPP\n");
 
   000b9	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG87651
+	00 00		 lea	 rcx, OFFSET FLAT:$SG87753
   000c0	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_OutputDebugStringA
 
-; 284  :         } break;
+; 268  :         } break;
 
   000c6	e9 4b 02 00 00	 jmp	 $LN2@Win32MainW
 $LN7@Win32MainW:
 
-; 285  : 
-; 286  :         case WM_DESTROY: {
-; 287  :             // TODO Handle this as an error - recreate window?
-; 288  :             GlobalRunning = false;
+; 269  : 
+; 270  :         case WM_DESTROY: {
+; 271  :             // TODO Handle this as an error - recreate window?
+; 272  :             GlobalRunning = false;
 
   000cb	c6 05 00 00 00
 	00 00		 mov	 BYTE PTR ?GlobalRunning@@3_NA, 0
 
-; 289  :         } break;
+; 273  :         } break;
 
   000d2	e9 3f 02 00 00	 jmp	 $LN2@Win32MainW
 $LN8@Win32MainW:
 
-; 290  : 
-; 291  :         case WM_SYSKEYDOWN: 
-; 292  :         case WM_SYSKEYUP:
-; 293  :         case WM_KEYDOWN:
-; 294  :         case WM_KEYUP: {
-; 295  :             uint32 VKCode = WParam;
+; 274  : 
+; 275  :         case WM_SYSKEYDOWN: 
+; 276  :         case WM_SYSKEYUP:
+; 277  :         case WM_KEYDOWN:
+; 278  :         case WM_KEYUP: {
+; 279  :             uint32 VKCode = WParam;
 
   000d7	8b 84 24 f0 00
 	00 00		 mov	 eax, DWORD PTR WParam$[rsp]
   000de	89 44 24 20	 mov	 DWORD PTR VKCode$1[rsp], eax
 
-; 296  :             bool WasDown = ((LParam & (1 << 30)) != 0);
+; 280  :             bool WasDown = ((LParam & (1 << 30)) != 0);
 
   000e2	48 8b 84 24 f8
 	00 00 00	 mov	 rax, QWORD PTR LParam$[rsp]
@@ -722,7 +806,7 @@ $LN40@Win32MainW:
   00107	0f b6 44 24 30	 movzx	 eax, BYTE PTR tv68[rsp]
   0010c	88 44 24 24	 mov	 BYTE PTR WasDown$2[rsp], al
 
-; 297  :             bool IsDown = ((LParam & (1 << 31)) == 0);
+; 281  :             bool IsDown = ((LParam & (1 << 31)) == 0);
 
   00110	48 8b 84 24 f8
 	00 00 00	 mov	 rax, QWORD PTR LParam$[rsp]
@@ -740,7 +824,7 @@ $LN42@Win32MainW:
   00135	0f b6 44 24 2c	 movzx	 eax, BYTE PTR tv72[rsp]
   0013a	88 44 24 25	 mov	 BYTE PTR IsDown$3[rsp], al
 
-; 298  :             if(WasDown != IsDown) {
+; 282  :             if(WasDown != IsDown) {
 
   0013e	0f b6 44 24 24	 movzx	 eax, BYTE PTR WasDown$2[rsp]
   00143	0f b6 4c 24 25	 movzx	 ecx, BYTE PTR IsDown$3[rsp]
@@ -748,145 +832,145 @@ $LN42@Win32MainW:
   0014a	0f 84 c9 00 00
 	00		 je	 $LN9@Win32MainW
 
-; 299  :                 if(VKCode == 'W') {
+; 283  :                 if(VKCode == 'W') {
 
   00150	83 7c 24 20 57	 cmp	 DWORD PTR VKCode$1[rsp], 87 ; 00000057H
   00155	75 05		 jne	 SHORT $LN10@Win32MainW
   00157	e9 bd 00 00 00	 jmp	 $LN11@Win32MainW
 $LN10@Win32MainW:
 
-; 300  :                 }
-; 301  :                 else if(VKCode == 'A') {
+; 284  :                 }
+; 285  :                 else if(VKCode == 'A') {
 
   0015c	83 7c 24 20 41	 cmp	 DWORD PTR VKCode$1[rsp], 65 ; 00000041H
   00161	75 05		 jne	 SHORT $LN12@Win32MainW
   00163	e9 b1 00 00 00	 jmp	 $LN13@Win32MainW
 $LN12@Win32MainW:
 
-; 302  :                 }
-; 303  :                 else if(VKCode == 'S') {
+; 286  :                 }
+; 287  :                 else if(VKCode == 'S') {
 
   00168	83 7c 24 20 53	 cmp	 DWORD PTR VKCode$1[rsp], 83 ; 00000053H
   0016d	75 05		 jne	 SHORT $LN14@Win32MainW
   0016f	e9 a5 00 00 00	 jmp	 $LN15@Win32MainW
 $LN14@Win32MainW:
 
-; 304  :                 }
-; 305  :                 else if(VKCode == 'D') {
+; 288  :                 }
+; 289  :                 else if(VKCode == 'D') {
 
   00174	83 7c 24 20 44	 cmp	 DWORD PTR VKCode$1[rsp], 68 ; 00000044H
   00179	75 05		 jne	 SHORT $LN16@Win32MainW
   0017b	e9 99 00 00 00	 jmp	 $LN17@Win32MainW
 $LN16@Win32MainW:
 
-; 306  :                 }
-; 307  :                 else if(VKCode == 'Q') {
+; 290  :                 }
+; 291  :                 else if(VKCode == 'Q') {
 
   00180	83 7c 24 20 51	 cmp	 DWORD PTR VKCode$1[rsp], 81 ; 00000051H
   00185	75 05		 jne	 SHORT $LN18@Win32MainW
   00187	e9 8d 00 00 00	 jmp	 $LN19@Win32MainW
 $LN18@Win32MainW:
 
-; 308  :                 }
-; 309  :                 else if(VKCode == 'E') {
+; 292  :                 }
+; 293  :                 else if(VKCode == 'E') {
 
   0018c	83 7c 24 20 45	 cmp	 DWORD PTR VKCode$1[rsp], 69 ; 00000045H
   00191	75 05		 jne	 SHORT $LN20@Win32MainW
   00193	e9 81 00 00 00	 jmp	 $LN21@Win32MainW
 $LN20@Win32MainW:
 
-; 310  :                 }
-; 311  :                 else if(VKCode == VK_UP) {
+; 294  :                 }
+; 295  :                 else if(VKCode == VK_UP) {
 
   00198	83 7c 24 20 26	 cmp	 DWORD PTR VKCode$1[rsp], 38 ; 00000026H
   0019d	75 02		 jne	 SHORT $LN22@Win32MainW
   0019f	eb 78		 jmp	 SHORT $LN23@Win32MainW
 $LN22@Win32MainW:
 
-; 312  :                 }
-; 313  :                 else if(VKCode == VK_DOWN) {
+; 296  :                 }
+; 297  :                 else if(VKCode == VK_DOWN) {
 
   001a1	83 7c 24 20 28	 cmp	 DWORD PTR VKCode$1[rsp], 40 ; 00000028H
   001a6	75 02		 jne	 SHORT $LN24@Win32MainW
   001a8	eb 6f		 jmp	 SHORT $LN25@Win32MainW
 $LN24@Win32MainW:
 
-; 314  :                 }
-; 315  :                 else if(VKCode == VK_LEFT) {
+; 298  :                 }
+; 299  :                 else if(VKCode == VK_LEFT) {
 
   001aa	83 7c 24 20 25	 cmp	 DWORD PTR VKCode$1[rsp], 37 ; 00000025H
   001af	75 02		 jne	 SHORT $LN26@Win32MainW
   001b1	eb 66		 jmp	 SHORT $LN27@Win32MainW
 $LN26@Win32MainW:
 
-; 316  :                 }
-; 317  :                 else if(VKCode == VK_RIGHT) {
+; 300  :                 }
+; 301  :                 else if(VKCode == VK_RIGHT) {
 
   001b3	83 7c 24 20 27	 cmp	 DWORD PTR VKCode$1[rsp], 39 ; 00000027H
   001b8	75 02		 jne	 SHORT $LN28@Win32MainW
   001ba	eb 5d		 jmp	 SHORT $LN29@Win32MainW
 $LN28@Win32MainW:
 
-; 318  :                 }
-; 319  :                 else if(VKCode == VK_ESCAPE) {
+; 302  :                 }
+; 303  :                 else if(VKCode == VK_ESCAPE) {
 
   001bc	83 7c 24 20 1b	 cmp	 DWORD PTR VKCode$1[rsp], 27
   001c1	75 09		 jne	 SHORT $LN30@Win32MainW
 
-; 320  :                     GlobalRunning = false;
+; 304  :                     GlobalRunning = false;
 
   001c3	c6 05 00 00 00
 	00 00		 mov	 BYTE PTR ?GlobalRunning@@3_NA, 0
   001ca	eb 4d		 jmp	 SHORT $LN31@Win32MainW
 $LN30@Win32MainW:
 
-; 321  :                 }
-; 322  :                 else if(VKCode == VK_SPACE) {
+; 305  :                 }
+; 306  :                 else if(VKCode == VK_SPACE) {
 
   001cc	83 7c 24 20 20	 cmp	 DWORD PTR VKCode$1[rsp], 32 ; 00000020H
   001d1	75 46		 jne	 SHORT $LN32@Win32MainW
 
-; 323  :                     OutputDebugStringA("Space ");
+; 307  :                     OutputDebugStringA("Space ");
 
   001d3	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG87678
+	00 00		 lea	 rcx, OFFSET FLAT:$SG87780
   001da	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_OutputDebugStringA
 
-; 324  :                     if(IsDown) {
+; 308  :                     if(IsDown) {
 
   001e0	0f b6 44 24 25	 movzx	 eax, BYTE PTR IsDown$3[rsp]
   001e5	85 c0		 test	 eax, eax
   001e7	74 0d		 je	 SHORT $LN33@Win32MainW
 
-; 325  :                         OutputDebugStringA("IsDown ");
+; 309  :                         OutputDebugStringA("IsDown ");
 
   001e9	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG87680
+	00 00		 lea	 rcx, OFFSET FLAT:$SG87782
   001f0	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_OutputDebugStringA
 $LN33@Win32MainW:
 
-; 326  :                     }
-; 327  :                     if(WasDown) {
+; 310  :                     }
+; 311  :                     if(WasDown) {
 
   001f6	0f b6 44 24 24	 movzx	 eax, BYTE PTR WasDown$2[rsp]
   001fb	85 c0		 test	 eax, eax
   001fd	74 0d		 je	 SHORT $LN34@Win32MainW
 
-; 328  :                         OutputDebugStringA("WasDown ");
+; 312  :                         OutputDebugStringA("WasDown ");
 
   001ff	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG87682
+	00 00		 lea	 rcx, OFFSET FLAT:$SG87784
   00206	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_OutputDebugStringA
 $LN34@Win32MainW:
 
-; 329  :                     }
-; 330  :                     OutputDebugStringA("\n");
+; 313  :                     }
+; 314  :                     OutputDebugStringA("\n");
 
   0020c	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG87683
+	00 00		 lea	 rcx, OFFSET FLAT:$SG87785
   00213	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_OutputDebugStringA
 $LN32@Win32MainW:
@@ -903,11 +987,11 @@ $LN13@Win32MainW:
 $LN11@Win32MainW:
 $LN9@Win32MainW:
 
-; 331  :                 }
-; 332  : 
-; 333  :             }
-; 334  : 
-; 335  :             if((LParam & (1 << 29)) && VKCode == VK_F4) { //Alt+F4
+; 315  :                 }
+; 316  : 
+; 317  :             }
+; 318  : 
+; 319  :             if((LParam & (1 << 29)) && VKCode == VK_F4) { //Alt+F4
 
   00219	48 8b 84 24 f8
 	00 00 00	 mov	 rax, QWORD PTR LParam$[rsp]
@@ -918,30 +1002,30 @@ $LN9@Win32MainW:
   0022c	83 7c 24 20 73	 cmp	 DWORD PTR VKCode$1[rsp], 115 ; 00000073H
   00231	75 07		 jne	 SHORT $LN35@Win32MainW
 
-; 336  :                 GlobalRunning = false;
+; 320  :                 GlobalRunning = false;
 
   00233	c6 05 00 00 00
 	00 00		 mov	 BYTE PTR ?GlobalRunning@@3_NA, 0
 $LN35@Win32MainW:
 
-; 337  :             }
-; 338  : 
-; 339  :         } break;
+; 321  :             }
+; 322  : 
+; 323  :         } break;
 
   0023a	e9 d7 00 00 00	 jmp	 $LN2@Win32MainW
 $LN36@Win32MainW:
 
-; 340  : 
-; 341  :         case WM_PAINT: {
-; 342  :             OutputDebugStringA("WM_PAINT\n");
+; 324  : 
+; 325  :         case WM_PAINT: {
+; 326  :             OutputDebugStringA("WM_PAINT\n");
 
   0023f	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG87686
+	00 00		 lea	 rcx, OFFSET FLAT:$SG87788
   00246	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_OutputDebugStringA
 
-; 343  :             PAINTSTRUCT Paint;
-; 344  :             HDC DeviceContext = BeginPaint(Window, &Paint);
+; 327  :             PAINTSTRUCT Paint;
+; 328  :             HDC DeviceContext = BeginPaint(Window, &Paint);
 
   0024c	48 8d 54 24 70	 lea	 rdx, QWORD PTR Paint$11[rsp]
   00251	48 8b 8c 24 e0
@@ -950,18 +1034,18 @@ $LN36@Win32MainW:
 	00		 call	 QWORD PTR __imp_BeginPaint
   0025f	48 89 44 24 60	 mov	 QWORD PTR DeviceContext$9[rsp], rax
 
-; 345  :             int X = Paint.rcPaint.left;
+; 329  :             int X = Paint.rcPaint.left;
 
   00264	8b 44 24 7c	 mov	 eax, DWORD PTR Paint$11[rsp+12]
   00268	89 44 24 58	 mov	 DWORD PTR X$8[rsp], eax
 
-; 346  :             int Y = Paint.rcPaint.top;
+; 330  :             int Y = Paint.rcPaint.top;
 
   0026c	8b 84 24 80 00
 	00 00		 mov	 eax, DWORD PTR Paint$11[rsp+16]
   00273	89 44 24 48	 mov	 DWORD PTR Y$5[rsp], eax
 
-; 347  :             int Width = Paint.rcPaint.right - Paint.rcPaint.left;
+; 331  :             int Width = Paint.rcPaint.right - Paint.rcPaint.left;
 
   00277	8b 44 24 7c	 mov	 eax, DWORD PTR Paint$11[rsp+12]
   0027b	8b 8c 24 84 00
@@ -970,7 +1054,7 @@ $LN36@Win32MainW:
   00284	8b c1		 mov	 eax, ecx
   00286	89 44 24 4c	 mov	 DWORD PTR Width$6[rsp], eax
 
-; 348  :             int Height = Paint.rcPaint.bottom - Paint.rcPaint.top;
+; 332  :             int Height = Paint.rcPaint.bottom - Paint.rcPaint.top;
 
   0028a	8b 84 24 80 00
 	00 00		 mov	 eax, DWORD PTR Paint$11[rsp+16]
@@ -980,9 +1064,9 @@ $LN36@Win32MainW:
   0029a	8b c1		 mov	 eax, ecx
   0029c	89 44 24 68	 mov	 DWORD PTR Height$10[rsp], eax
 
-; 349  : 
-; 350  : 
-; 351  :             win32_window_dimension Dimension = Win32GetWindowDimension(Window);
+; 333  : 
+; 334  : 
+; 335  :             win32_window_dimension Dimension = Win32GetWindowDimension(Window);
 
   002a0	48 8b 8c 24 e0
 	00 00 00	 mov	 rcx, QWORD PTR Window$[rsp]
@@ -991,7 +1075,7 @@ $LN36@Win32MainW:
   002b2	48 8b 44 24 50	 mov	 rax, QWORD PTR $T7[rsp]
   002b7	48 89 44 24 40	 mov	 QWORD PTR Dimension$4[rsp], rax
 
-; 352  :             Win32DisplayBufferInWindow(&GlobalBackbuffer, DeviceContext, Dimension.Width, Dimension.Height);
+; 336  :             Win32DisplayBufferInWindow(&GlobalBackbuffer, DeviceContext, Dimension.Width, Dimension.Height);
 
   002bc	44 8b 4c 24 44	 mov	 r9d, DWORD PTR Dimension$4[rsp+4]
   002c1	44 8b 44 24 40	 mov	 r8d, DWORD PTR Dimension$4[rsp]
@@ -1000,7 +1084,7 @@ $LN36@Win32MainW:
 	00 00		 lea	 rcx, OFFSET FLAT:?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A
   002d2	e8 00 00 00 00	 call	 ?Win32DisplayBufferInWindow@@YAXPEAUwin32_offscreen_buffer@@PEAUHDC__@@HH@Z ; Win32DisplayBufferInWindow
 
-; 353  :             EndPaint(Window, &Paint);
+; 337  :             EndPaint(Window, &Paint);
 
   002d7	48 8d 54 24 70	 lea	 rdx, QWORD PTR Paint$11[rsp]
   002dc	48 8b 8c 24 e0
@@ -1008,14 +1092,14 @@ $LN36@Win32MainW:
   002e4	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_EndPaint
 
-; 354  :         } break;
+; 338  :         } break;
 
   002ea	eb 2a		 jmp	 SHORT $LN2@Win32MainW
 $LN37@Win32MainW:
 
-; 355  : 
-; 356  :         default: {
-; 357  :             Result = DefWindowProcA(Window, Message, WParam, LParam);
+; 339  : 
+; 340  :         default: {
+; 341  :             Result = DefWindowProcA(Window, Message, WParam, LParam);
 
   002ec	4c 8b 8c 24 f8
 	00 00 00	 mov	 r9, QWORD PTR LParam$[rsp]
@@ -1030,14 +1114,14 @@ $LN37@Win32MainW:
   00311	48 89 44 24 38	 mov	 QWORD PTR Result$[rsp], rax
 $LN2@Win32MainW:
 
-; 358  :         } break;
-; 359  :     }
-; 360  : 
-; 361  :     return(Result);
+; 342  :         } break;
+; 343  :     }
+; 344  : 
+; 345  :     return(Result);
 
   00316	48 8b 44 24 38	 mov	 rax, QWORD PTR Result$[rsp]
 
-; 362  : } 
+; 346  : } 
 
   0031b	48 8b 8c 24 c0
 	00 00 00	 mov	 rcx, QWORD PTR __$ArrayPad$[rsp]
@@ -1057,7 +1141,7 @@ WindowWidth$ = 144
 WindowHeight$ = 152
 ?Win32DisplayBufferInWindow@@YAXPEAUwin32_offscreen_buffer@@PEAUHDC__@@HH@Z PROC ; Win32DisplayBufferInWindow
 
-; 249  : ) {
+; 233  : ) {
 
   00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
   00005	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
@@ -1065,8 +1149,8 @@ WindowHeight$ = 152
   0000f	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
   00014	48 83 ec 78	 sub	 rsp, 120		; 00000078H
 
-; 250  :     // TODO aspect ration correction
-; 251  :     StretchDIBits(
+; 234  :     // TODO aspect ration correction
+; 235  :     StretchDIBits(
 
   00018	48 8b 84 24 80
 	00 00 00	 mov	 rax, QWORD PTR Buffer$[rsp]
@@ -1103,14 +1187,14 @@ WindowHeight$ = 152
   00094	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_StretchDIBits
 
-; 252  :         DeviceContext,
-; 253  :         0, 0, WindowWidth, WindowHeight,
-; 254  :         0, 0, Buffer->Width, Buffer->Height,
-; 255  :         Buffer->Memory,
-; 256  :         &Buffer->Info,
-; 257  :         DIB_RGB_COLORS, SRCCOPY
-; 258  :     );
-; 259  : }
+; 236  :         DeviceContext,
+; 237  :         0, 0, WindowWidth, WindowHeight,
+; 238  :         0, 0, Buffer->Width, Buffer->Height,
+; 239  :         Buffer->Memory,
+; 240  :         &Buffer->Info,
+; 241  :         DIB_RGB_COLORS, SRCCOPY
+; 242  :     );
+; 243  : }
 
   0009a	48 83 c4 78	 add	 rsp, 120		; 00000078H
   0009e	c3		 ret	 0
@@ -1125,23 +1209,23 @@ Width$ = 72
 Height$ = 80
 ?Win32ResizeDIBSection@@YAXPEAUwin32_offscreen_buffer@@HH@Z PROC ; Win32ResizeDIBSection
 
-; 214  : Win32ResizeDIBSection(win32_offscreen_buffer *Buffer, int Width, int Height) {
+; 198  : Win32ResizeDIBSection(win32_offscreen_buffer *Buffer, int Width, int Height) {
 
   00000	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
   00005	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
   00009	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
   0000e	48 83 ec 38	 sub	 rsp, 56			; 00000038H
 
-; 215  :     // TODO Bulletproof this
-; 216  :     // Maybe don't free first, free after, then free first if that fails
-; 217  : 
-; 218  :     if(Buffer->Memory) {
+; 199  :     // TODO Bulletproof this
+; 200  :     // Maybe don't free first, free after, then free first if that fails
+; 201  : 
+; 202  :     if(Buffer->Memory) {
 
   00012	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
   00017	48 83 78 30 00	 cmp	 QWORD PTR [rax+48], 0
   0001c	74 17		 je	 SHORT $LN2@Win32Resiz
 
-; 219  :         VirtualFree(Buffer->Memory, 0, MEM_RELEASE);
+; 203  :         VirtualFree(Buffer->Memory, 0, MEM_RELEASE);
 
   0001e	41 b8 00 80 00
 	00		 mov	 r8d, 32768		; 00008000H
@@ -1152,41 +1236,41 @@ Height$ = 80
 	00		 call	 QWORD PTR __imp_VirtualFree
 $LN2@Win32Resiz:
 
-; 220  :     }
-; 221  : 
-; 222  :     Buffer->Width = Width;
+; 204  :     }
+; 205  : 
+; 206  :     Buffer->Width = Width;
 
   00035	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
   0003a	8b 4c 24 48	 mov	 ecx, DWORD PTR Width$[rsp]
   0003e	89 48 38	 mov	 DWORD PTR [rax+56], ecx
 
-; 223  :     Buffer->Height = Height;
+; 207  :     Buffer->Height = Height;
 
   00041	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
   00046	8b 4c 24 50	 mov	 ecx, DWORD PTR Height$[rsp]
   0004a	89 48 3c	 mov	 DWORD PTR [rax+60], ecx
 
-; 224  :     Buffer->BytesPerPixel = 4;
+; 208  :     Buffer->BytesPerPixel = 4;
 
   0004d	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
   00052	c7 40 44 04 00
 	00 00		 mov	 DWORD PTR [rax+68], 4
 
-; 225  : 
-; 226  :     Buffer->Info.bmiHeader.biSize = sizeof(Buffer->Info.bmiHeader);
+; 209  : 
+; 210  :     Buffer->Info.bmiHeader.biSize = sizeof(Buffer->Info.bmiHeader);
 
   00059	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
   0005e	c7 00 28 00 00
 	00		 mov	 DWORD PTR [rax], 40	; 00000028H
 
-; 227  :     Buffer->Info.bmiHeader.biWidth = Buffer->Width;
+; 211  :     Buffer->Info.bmiHeader.biWidth = Buffer->Width;
 
   00064	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
   00069	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
   0006e	8b 49 38	 mov	 ecx, DWORD PTR [rcx+56]
   00071	89 48 04	 mov	 DWORD PTR [rax+4], ecx
 
-; 228  :     Buffer->Info.bmiHeader.biHeight = -Buffer->Height;
+; 212  :     Buffer->Info.bmiHeader.biHeight = -Buffer->Height;
 
   00074	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
   00079	8b 40 3c	 mov	 eax, DWORD PTR [rax+60]
@@ -1194,27 +1278,27 @@ $LN2@Win32Resiz:
   0007e	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
   00083	89 41 08	 mov	 DWORD PTR [rcx+8], eax
 
-; 229  :     Buffer->Info.bmiHeader.biPlanes = 1;
+; 213  :     Buffer->Info.bmiHeader.biPlanes = 1;
 
   00086	b8 01 00 00 00	 mov	 eax, 1
   0008b	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
   00090	66 89 41 0c	 mov	 WORD PTR [rcx+12], ax
 
-; 230  :     Buffer->Info.bmiHeader.biBitCount = 32;
+; 214  :     Buffer->Info.bmiHeader.biBitCount = 32;
 
   00094	b8 20 00 00 00	 mov	 eax, 32			; 00000020H
   00099	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
   0009e	66 89 41 0e	 mov	 WORD PTR [rcx+14], ax
 
-; 231  :     Buffer->Info.bmiHeader.biCompression = BI_RGB;
+; 215  :     Buffer->Info.bmiHeader.biCompression = BI_RGB;
 
   000a2	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
   000a7	c7 40 10 00 00
 	00 00		 mov	 DWORD PTR [rax+16], 0
 
-; 232  : 
-; 233  :     // NOTE: Thanks Chris Hecker for clarifying StretchDIBits/BitBlt
-; 234  :     int BitmapMemorySize = (Buffer->Width*Buffer->Height)*Buffer->BytesPerPixel;
+; 216  : 
+; 217  :     // NOTE: Thanks Chris Hecker for clarifying StretchDIBits/BitBlt
+; 218  :     int BitmapMemorySize = (Buffer->Width*Buffer->Height)*Buffer->BytesPerPixel;
 
   000ae	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
   000b3	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
@@ -1224,7 +1308,7 @@ $LN2@Win32Resiz:
   000c4	0f af 41 44	 imul	 eax, DWORD PTR [rcx+68]
   000c8	89 44 24 20	 mov	 DWORD PTR BitmapMemorySize$[rsp], eax
 
-; 235  :     Buffer->Memory = VirtualAlloc(0, BitmapMemorySize, MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
+; 219  :     Buffer->Memory = VirtualAlloc(0, BitmapMemorySize, MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
 
   000cc	48 63 44 24 20	 movsxd	 rax, DWORD PTR BitmapMemorySize$[rsp]
   000d1	41 b9 04 00 00
@@ -1238,10 +1322,10 @@ $LN2@Win32Resiz:
   000e8	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
   000ed	48 89 41 30	 mov	 QWORD PTR [rcx+48], rax
 
-; 236  : 
-; 237  :     // TODO probably clear to black
-; 238  : 
-; 239  :     Buffer->Pitch = Width*Buffer->BytesPerPixel;
+; 220  : 
+; 221  :     // TODO probably clear to black
+; 222  : 
+; 223  :     Buffer->Pitch = Width*Buffer->BytesPerPixel;
 
   000f1	48 8b 44 24 40	 mov	 rax, QWORD PTR Buffer$[rsp]
   000f6	8b 4c 24 48	 mov	 ecx, DWORD PTR Width$[rsp]
@@ -1250,7 +1334,7 @@ $LN2@Win32Resiz:
   00100	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Buffer$[rsp]
   00105	89 41 40	 mov	 DWORD PTR [rcx+64], eax
 
-; 240  : }
+; 224  : }
 
   00108	48 83 c4 38	 add	 rsp, 56			; 00000038H
   0010c	c3		 ret	 0
@@ -1265,7 +1349,7 @@ __$ArrayPad$ = 56
 Window$ = 80
 ?Win32GetWindowDimension@@YA?AUwin32_window_dimension@@PEAUHWND__@@@Z PROC ; Win32GetWindowDimension
 
-; 197  : internal win32_window_dimension Win32GetWindowDimension(HWND Window) {
+; 181  : internal win32_window_dimension Win32GetWindowDimension(HWND Window) {
 
   00000	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
   00005	48 83 ec 48	 sub	 rsp, 72			; 00000048H
@@ -1274,17 +1358,17 @@ Window$ = 80
   00010	48 33 c4	 xor	 rax, rsp
   00013	48 89 44 24 38	 mov	 QWORD PTR __$ArrayPad$[rsp], rax
 
-; 198  :     win32_window_dimension Result;
-; 199  : 
-; 200  :     RECT ClientRect;
-; 201  :     GetClientRect(Window, &ClientRect);
+; 182  :     win32_window_dimension Result;
+; 183  : 
+; 184  :     RECT ClientRect;
+; 185  :     GetClientRect(Window, &ClientRect);
 
   00018	48 8d 54 24 28	 lea	 rdx, QWORD PTR ClientRect$[rsp]
   0001d	48 8b 4c 24 50	 mov	 rcx, QWORD PTR Window$[rsp]
   00022	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_GetClientRect
 
-; 202  :     Result.Width = ClientRect.right - ClientRect.left;
+; 186  :     Result.Width = ClientRect.right - ClientRect.left;
 
   00028	8b 44 24 28	 mov	 eax, DWORD PTR ClientRect$[rsp]
   0002c	8b 4c 24 30	 mov	 ecx, DWORD PTR ClientRect$[rsp+8]
@@ -1292,7 +1376,7 @@ Window$ = 80
   00032	8b c1		 mov	 eax, ecx
   00034	89 44 24 20	 mov	 DWORD PTR Result$[rsp], eax
 
-; 203  :     Result.Height = ClientRect.bottom - ClientRect.top;
+; 187  :     Result.Height = ClientRect.bottom - ClientRect.top;
 
   00038	8b 44 24 2c	 mov	 eax, DWORD PTR ClientRect$[rsp+4]
   0003c	8b 4c 24 34	 mov	 ecx, DWORD PTR ClientRect$[rsp+12]
@@ -1300,12 +1384,12 @@ Window$ = 80
   00042	8b c1		 mov	 eax, ecx
   00044	89 44 24 24	 mov	 DWORD PTR Result$[rsp+4], eax
 
-; 204  : 
-; 205  :     return(Result);
+; 188  : 
+; 189  :     return(Result);
 
   00048	48 8b 44 24 20	 mov	 rax, QWORD PTR Result$[rsp]
 
-; 206  : }
+; 190  : }
 
   0004d	48 8b 4c 24 38	 mov	 rcx, QWORD PTR __$ArrayPad$[rsp]
   00052	48 33 cc	 xor	 rcx, rsp
@@ -1332,7 +1416,7 @@ SamplesPerSecond$ = 216
 BufferSize$ = 224
 ?Win32InitDSound@@YAXPEAUHWND__@@HH@Z PROC		; Win32InitDSound
 
-; 133  : Win32InitDSound(HWND Window, int32 SamplesPerSecond, int32 BufferSize) {
+; 117  : Win32InitDSound(HWND Window, int32 SamplesPerSecond, int32 BufferSize) {
 
   00000	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
   00005	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
@@ -1346,36 +1430,36 @@ BufferSize$ = 224
   00020	48 89 84 24 b0
 	00 00 00	 mov	 QWORD PTR __$ArrayPad$[rsp], rax
 
-; 134  :     // load the library
-; 135  :     HMODULE DSoundLibrary = LoadLibraryA("dsound.dll");
+; 118  :     // load the library
+; 119  :     HMODULE DSoundLibrary = LoadLibraryA("dsound.dll");
 
   00028	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG87595
+	00 00		 lea	 rcx, OFFSET FLAT:$SG87697
   0002f	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_LoadLibraryA
   00035	48 89 44 24 40	 mov	 QWORD PTR DSoundLibrary$[rsp], rax
 
-; 136  : 
-; 137  :     if(DSoundLibrary) {
+; 120  : 
+; 121  :     if(DSoundLibrary) {
 
   0003a	48 83 7c 24 40
 	00		 cmp	 QWORD PTR DSoundLibrary$[rsp], 0
   00040	0f 84 cb 01 00
 	00		 je	 $LN2@Win32InitD
 
-; 138  :         // get a DirectSound object
-; 139  :         direct_sound_create *DirectSoundCreate = (direct_sound_create *)GetProcAddress(DSoundLibrary, "DirectSoundCreate");
+; 122  :         // get a DirectSound object
+; 123  :         direct_sound_create *DirectSoundCreate = (direct_sound_create *)GetProcAddress(DSoundLibrary, "DirectSoundCreate");
 
   00046	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:$SG87597
+	00 00		 lea	 rdx, OFFSET FLAT:$SG87699
   0004d	48 8b 4c 24 40	 mov	 rcx, QWORD PTR DSoundLibrary$[rsp]
   00052	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_GetProcAddress
   00058	48 89 44 24 30	 mov	 QWORD PTR DirectSoundCreate$4[rsp], rax
 
-; 140  :         // TODO double-check that this works on XP -- 7 or 8?
-; 141  :         LPDIRECTSOUND DirectSound;
-; 142  :         if(DirectSoundCreate && SUCCEEDED(DirectSoundCreate(0, &DirectSound, 0))) {
+; 124  :         // TODO double-check that this works on XP -- 7 or 8?
+; 125  :         LPDIRECTSOUND DirectSound;
+; 126  :         if(DirectSoundCreate && SUCCEEDED(DirectSoundCreate(0, &DirectSound, 0))) {
 
   0005d	48 83 7c 24 30
 	00		 cmp	 QWORD PTR DirectSoundCreate$4[rsp], 0
@@ -1389,7 +1473,7 @@ BufferSize$ = 224
   00079	0f 8c 92 01 00
 	00		 jl	 $LN3@Win32InitD
 
-; 143  :             WAVEFORMATEX WaveFormat = {};
+; 127  :             WAVEFORMATEX WaveFormat = {};
 
   0007f	48 8d 44 24 70	 lea	 rax, QWORD PTR WaveFormat$7[rsp]
   00084	48 8b f8	 mov	 rdi, rax
@@ -1397,28 +1481,28 @@ BufferSize$ = 224
   00089	b9 12 00 00 00	 mov	 ecx, 18
   0008e	f3 aa		 rep stosb
 
-; 144  :             WaveFormat.wFormatTag = WAVE_FORMAT_PCM;
+; 128  :             WaveFormat.wFormatTag = WAVE_FORMAT_PCM;
 
   00090	b8 01 00 00 00	 mov	 eax, 1
   00095	66 89 44 24 70	 mov	 WORD PTR WaveFormat$7[rsp], ax
 
-; 145  :             WaveFormat.nChannels = 2;
+; 129  :             WaveFormat.nChannels = 2;
 
   0009a	b8 02 00 00 00	 mov	 eax, 2
   0009f	66 89 44 24 72	 mov	 WORD PTR WaveFormat$7[rsp+2], ax
 
-; 146  :             WaveFormat.nSamplesPerSec = SamplesPerSecond;
+; 130  :             WaveFormat.nSamplesPerSec = SamplesPerSecond;
 
   000a4	8b 84 24 d8 00
 	00 00		 mov	 eax, DWORD PTR SamplesPerSecond$[rsp]
   000ab	89 44 24 74	 mov	 DWORD PTR WaveFormat$7[rsp+4], eax
 
-; 147  :             WaveFormat.wBitsPerSample = 16;
+; 131  :             WaveFormat.wBitsPerSample = 16;
 
   000af	b8 10 00 00 00	 mov	 eax, 16
   000b4	66 89 44 24 7e	 mov	 WORD PTR WaveFormat$7[rsp+14], ax
 
-; 148  :             WaveFormat.nBlockAlign = (WaveFormat.nChannels*WaveFormat.wBitsPerSample) / 8;
+; 132  :             WaveFormat.nBlockAlign = (WaveFormat.nChannels*WaveFormat.wBitsPerSample) / 8;
 
   000b9	0f b7 44 24 72	 movzx	 eax, WORD PTR WaveFormat$7[rsp+2]
   000be	0f b7 4c 24 7e	 movzx	 ecx, WORD PTR WaveFormat$7[rsp+14]
@@ -1429,7 +1513,7 @@ BufferSize$ = 224
   000cc	c1 f8 03	 sar	 eax, 3
   000cf	66 89 44 24 7c	 mov	 WORD PTR WaveFormat$7[rsp+12], ax
 
-; 149  :             WaveFormat.nAvgBytesPerSec = WaveFormat.nSamplesPerSec*WaveFormat.nBlockAlign;
+; 133  :             WaveFormat.nAvgBytesPerSec = WaveFormat.nSamplesPerSec*WaveFormat.nBlockAlign;
 
   000d4	0f b7 44 24 7c	 movzx	 eax, WORD PTR WaveFormat$7[rsp+12]
   000d9	8b 4c 24 74	 mov	 ecx, DWORD PTR WaveFormat$7[rsp+4]
@@ -1437,14 +1521,14 @@ BufferSize$ = 224
   000e0	8b c1		 mov	 eax, ecx
   000e2	89 44 24 78	 mov	 DWORD PTR WaveFormat$7[rsp+8], eax
 
-; 150  :             WaveFormat.cbSize = 0;
+; 134  :             WaveFormat.cbSize = 0;
 
   000e6	33 c0		 xor	 eax, eax
   000e8	66 89 84 24 80
 	00 00 00	 mov	 WORD PTR WaveFormat$7[rsp+16], ax
 
-; 151  : 
-; 152  :             if(SUCCEEDED(DirectSound->SetCooperativeLevel(Window, DSSCL_PRIORITY))) {
+; 135  : 
+; 136  :             if(SUCCEEDED(DirectSound->SetCooperativeLevel(Window, DSSCL_PRIORITY))) {
 
   000f0	48 8b 44 24 20	 mov	 rax, QWORD PTR DirectSound$1[rsp]
   000f5	48 8b 00	 mov	 rax, QWORD PTR [rax]
@@ -1458,7 +1542,7 @@ BufferSize$ = 224
   00110	0f 8c 86 00 00
 	00		 jl	 $LN5@Win32InitD
 
-; 153  :                 DSBUFFERDESC BufferDescription = {0};
+; 137  :                 DSBUFFERDESC BufferDescription = {0};
 
   00116	c7 84 24 88 00
 	00 00 00 00 00
@@ -1470,23 +1554,23 @@ BufferSize$ = 224
   0012e	b9 24 00 00 00	 mov	 ecx, 36			; 00000024H
   00133	f3 aa		 rep stosb
 
-; 154  :                 BufferDescription.dwSize = sizeof(BufferDescription);
+; 138  :                 BufferDescription.dwSize = sizeof(BufferDescription);
 
   00135	c7 84 24 88 00
 	00 00 28 00 00
 	00		 mov	 DWORD PTR BufferDescription$8[rsp], 40 ; 00000028H
 
-; 155  :                 BufferDescription.dwFlags = DSBCAPS_PRIMARYBUFFER;
+; 139  :                 BufferDescription.dwFlags = DSBCAPS_PRIMARYBUFFER;
 
   00140	c7 84 24 8c 00
 	00 00 01 00 00
 	00		 mov	 DWORD PTR BufferDescription$8[rsp+4], 1
 
-; 156  :                 // TODO DSBCAPS_GLOBALFOCUS?
-; 157  : 
-; 158  :                 LPDIRECTSOUNDBUFFER PrimaryBuffer;
-; 159  : 
-; 160  :                 if (SUCCEEDED(DirectSound->CreateSoundBuffer(&BufferDescription, &PrimaryBuffer, 0))) {
+; 140  :                 // TODO DSBCAPS_GLOBALFOCUS?
+; 141  : 
+; 142  :                 LPDIRECTSOUNDBUFFER PrimaryBuffer;
+; 143  : 
+; 144  :                 if (SUCCEEDED(DirectSound->CreateSoundBuffer(&BufferDescription, &PrimaryBuffer, 0))) {
 
   0014b	48 8b 44 24 20	 mov	 rax, QWORD PTR DirectSound$1[rsp]
   00150	48 8b 00	 mov	 rax, QWORD PTR [rax]
@@ -1499,7 +1583,7 @@ BufferSize$ = 224
   0016b	85 c0		 test	 eax, eax
   0016d	7c 2d		 jl	 SHORT $LN7@Win32InitD
 
-; 161  :                     HRESULT Error = PrimaryBuffer->SetFormat(&WaveFormat);
+; 145  :                     HRESULT Error = PrimaryBuffer->SetFormat(&WaveFormat);
 
   0016f	48 8b 44 24 38	 mov	 rax, QWORD PTR PrimaryBuffer$5[rsp]
   00174	48 8b 00	 mov	 rax, QWORD PTR [rax]
@@ -1508,36 +1592,36 @@ BufferSize$ = 224
   00181	ff 50 70	 call	 QWORD PTR [rax+112]
   00184	89 44 24 2c	 mov	 DWORD PTR Error$3[rsp], eax
 
-; 162  :                     if(SUCCEEDED(Error)) {
+; 146  :                     if(SUCCEEDED(Error)) {
 
   00188	83 7c 24 2c 00	 cmp	 DWORD PTR Error$3[rsp], 0
   0018d	7c 0d		 jl	 SHORT $LN9@Win32InitD
 
-; 163  :                         OutputDebugStringA("Primary buffer format was set.\n");
+; 147  :                         OutputDebugStringA("Primary buffer format was set.\n");
 
   0018f	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG87606
+	00 00		 lea	 rcx, OFFSET FLAT:$SG87708
   00196	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_OutputDebugStringA
 $LN9@Win32InitD:
 $LN7@Win32InitD:
 $LN5@Win32InitD:
 
-; 164  :                     }
-; 165  :                     else {
-; 166  :                         // TODO Diagnostic
-; 167  :                     }
-; 168  :                 }
-; 169  :                 else {
-; 170  :                     // TODO Diagnostic
-; 171  :                 }
-; 172  :             }
-; 173  :             else {
-; 174  :                 // TODO Diagnostic
-; 175  :             }
-; 176  :             // create a secondary buffer
-; 177  :             // TODO DSBCAPS_GETCURENTPOSITION2?
-; 178  :             DSBUFFERDESC BufferDescription = {0};
+; 148  :                     }
+; 149  :                     else {
+; 150  :                         // TODO Diagnostic
+; 151  :                     }
+; 152  :                 }
+; 153  :                 else {
+; 154  :                     // TODO Diagnostic
+; 155  :                 }
+; 156  :             }
+; 157  :             else {
+; 158  :                 // TODO Diagnostic
+; 159  :             }
+; 160  :             // create a secondary buffer
+; 161  :             // TODO DSBCAPS_GETCURENTPOSITION2?
+; 162  :             DSBUFFERDESC BufferDescription = {0};
 
   0019c	c7 44 24 48 00
 	00 00 00	 mov	 DWORD PTR BufferDescription$6[rsp], 0
@@ -1547,28 +1631,28 @@ $LN5@Win32InitD:
   001ae	b9 24 00 00 00	 mov	 ecx, 36			; 00000024H
   001b3	f3 aa		 rep stosb
 
-; 179  :             BufferDescription.dwSize = sizeof(BufferDescription);
+; 163  :             BufferDescription.dwSize = sizeof(BufferDescription);
 
   001b5	c7 44 24 48 28
 	00 00 00	 mov	 DWORD PTR BufferDescription$6[rsp], 40 ; 00000028H
 
-; 180  :             BufferDescription.dwFlags = 0;
+; 164  :             BufferDescription.dwFlags = 0;
 
   001bd	c7 44 24 4c 00
 	00 00 00	 mov	 DWORD PTR BufferDescription$6[rsp+4], 0
 
-; 181  :             BufferDescription.dwBufferBytes = BufferSize;
+; 165  :             BufferDescription.dwBufferBytes = BufferSize;
 
   001c5	8b 84 24 e0 00
 	00 00		 mov	 eax, DWORD PTR BufferSize$[rsp]
   001cc	89 44 24 50	 mov	 DWORD PTR BufferDescription$6[rsp+8], eax
 
-; 182  :             BufferDescription.lpwfxFormat = &WaveFormat;
+; 166  :             BufferDescription.lpwfxFormat = &WaveFormat;
 
   001d0	48 8d 44 24 70	 lea	 rax, QWORD PTR WaveFormat$7[rsp]
   001d5	48 89 44 24 58	 mov	 QWORD PTR BufferDescription$6[rsp+16], rax
 
-; 183  :             HRESULT Error = DirectSound->CreateSoundBuffer(&BufferDescription, &GlobalSecondaryBuffer, 0);
+; 167  :             HRESULT Error = DirectSound->CreateSoundBuffer(&BufferDescription, &GlobalSecondaryBuffer, 0);
 
   001da	48 8b 44 24 20	 mov	 rax, QWORD PTR DirectSound$1[rsp]
   001df	48 8b 00	 mov	 rax, QWORD PTR [rax]
@@ -1580,29 +1664,29 @@ $LN5@Win32InitD:
   001f6	ff 50 18	 call	 QWORD PTR [rax+24]
   001f9	89 44 24 28	 mov	 DWORD PTR Error$2[rsp], eax
 
-; 184  : 
-; 185  :             if(SUCCEEDED(Error)) {
+; 168  : 
+; 169  :             if(SUCCEEDED(Error)) {
 
   001fd	83 7c 24 28 00	 cmp	 DWORD PTR Error$2[rsp], 0
   00202	7c 0d		 jl	 SHORT $LN11@Win32InitD
 
-; 186  :                 OutputDebugStringA("Secondary buffer created successfuly\n");
+; 170  :                 OutputDebugStringA("Secondary buffer created successfuly\n");
 
   00204	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG87608
+	00 00		 lea	 rcx, OFFSET FLAT:$SG87710
   0020b	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_OutputDebugStringA
 $LN11@Win32InitD:
 $LN3@Win32InitD:
 $LN2@Win32InitD:
 
-; 187  :             }
-; 188  :         }
-; 189  :         else {
-; 190  :             // TODO Diagnositc
-; 191  :         }
-; 192  :     }
-; 193  : }
+; 171  :             }
+; 172  :         }
+; 173  :         else {
+; 174  :             // TODO Diagnositc
+; 175  :         }
+; 176  :     }
+; 177  : }
 
   00211	48 8b 8c 24 b0
 	00 00 00	 mov	 rcx, QWORD PTR __$ArrayPad$[rsp]
@@ -1620,71 +1704,71 @@ _TEXT	SEGMENT
 XInputLibrary$ = 32
 ?Wind32LoadXInput@@YAXXZ PROC				; Wind32LoadXInput
 
-; 105  : Wind32LoadXInput(void) {
+; 89   : Wind32LoadXInput(void) {
 
   00000	48 83 ec 38	 sub	 rsp, 56			; 00000038H
 
-; 106  :     // TODO Test on windows 8
-; 107  :     HMODULE XInputLibrary = LoadLibraryA("xinput1_4.dll");
+; 90   :     // TODO Test on windows 8
+; 91   :     HMODULE XInputLibrary = LoadLibraryA("xinput1_4.dll");
 
   00004	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG87564
+	00 00		 lea	 rcx, OFFSET FLAT:$SG87666
   0000b	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_LoadLibraryA
   00011	48 89 44 24 20	 mov	 QWORD PTR XInputLibrary$[rsp], rax
 
-; 108  :     if(!XInputLibrary)
+; 92   :     if(!XInputLibrary)
 
   00016	48 83 7c 24 20
 	00		 cmp	 QWORD PTR XInputLibrary$[rsp], 0
   0001c	75 12		 jne	 SHORT $LN2@Wind32Load
 
-; 109  :     {
-; 110  :         // TODO(casey): Diagnostic
-; 111  :         XInputLibrary = LoadLibraryA("xinput9_1_0.dll");
+; 93   :     {
+; 94   :         // TODO(casey): Diagnostic
+; 95   :         XInputLibrary = LoadLibraryA("xinput9_1_0.dll");
 
   0001e	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG87566
+	00 00		 lea	 rcx, OFFSET FLAT:$SG87668
   00025	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_LoadLibraryA
   0002b	48 89 44 24 20	 mov	 QWORD PTR XInputLibrary$[rsp], rax
 $LN2@Wind32Load:
 
-; 112  :     }
-; 113  :     if(!XInputLibrary) {
+; 96   :     }
+; 97   :     if(!XInputLibrary) {
 
   00030	48 83 7c 24 20
 	00		 cmp	 QWORD PTR XInputLibrary$[rsp], 0
   00036	75 12		 jne	 SHORT $LN3@Wind32Load
 
-; 114  :         // TODO Diagnostic
-; 115  :         XInputLibrary = LoadLibraryA("xinput1_3.dll");
+; 98   :         // TODO Diagnostic
+; 99   :         XInputLibrary = LoadLibraryA("xinput1_3.dll");
 
   00038	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:$SG87568
+	00 00		 lea	 rcx, OFFSET FLAT:$SG87670
   0003f	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_LoadLibraryA
   00045	48 89 44 24 20	 mov	 QWORD PTR XInputLibrary$[rsp], rax
 $LN3@Wind32Load:
 
-; 116  :     }
-; 117  :     if(XInputLibrary) {
+; 100  :     }
+; 101  :     if(XInputLibrary) {
 
   0004a	48 83 7c 24 20
 	00		 cmp	 QWORD PTR XInputLibrary$[rsp], 0
   00050	74 62		 je	 SHORT $LN4@Wind32Load
 
-; 118  :         XInputGetState = (x_input_get_state *)GetProcAddress(XInputLibrary, "XInputGetState" );
+; 102  :         XInputGetState = (x_input_get_state *)GetProcAddress(XInputLibrary, "XInputGetState" );
 
   00052	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:$SG87571
+	00 00		 lea	 rdx, OFFSET FLAT:$SG87673
   00059	48 8b 4c 24 20	 mov	 rcx, QWORD PTR XInputLibrary$[rsp]
   0005e	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_GetProcAddress
   00064	48 89 05 00 00
 	00 00		 mov	 QWORD PTR ?XInputGetState_@@3P6AKKPEAU_XINPUT_STATE@@@ZEA, rax
 
-; 119  :         if(!XInputGetState) {XInputGetState = XInputGetStateStub;}
+; 103  :         if(!XInputGetState) {XInputGetState = XInputGetStateStub;}
 
   0006b	48 83 3d 00 00
 	00 00 00	 cmp	 QWORD PTR ?XInputGetState_@@3P6AKKPEAU_XINPUT_STATE@@@ZEA, 0
@@ -1695,17 +1779,17 @@ $LN3@Wind32Load:
 	00 00		 mov	 QWORD PTR ?XInputGetState_@@3P6AKKPEAU_XINPUT_STATE@@@ZEA, rax
 $LN6@Wind32Load:
 
-; 120  :         XInputSetState = (x_input_set_state *)GetProcAddress(XInputLibrary, "XInputSetState" );
+; 104  :         XInputSetState = (x_input_set_state *)GetProcAddress(XInputLibrary, "XInputSetState" );
 
   00083	48 8d 15 00 00
-	00 00		 lea	 rdx, OFFSET FLAT:$SG87573
+	00 00		 lea	 rdx, OFFSET FLAT:$SG87675
   0008a	48 8b 4c 24 20	 mov	 rcx, QWORD PTR XInputLibrary$[rsp]
   0008f	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_GetProcAddress
   00095	48 89 05 00 00
 	00 00		 mov	 QWORD PTR ?XInputSetState_@@3P6AKKPEAU_XINPUT_VIBRATION@@@ZEA, rax
 
-; 121  :         if(!XInputSetState) {XInputSetState = XInputSetStateStub;}
+; 105  :         if(!XInputSetState) {XInputSetState = XInputSetStateStub;}
 
   0009c	48 83 3d 00 00
 	00 00 00	 cmp	 QWORD PTR ?XInputSetState_@@3P6AKKPEAU_XINPUT_VIBRATION@@@ZEA, 0
@@ -1717,13 +1801,13 @@ $LN6@Wind32Load:
 $LN7@Wind32Load:
 $LN4@Wind32Load:
 
-; 122  : 
-; 123  :         // TODO Diagnostic
-; 124  :     }
-; 125  :     else {
-; 126  :         // TODO Diagnostic
-; 127  :     }
-; 128  : }
+; 106  : 
+; 107  :         // TODO Diagnostic
+; 108  :     }
+; 109  :     else {
+; 110  :         // TODO Diagnostic
+; 111  :     }
+; 112  : }
 
   000b4	48 83 c4 38	 add	 rsp, 56			; 00000038H
   000b8	c3		 ret	 0
@@ -1736,16 +1820,16 @@ dwUserIndex$ = 8
 pVibration$ = 16
 ?XInputSetStateStub@@YAKKPEAU_XINPUT_VIBRATION@@@Z PROC	; XInputSetStateStub
 
-; 93   : X_INPUT_SET_STATE(XInputSetStateStub) {
+; 77   : X_INPUT_SET_STATE(XInputSetStateStub) {
 
   00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
   00005	89 4c 24 08	 mov	 DWORD PTR [rsp+8], ecx
 
-; 94   :     return(ERROR_DEVICE_NOT_CONNECTED);
+; 78   :     return(ERROR_DEVICE_NOT_CONNECTED);
 
   00009	b8 8f 04 00 00	 mov	 eax, 1167		; 0000048fH
 
-; 95   : }
+; 79   : }
 
   0000e	c3		 ret	 0
 ?XInputSetStateStub@@YAKKPEAU_XINPUT_VIBRATION@@@Z ENDP	; XInputSetStateStub
@@ -1757,16 +1841,16 @@ dwUserIndex$ = 8
 pState$ = 16
 ?XInputGetStateStub@@YAKKPEAU_XINPUT_STATE@@@Z PROC	; XInputGetStateStub
 
-; 84   : X_INPUT_GET_STATE(XInputGetStateStub) {
+; 68   : X_INPUT_GET_STATE(XInputGetStateStub) {
 
   00000	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
   00005	89 4c 24 08	 mov	 DWORD PTR [rsp+8], ecx
 
-; 85   :     return(ERROR_DEVICE_NOT_CONNECTED);
+; 69   :     return(ERROR_DEVICE_NOT_CONNECTED);
 
   00009	b8 8f 04 00 00	 mov	 eax, 1167		; 0000048fH
 
-; 86   : }
+; 70   : }
 
   0000e	c3		 ret	 0
 ?XInputGetStateStub@@YAKKPEAU_XINPUT_STATE@@@Z ENDP	; XInputGetStateStub
@@ -1774,118 +1858,115 @@ _TEXT	ENDS
 ; Function compile flags: /Odtp
 ; File p:\handmade\code\win32_handmade.cpp
 _TEXT	SEGMENT
-tv242 = 96
-tv247 = 97
-tv212 = 98
-tv252 = 99
-tv222 = 100
-tv257 = 101
-tv232 = 102
-tv217 = 103
-tv227 = 104
-tv207 = 105
-tv237 = 106
-AButton$1 = 107
-Pad$2 = 112
+tv228 = 96
+tv233 = 97
+tv223 = 98
+Pad$1 = 104
+NewController$2 = 112
 BytesToWrite$3 = 120
-ByteToLock$4 = 124
-StickY$5 = 128
+ControllerIndex$4 = 124
+ByteToLock$5 = 128
 TargetCursor$6 = 132
-ControllerIndex$7 = 136
-Down$8 = 140
-Left$9 = 141
-LeftShoulder$10 = 142
-BButton$11 = 143
-Right$12 = 144
-YButton$13 = 145
-YOffset$14 = 148
-StickX$15 = 152
-XOffset$16 = 156
-RightShoulder$17 = 160
-Back$18 = 161
-XButton$19 = 162
-Start$20 = 163
-Up$21 = 164
-SoundIsValid$22 = 168
-Window$23 = 176
-PlayCursor$24 = 184
-Dimension$25 = 192
-EndCounter$26 = 200
-SoundBuffer$27 = 208
-LastCounter$28 = 224
-CounterElapsed$29 = 232
-EndCycleCount$30 = 240
-PerfCountFrequency$ = 248
-LastCycleCount$31 = 256
-DeviceContext$32 = 264
-WriteCursor$33 = 272
-CyclesElapsed$34 = 280
-$T35 = 288
-Samples$36 = 296
-Buffer$37 = 304
-PerfCountFrequencyResult$ = 328
-MCPF$38 = 336
-MSPerFrame$39 = 344
-FPS$40 = 352
-WindowClass$ = 368
-Message$41 = 448
-SoundOutput$42 = 496
-ControllerState$43 = 536
-__$ArrayPad$ = 552
-Instance$ = 576
-PrevInstance$ = 584
-CmdLine$ = 592
-ShowCode$ = 600
+X$7 = 136
+Y$8 = 140
+OldController$9 = 144
+MaxControllerCount$10 = 152
+Right$11 = 156
+Up$12 = 157
+Left$13 = 158
+Down$14 = 159
+PlayCursor$15 = 160
+SoundIsValid$16 = 164
+NewInput$17 = 168
+Window$18 = 176
+tv281 = 184
+tv289 = 188
+WriteCursor$19 = 192
+tv313 = 196
+tv305 = 200
+tv297 = 204
+tv273 = 208
+OldInput$20 = 216
+EndCycleCount$21 = 224
+CounterElapsed$22 = 232
+SoundBuffer$23 = 240
+EndCounter$24 = 256
+PerfCountFrequency$ = 264
+LastCounter$25 = 272
+Dimension$26 = 280
+LastCycleCount$27 = 288
+DeviceContext$28 = 296
+YOffset$29 = 304
+CyclesElapsed$30 = 312
+Samples$31 = 320
+Temp$32 = 328
+Buffer$33 = 336
+PerfCountFrequencyResult$ = 360
+$T34 = 368
+XOffset$35 = 376
+FPS$36 = 384
+MCPF$37 = 392
+MSPerFrame$38 = 400
+WindowClass$ = 416
+Message$39 = 496
+SoundOutput$40 = 544
+ControllerState$41 = 568
+Input$42 = 592
+__$ArrayPad$ = 1264
+Instance$ = 1296
+PrevInstance$ = 1304
+CmdLine$ = 1312
+ShowCode$ = 1320
 WinMain	PROC
 
-; 446  : ) {
+; 427  : ) {
 
-$LN47:
+$LN34:
   00000	44 89 4c 24 20	 mov	 DWORD PTR [rsp+32], r9d
   00005	4c 89 44 24 18	 mov	 QWORD PTR [rsp+24], r8
   0000a	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
   0000f	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
   00014	57		 push	 rdi
-  00015	48 81 ec 30 02
-	00 00		 sub	 rsp, 560		; 00000230H
+  00015	48 81 ec 00 05
+	00 00		 sub	 rsp, 1280		; 00000500H
   0001c	48 8b 05 00 00
 	00 00		 mov	 rax, QWORD PTR __security_cookie
   00023	48 33 c4	 xor	 rax, rsp
-  00026	48 89 84 24 28
-	02 00 00	 mov	 QWORD PTR __$ArrayPad$[rsp], rax
+  00026	48 89 84 24 f0
+	04 00 00	 mov	 QWORD PTR __$ArrayPad$[rsp], rax
 
-; 447  :     LARGE_INTEGER PerfCountFrequencyResult;
-; 448  :     QueryPerformanceFrequency(&PerfCountFrequencyResult);
+; 428  :     LARGE_INTEGER PerfCountFrequencyResult;
+; 429  :     QueryPerformanceFrequency(&PerfCountFrequencyResult);
 
-  0002e	48 8d 8c 24 48
+  0002e	48 8d 8c 24 68
 	01 00 00	 lea	 rcx, QWORD PTR PerfCountFrequencyResult$[rsp]
   00036	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_QueryPerformanceFrequency
 
-; 449  :     int64 PerfCountFrequency = PerfCountFrequencyResult.QuadPart;
+; 430  :     int64 PerfCountFrequency = PerfCountFrequencyResult.QuadPart;
 
-  0003c	48 8b 84 24 48
+  0003c	48 8b 84 24 68
 	01 00 00	 mov	 rax, QWORD PTR PerfCountFrequencyResult$[rsp]
-  00044	48 89 84 24 f8
-	00 00 00	 mov	 QWORD PTR PerfCountFrequency$[rsp], rax
+  00044	48 89 84 24 08
+	01 00 00	 mov	 QWORD PTR PerfCountFrequency$[rsp], rax
 
-; 450  : 
-; 451  :     Wind32LoadXInput();
+; 431  : 
+; 432  :     Wind32LoadXInput();
 
   0004c	e8 00 00 00 00	 call	 ?Wind32LoadXInput@@YAXXZ ; Wind32LoadXInput
 
-; 452  : 
-; 453  :     WNDCLASSA WindowClass = {};
+; 433  : 
+; 434  :     WNDCLASSA WindowClass = {};
 
-  00051	48 8d 84 24 70
+  00051	48 8d 84 24 a0
 	01 00 00	 lea	 rax, QWORD PTR WindowClass$[rsp]
   00059	48 8b f8	 mov	 rdi, rax
   0005c	33 c0		 xor	 eax, eax
   0005e	b9 48 00 00 00	 mov	 ecx, 72			; 00000048H
   00063	f3 aa		 rep stosb
 
-; 454  : 
-; 455  :     Win32ResizeDIBSection(&GlobalBackbuffer, 1280, 720);
+; 435  : 
+; 436  :     Win32ResizeDIBSection(&GlobalBackbuffer, 1280, 720);
 
   00065	41 b8 d0 02 00
 	00		 mov	 r8d, 720		; 000002d0H
@@ -1894,54 +1975,54 @@ $LN47:
 	00 00		 lea	 rcx, OFFSET FLAT:?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A
   00077	e8 00 00 00 00	 call	 ?Win32ResizeDIBSection@@YAXPEAUwin32_offscreen_buffer@@HH@Z ; Win32ResizeDIBSection
 
-; 456  :     
-; 457  :     WindowClass.style = CS_HREDRAW|CS_VREDRAW;
+; 437  :     
+; 438  :     WindowClass.style = CS_HREDRAW|CS_VREDRAW;
 
-  0007c	c7 84 24 70 01
+  0007c	c7 84 24 a0 01
 	00 00 03 00 00
 	00		 mov	 DWORD PTR WindowClass$[rsp], 3
 
-; 458  :     WindowClass.lpfnWndProc = Win32MainWindowCallback;
+; 439  :     WindowClass.lpfnWndProc = Win32MainWindowCallback;
 
   00087	48 8d 05 00 00
 	00 00		 lea	 rax, OFFSET FLAT:?Win32MainWindowCallback@@YA_JPEAUHWND__@@I_K_J@Z ; Win32MainWindowCallback
-  0008e	48 89 84 24 78
+  0008e	48 89 84 24 a8
 	01 00 00	 mov	 QWORD PTR WindowClass$[rsp+8], rax
 
-; 459  :     WindowClass.hInstance = Instance;
+; 440  :     WindowClass.hInstance = Instance;
 
-  00096	48 8b 84 24 40
-	02 00 00	 mov	 rax, QWORD PTR Instance$[rsp]
-  0009e	48 89 84 24 88
+  00096	48 8b 84 24 10
+	05 00 00	 mov	 rax, QWORD PTR Instance$[rsp]
+  0009e	48 89 84 24 b8
 	01 00 00	 mov	 QWORD PTR WindowClass$[rsp+24], rax
 
-; 460  : //    WindowClass.hIcon;
-; 461  :     WindowClass.lpszClassName = "HandmadeHeroWindowClass";
+; 441  : //    WindowClass.hIcon;
+; 442  :     WindowClass.lpszClassName = "HandmadeHeroWindowClass";
 
   000a6	48 8d 05 00 00
-	00 00		 lea	 rax, OFFSET FLAT:$SG87827
-  000ad	48 89 84 24 b0
+	00 00		 lea	 rax, OFFSET FLAT:$SG87916
+  000ad	48 89 84 24 e0
 	01 00 00	 mov	 QWORD PTR WindowClass$[rsp+64], rax
 
-; 462  : 
-; 463  : 
-; 464  :     if (RegisterClass(&WindowClass)) {
+; 443  : 
+; 444  : 
+; 445  :     if (RegisterClass(&WindowClass)) {
 
-  000b5	48 8d 8c 24 70
+  000b5	48 8d 8c 24 a0
 	01 00 00	 lea	 rcx, QWORD PTR WindowClass$[rsp]
   000bd	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_RegisterClassA
   000c3	0f b7 c0	 movzx	 eax, ax
   000c6	85 c0		 test	 eax, eax
-  000c8	0f 84 50 08 00
+  000c8	0f 84 a8 09 00
 	00		 je	 $LN9@WinMain
 
-; 465  :         HWND Window = CreateWindowExA(
+; 446  :         HWND Window = CreateWindowExA(
 
   000ce	48 c7 44 24 58
 	00 00 00 00	 mov	 QWORD PTR [rsp+88], 0
-  000d7	48 8b 84 24 40
-	02 00 00	 mov	 rax, QWORD PTR Instance$[rsp]
+  000d7	48 8b 84 24 10
+	05 00 00	 mov	 rax, QWORD PTR Instance$[rsp]
   000df	48 89 44 24 50	 mov	 QWORD PTR [rsp+80], rax
   000e4	48 c7 44 24 48
 	00 00 00 00	 mov	 QWORD PTR [rsp+72], 0
@@ -1958,1001 +2039,1136 @@ $LN47:
   00116	41 b9 00 00 cf
 	10		 mov	 r9d, 282001408		; 10cf0000H
   0011c	4c 8d 05 00 00
-	00 00		 lea	 r8, OFFSET FLAT:$SG87830
-  00123	48 8b 94 24 b0
+	00 00		 lea	 r8, OFFSET FLAT:$SG87919
+  00123	48 8b 94 24 e0
 	01 00 00	 mov	 rdx, QWORD PTR WindowClass$[rsp+64]
   0012b	33 c9		 xor	 ecx, ecx
   0012d	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_CreateWindowExA
   00133	48 89 84 24 b0
-	00 00 00	 mov	 QWORD PTR Window$23[rsp], rax
+	00 00 00	 mov	 QWORD PTR Window$18[rsp], rax
 
-; 466  :             0,
-; 467  :             WindowClass.lpszClassName,
-; 468  :             "Handmade Hero",
-; 469  :             WS_OVERLAPPEDWINDOW|WS_VISIBLE,
-; 470  :             CW_USEDEFAULT,
-; 471  :             CW_USEDEFAULT,
-; 472  :             CW_USEDEFAULT,
-; 473  :             CW_USEDEFAULT,
-; 474  :             0,
-; 475  :             0,
-; 476  :             Instance,
-; 477  :             0
-; 478  :         );
-; 479  :         if(Window){
+; 447  :             0,
+; 448  :             WindowClass.lpszClassName,
+; 449  :             "Handmade Hero",
+; 450  :             WS_OVERLAPPEDWINDOW|WS_VISIBLE,
+; 451  :             CW_USEDEFAULT,
+; 452  :             CW_USEDEFAULT,
+; 453  :             CW_USEDEFAULT,
+; 454  :             CW_USEDEFAULT,
+; 455  :             0,
+; 456  :             0,
+; 457  :             Instance,
+; 458  :             0
+; 459  :         );
+; 460  :         if(Window){
 
   0013b	48 83 bc 24 b0
-	00 00 00 00	 cmp	 QWORD PTR Window$23[rsp], 0
-  00144	0f 84 d4 07 00
+	00 00 00 00	 cmp	 QWORD PTR Window$18[rsp], 0
+  00144	0f 84 2c 09 00
 	00		 je	 $LN11@WinMain
 
-; 480  :             HDC DeviceContext = GetDC(Window);
+; 461  :             HDC DeviceContext = GetDC(Window);
 
   0014a	48 8b 8c 24 b0
-	00 00 00	 mov	 rcx, QWORD PTR Window$23[rsp]
+	00 00 00	 mov	 rcx, QWORD PTR Window$18[rsp]
   00152	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_GetDC
-  00158	48 89 84 24 08
-	01 00 00	 mov	 QWORD PTR DeviceContext$32[rsp], rax
+  00158	48 89 84 24 28
+	01 00 00	 mov	 QWORD PTR DeviceContext$28[rsp], rax
 
-; 481  : 
-; 482  :             // Graphics test
-; 483  :             int XOffset = 0;
+; 462  : 
+; 463  :             // Graphics test
+; 464  :             int XOffset = 0;
 
-  00160	c7 84 24 9c 00
+  00160	c7 84 24 78 01
 	00 00 00 00 00
-	00		 mov	 DWORD PTR XOffset$16[rsp], 0
+	00		 mov	 DWORD PTR XOffset$35[rsp], 0
 
-; 484  :             int YOffset = 0;
+; 465  :             int YOffset = 0;
 
-  0016b	c7 84 24 94 00
+  0016b	c7 84 24 30 01
 	00 00 00 00 00
-	00		 mov	 DWORD PTR YOffset$14[rsp], 0
+	00		 mov	 DWORD PTR YOffset$29[rsp], 0
 
-; 485  : 
-; 486  :             // Sound Test
-; 487  :             win32_sound_output SoundOutput = {};
+; 466  : 
+; 467  :             // Sound Test
+; 468  :             win32_sound_output SoundOutput = {};
 
-  00176	48 8d 84 24 f0
-	01 00 00	 lea	 rax, QWORD PTR SoundOutput$42[rsp]
+  00176	48 8d 84 24 20
+	02 00 00	 lea	 rax, QWORD PTR SoundOutput$40[rsp]
   0017e	48 8b f8	 mov	 rdi, rax
   00181	33 c0		 xor	 eax, eax
-  00183	b9 24 00 00 00	 mov	 ecx, 36			; 00000024H
+  00183	b9 18 00 00 00	 mov	 ecx, 24
   00188	f3 aa		 rep stosb
 
-; 488  :             SoundOutput.SamplesPerSecond = 48000;
+; 469  :             SoundOutput.SamplesPerSecond = 48000;
 
-  0018a	c7 84 24 f0 01
+  0018a	c7 84 24 20 02
 	00 00 80 bb 00
-	00		 mov	 DWORD PTR SoundOutput$42[rsp], 48000 ; 0000bb80H
+	00		 mov	 DWORD PTR SoundOutput$40[rsp], 48000 ; 0000bb80H
 
-; 489  :             SoundOutput.ToneHz = 256;
+; 470  :             // SoundOutput.ToneHz = 256;
+; 471  :             // SoundOutput.ToneVolume = 3000;
+; 472  :             SoundOutput.RunningSampleIndex = 0;
 
-  00195	c7 84 24 f4 01
-	00 00 00 01 00
-	00		 mov	 DWORD PTR SoundOutput$42[rsp+4], 256 ; 00000100H
-
-; 490  :             SoundOutput.ToneVolume = 3000;
-
-  001a0	b8 b8 0b 00 00	 mov	 eax, 3000		; 00000bb8H
-  001a5	66 89 84 24 f8
-	01 00 00	 mov	 WORD PTR SoundOutput$42[rsp+8], ax
-
-; 491  :             SoundOutput.RunningSampleIndex = 0;
-
-  001ad	c7 84 24 fc 01
+  00195	c7 84 24 24 02
 	00 00 00 00 00
-	00		 mov	 DWORD PTR SoundOutput$42[rsp+12], 0
+	00		 mov	 DWORD PTR SoundOutput$40[rsp+4], 0
 
-; 492  :             SoundOutput.WavePeriod = SoundOutput.SamplesPerSecond/SoundOutput.ToneHz;
+; 473  :             // SoundOutput.WavePeriod = SoundOutput.SamplesPerSecond/SoundOutput.ToneHz;
+; 474  :             SoundOutput.BytesPerSample = sizeof(int16)*2;
 
-  001b8	8b 84 24 f0 01
-	00 00		 mov	 eax, DWORD PTR SoundOutput$42[rsp]
-  001bf	99		 cdq
-  001c0	f7 bc 24 f4 01
-	00 00		 idiv	 DWORD PTR SoundOutput$42[rsp+4]
-  001c7	89 84 24 00 02
-	00 00		 mov	 DWORD PTR SoundOutput$42[rsp+16], eax
-
-; 493  :             SoundOutput.BytesPerSample = sizeof(int16)*2;
-
-  001ce	c7 84 24 04 02
+  001a0	c7 84 24 28 02
 	00 00 04 00 00
-	00		 mov	 DWORD PTR SoundOutput$42[rsp+20], 4
+	00		 mov	 DWORD PTR SoundOutput$40[rsp+8], 4
 
-; 494  :             SoundOutput.LatencySampleCount = SoundOutput.SamplesPerSecond / 15;
+; 475  :             SoundOutput.LatencySampleCount = SoundOutput.SamplesPerSecond / 15;
 
-  001d9	8b 84 24 f0 01
-	00 00		 mov	 eax, DWORD PTR SoundOutput$42[rsp]
-  001e0	99		 cdq
-  001e1	b9 0f 00 00 00	 mov	 ecx, 15
-  001e6	f7 f9		 idiv	 ecx
-  001e8	89 84 24 10 02
-	00 00		 mov	 DWORD PTR SoundOutput$42[rsp+32], eax
+  001ab	8b 84 24 20 02
+	00 00		 mov	 eax, DWORD PTR SoundOutput$40[rsp]
+  001b2	99		 cdq
+  001b3	b9 0f 00 00 00	 mov	 ecx, 15
+  001b8	f7 f9		 idiv	 ecx
+  001ba	89 84 24 34 02
+	00 00		 mov	 DWORD PTR SoundOutput$40[rsp+20], eax
 
-; 495  :             SoundOutput.SecondaryBufferSize = SoundOutput.SamplesPerSecond*SoundOutput.BytesPerSample;
+; 476  :             SoundOutput.SecondaryBufferSize = SoundOutput.SamplesPerSecond*SoundOutput.BytesPerSample;
 
-  001ef	8b 84 24 f0 01
-	00 00		 mov	 eax, DWORD PTR SoundOutput$42[rsp]
-  001f6	0f af 84 24 04
-	02 00 00	 imul	 eax, DWORD PTR SoundOutput$42[rsp+20]
-  001fe	89 84 24 08 02
-	00 00		 mov	 DWORD PTR SoundOutput$42[rsp+24], eax
+  001c1	8b 84 24 20 02
+	00 00		 mov	 eax, DWORD PTR SoundOutput$40[rsp]
+  001c8	0f af 84 24 28
+	02 00 00	 imul	 eax, DWORD PTR SoundOutput$40[rsp+8]
+  001d0	89 84 24 2c 02
+	00 00		 mov	 DWORD PTR SoundOutput$40[rsp+12], eax
 
-; 496  :             Win32InitDSound(Window, SoundOutput.SamplesPerSecond, SoundOutput.SecondaryBufferSize);
+; 477  :             Win32InitDSound(Window, SoundOutput.SamplesPerSecond, SoundOutput.SecondaryBufferSize);
 
-  00205	44 8b 84 24 08
-	02 00 00	 mov	 r8d, DWORD PTR SoundOutput$42[rsp+24]
-  0020d	8b 94 24 f0 01
-	00 00		 mov	 edx, DWORD PTR SoundOutput$42[rsp]
-  00214	48 8b 8c 24 b0
-	00 00 00	 mov	 rcx, QWORD PTR Window$23[rsp]
-  0021c	e8 00 00 00 00	 call	 ?Win32InitDSound@@YAXPEAUHWND__@@HH@Z ; Win32InitDSound
+  001d7	44 8b 84 24 2c
+	02 00 00	 mov	 r8d, DWORD PTR SoundOutput$40[rsp+12]
+  001df	8b 94 24 20 02
+	00 00		 mov	 edx, DWORD PTR SoundOutput$40[rsp]
+  001e6	48 8b 8c 24 b0
+	00 00 00	 mov	 rcx, QWORD PTR Window$18[rsp]
+  001ee	e8 00 00 00 00	 call	 ?Win32InitDSound@@YAXPEAUHWND__@@HH@Z ; Win32InitDSound
 
-; 497  :             win32ClearBuffer(&SoundOutput);
+; 478  :             win32ClearBuffer(&SoundOutput);
 
-  00221	48 8d 8c 24 f0
-	01 00 00	 lea	 rcx, QWORD PTR SoundOutput$42[rsp]
-  00229	e8 00 00 00 00	 call	 ?win32ClearBuffer@@YAXPEAUwin32_sound_output@@@Z ; win32ClearBuffer
+  001f3	48 8d 8c 24 20
+	02 00 00	 lea	 rcx, QWORD PTR SoundOutput$40[rsp]
+  001fb	e8 00 00 00 00	 call	 ?win32ClearBuffer@@YAXPEAUwin32_sound_output@@@Z ; win32ClearBuffer
 
-; 498  :             GlobalSecondaryBuffer->Play(0, 0, DSBPLAY_LOOPING);
+; 479  :             GlobalSecondaryBuffer->Play(0, 0, DSBPLAY_LOOPING);
 
-  0022e	48 8b 05 00 00
+  00200	48 8b 05 00 00
 	00 00		 mov	 rax, QWORD PTR ?GlobalSecondaryBuffer@@3PEAUIDirectSoundBuffer@@EA
-  00235	48 8b 00	 mov	 rax, QWORD PTR [rax]
-  00238	41 b9 01 00 00
+  00207	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  0020a	41 b9 01 00 00
 	00		 mov	 r9d, 1
-  0023e	45 33 c0	 xor	 r8d, r8d
-  00241	33 d2		 xor	 edx, edx
-  00243	48 8b 0d 00 00
+  00210	45 33 c0	 xor	 r8d, r8d
+  00213	33 d2		 xor	 edx, edx
+  00215	48 8b 0d 00 00
 	00 00		 mov	 rcx, QWORD PTR ?GlobalSecondaryBuffer@@3PEAUIDirectSoundBuffer@@EA
-  0024a	ff 50 60	 call	 QWORD PTR [rax+96]
+  0021c	ff 50 60	 call	 QWORD PTR [rax+96]
 
-; 499  :             // bool SoundIsPlaying = true;
-; 500  : 
-; 501  :             GlobalRunning = true;
+; 480  :             // bool SoundIsPlaying = true;
+; 481  : 
+; 482  :             GlobalRunning = true;
 
-  0024d	c6 05 00 00 00
+  0021f	c6 05 00 00 00
 	00 01		 mov	 BYTE PTR ?GlobalRunning@@3_NA, 1
 
-; 502  : 
-; 503  :             // TODO Pool with bitmap VirtualAlloc
-; 504  :             int16 *Samples = (int16 *)VirtualAlloc(0, SoundOutput.SecondaryBufferSize, MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
+; 483  : 
+; 484  :             // TODO Pool with bitmap VirtualAlloc
+; 485  :             int16 *Samples = (int16 *)VirtualAlloc(0, SoundOutput.SecondaryBufferSize, MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
 
-  00254	48 63 84 24 08
-	02 00 00	 movsxd	 rax, DWORD PTR SoundOutput$42[rsp+24]
-  0025c	41 b9 04 00 00
+  00226	48 63 84 24 2c
+	02 00 00	 movsxd	 rax, DWORD PTR SoundOutput$40[rsp+12]
+  0022e	41 b9 04 00 00
 	00		 mov	 r9d, 4
-  00262	41 b8 00 30 00
+  00234	41 b8 00 30 00
 	00		 mov	 r8d, 12288		; 00003000H
-  00268	48 8b d0	 mov	 rdx, rax
-  0026b	33 c9		 xor	 ecx, ecx
-  0026d	ff 15 00 00 00
+  0023a	48 8b d0	 mov	 rdx, rax
+  0023d	33 c9		 xor	 ecx, ecx
+  0023f	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_VirtualAlloc
-  00273	48 89 84 24 28
-	01 00 00	 mov	 QWORD PTR Samples$36[rsp], rax
+  00245	48 89 84 24 40
+	01 00 00	 mov	 QWORD PTR Samples$31[rsp], rax
 
-; 505  : 
-; 506  :             LARGE_INTEGER LastCounter;
-; 507  :             QueryPerformanceCounter(&LastCounter);
+; 486  : 
+; 487  :             game_input Input[2] = {};
 
-  0027b	48 8d 8c 24 e0
-	00 00 00	 lea	 rcx, QWORD PTR LastCounter$28[rsp]
-  00283	ff 15 00 00 00
+  0024d	48 8d 84 24 50
+	02 00 00	 lea	 rax, QWORD PTR Input$42[rsp]
+  00255	48 8b f8	 mov	 rdi, rax
+  00258	33 c0		 xor	 eax, eax
+  0025a	b9 a0 02 00 00	 mov	 ecx, 672		; 000002a0H
+  0025f	f3 aa		 rep stosb
+
+; 488  :             game_input *NewInput = &Input[0];
+
+  00261	b8 50 01 00 00	 mov	 eax, 336		; 00000150H
+  00266	48 6b c0 00	 imul	 rax, rax, 0
+  0026a	48 8d 84 04 50
+	02 00 00	 lea	 rax, QWORD PTR Input$42[rsp+rax]
+  00272	48 89 84 24 a8
+	00 00 00	 mov	 QWORD PTR NewInput$17[rsp], rax
+
+; 489  :             game_input *OldInput = &Input[1];
+
+  0027a	b8 50 01 00 00	 mov	 eax, 336		; 00000150H
+  0027f	48 6b c0 01	 imul	 rax, rax, 1
+  00283	48 8d 84 04 50
+	02 00 00	 lea	 rax, QWORD PTR Input$42[rsp+rax]
+  0028b	48 89 84 24 d8
+	00 00 00	 mov	 QWORD PTR OldInput$20[rsp], rax
+
+; 490  : 
+; 491  :             LARGE_INTEGER LastCounter;
+; 492  :             QueryPerformanceCounter(&LastCounter);
+
+  00293	48 8d 8c 24 10
+	01 00 00	 lea	 rcx, QWORD PTR LastCounter$25[rsp]
+  0029b	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_QueryPerformanceCounter
 
-; 508  :             int64 LastCycleCount = __rdtsc();
+; 493  :             int64 LastCycleCount = __rdtsc();
 
-  00289	0f 31		 rdtsc
-  0028b	48 c1 e2 20	 shl	 rdx, 32			; 00000020H
-  0028f	48 0b c2	 or	 rax, rdx
-  00292	48 89 84 24 00
-	01 00 00	 mov	 QWORD PTR LastCycleCount$31[rsp], rax
+  002a1	0f 31		 rdtsc
+  002a3	48 c1 e2 20	 shl	 rdx, 32			; 00000020H
+  002a7	48 0b c2	 or	 rax, rdx
+  002aa	48 89 84 24 20
+	01 00 00	 mov	 QWORD PTR LastCycleCount$27[rsp], rax
 $LN2@WinMain:
 
-; 509  : 
-; 510  :             // game loop begin
-; 511  :             while (GlobalRunning) {
+; 494  : 
+; 495  :             // game loop begin
+; 496  :             while (GlobalRunning) {
 
-  0029a	0f b6 05 00 00
+  002b2	0f b6 05 00 00
 	00 00		 movzx	 eax, BYTE PTR ?GlobalRunning@@3_NA
-  002a1	85 c0		 test	 eax, eax
-  002a3	0f 84 75 06 00
+  002b9	85 c0		 test	 eax, eax
+  002bb	0f 84 b5 07 00
 	00		 je	 $LN3@WinMain
 $LN4@WinMain:
 
-; 512  : 
-; 513  :                 MSG Message;
-; 514  :                 while (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)) {
+; 497  : 
+; 498  :                 MSG Message;
+; 499  : 
+; 500  :                 while (PeekMessage(&Message, 0, 0, 0, PM_REMOVE)) {
 
-  002a9	c7 44 24 20 01
+  002c1	c7 44 24 20 01
 	00 00 00	 mov	 DWORD PTR [rsp+32], 1
-  002b1	45 33 c9	 xor	 r9d, r9d
-  002b4	45 33 c0	 xor	 r8d, r8d
-  002b7	33 d2		 xor	 edx, edx
-  002b9	48 8d 8c 24 c0
-	01 00 00	 lea	 rcx, QWORD PTR Message$41[rsp]
-  002c1	ff 15 00 00 00
+  002c9	45 33 c9	 xor	 r9d, r9d
+  002cc	45 33 c0	 xor	 r8d, r8d
+  002cf	33 d2		 xor	 edx, edx
+  002d1	48 8d 8c 24 f0
+	01 00 00	 lea	 rcx, QWORD PTR Message$39[rsp]
+  002d9	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_PeekMessageA
-  002c7	85 c0		 test	 eax, eax
-  002c9	74 2f		 je	 SHORT $LN5@WinMain
+  002df	85 c0		 test	 eax, eax
+  002e1	74 2f		 je	 SHORT $LN5@WinMain
 
-; 515  :                     if(Message.message == WM_QUIT) {
+; 501  :                     if(Message.message == WM_QUIT) {
 
-  002cb	83 bc 24 c8 01
-	00 00 12	 cmp	 DWORD PTR Message$41[rsp+8], 18
-  002d3	75 07		 jne	 SHORT $LN13@WinMain
+  002e3	83 bc 24 f8 01
+	00 00 12	 cmp	 DWORD PTR Message$39[rsp+8], 18
+  002eb	75 07		 jne	 SHORT $LN13@WinMain
 
-; 516  :                         GlobalRunning = false;
+; 502  :                         GlobalRunning = false;
 
-  002d5	c6 05 00 00 00
+  002ed	c6 05 00 00 00
 	00 00		 mov	 BYTE PTR ?GlobalRunning@@3_NA, 0
 $LN13@WinMain:
 
-; 517  :                     }
-; 518  : 
-; 519  :                     // TODO Should we poll this more frequently
-; 520  : 
-; 521  :                     TranslateMessage(&Message);
+; 503  :                     }
+; 504  : 
+; 505  :                     // TODO Should we poll this more frequently
+; 506  : 
+; 507  :                     TranslateMessage(&Message);
 
-  002dc	48 8d 8c 24 c0
-	01 00 00	 lea	 rcx, QWORD PTR Message$41[rsp]
-  002e4	ff 15 00 00 00
+  002f4	48 8d 8c 24 f0
+	01 00 00	 lea	 rcx, QWORD PTR Message$39[rsp]
+  002fc	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_TranslateMessage
 
-; 522  :                     DispatchMessageA(&Message);
+; 508  :                     DispatchMessageA(&Message);
 
-  002ea	48 8d 8c 24 c0
-	01 00 00	 lea	 rcx, QWORD PTR Message$41[rsp]
-  002f2	ff 15 00 00 00
+  00302	48 8d 8c 24 f0
+	01 00 00	 lea	 rcx, QWORD PTR Message$39[rsp]
+  0030a	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_DispatchMessageA
 
-; 523  :                 }
+; 509  :                 }
 
-  002f8	eb af		 jmp	 SHORT $LN4@WinMain
+  00310	eb af		 jmp	 SHORT $LN4@WinMain
 $LN5@WinMain:
 
-; 524  : 
-; 525  :                 for(
-; 526  :                     DWORD ControllerIndex = 0;
+; 510  : 
+; 511  :                 int MaxControllerCount = XUSER_MAX_COUNT;
 
-  002fa	c7 84 24 88 00
-	00 00 00 00 00
-	00		 mov	 DWORD PTR ControllerIndex$7[rsp], 0
-  00305	eb 10		 jmp	 SHORT $LN8@WinMain
-$LN6@WinMain:
+  00312	c7 84 24 98 00
+	00 00 04 00 00
+	00		 mov	 DWORD PTR MaxControllerCount$10[rsp], 4
 
-; 528  :                     ++ControllerIndex
+; 512  :                 if(MaxControllerCount = ArrayCount(NewInput->Controllers)) {
 
-  00307	8b 84 24 88 00
-	00 00		 mov	 eax, DWORD PTR ControllerIndex$7[rsp]
-  0030e	ff c0		 inc	 eax
-  00310	89 84 24 88 00
-	00 00		 mov	 DWORD PTR ControllerIndex$7[rsp], eax
-$LN8@WinMain:
+  0031d	c7 84 24 98 00
+	00 00 04 00 00
+	00		 mov	 DWORD PTR MaxControllerCount$10[rsp], 4
+  00328	83 bc 24 98 00
+	00 00 00	 cmp	 DWORD PTR MaxControllerCount$10[rsp], 0
+  00330	74 0b		 je	 SHORT $LN14@WinMain
 
-; 527  :                     ControllerIndex < XUSER_MAX_COUNT;
+; 513  :                     MaxControllerCount = ArrayCount(NewInput->Controllers);
 
-  00317	83 bc 24 88 00
-	00 00 04	 cmp	 DWORD PTR ControllerIndex$7[rsp], 4
-  0031f	0f 83 e4 02 00
-	00		 jae	 $LN7@WinMain
-
-; 529  :                 ) {
-; 530  :                     XINPUT_STATE ControllerState;
-; 531  :                     if(XInputGetState(ControllerIndex, &ControllerState) == ERROR_SUCCESS) {
-
-  00325	48 8d 94 24 18
-	02 00 00	 lea	 rdx, QWORD PTR ControllerState$43[rsp]
-  0032d	8b 8c 24 88 00
-	00 00		 mov	 ecx, DWORD PTR ControllerIndex$7[rsp]
-  00334	ff 15 00 00 00
-	00		 call	 QWORD PTR ?XInputGetState_@@3P6AKKPEAU_XINPUT_STATE@@@ZEA
-  0033a	85 c0		 test	 eax, eax
-  0033c	0f 85 c2 02 00
-	00		 jne	 $LN14@WinMain
-
-; 532  :                         // NOTE Controller is plugged in
-; 533  :                         // TODO See if ControllerState.dwPacketNumber increments
-; 534  :                         XINPUT_GAMEPAD *Pad = &ControllerState.Gamepad;
-
-  00342	48 8d 84 24 1c
-	02 00 00	 lea	 rax, QWORD PTR ControllerState$43[rsp+4]
-  0034a	48 89 44 24 70	 mov	 QWORD PTR Pad$2[rsp], rax
-
-; 535  : 
-; 536  :                         bool Up = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_UP);
-
-  0034f	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  00354	0f b7 00	 movzx	 eax, WORD PTR [rax]
-  00357	83 e0 01	 and	 eax, 1
-  0035a	88 84 24 a4 00
-	00 00		 mov	 BYTE PTR Up$21[rsp], al
-
-; 537  :                         bool Down = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
-
-  00361	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  00366	0f b7 00	 movzx	 eax, WORD PTR [rax]
-  00369	83 e0 02	 and	 eax, 2
-  0036c	85 c0		 test	 eax, eax
-  0036e	74 07		 je	 SHORT $LN24@WinMain
-  00370	c6 44 24 69 01	 mov	 BYTE PTR tv207[rsp], 1
-  00375	eb 05		 jmp	 SHORT $LN25@WinMain
-$LN24@WinMain:
-  00377	c6 44 24 69 00	 mov	 BYTE PTR tv207[rsp], 0
-$LN25@WinMain:
-  0037c	0f b6 44 24 69	 movzx	 eax, BYTE PTR tv207[rsp]
-  00381	88 84 24 8c 00
-	00 00		 mov	 BYTE PTR Down$8[rsp], al
-
-; 538  :                         bool Left = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
-
-  00388	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  0038d	0f b7 00	 movzx	 eax, WORD PTR [rax]
-  00390	83 e0 04	 and	 eax, 4
-  00393	85 c0		 test	 eax, eax
-  00395	74 07		 je	 SHORT $LN26@WinMain
-  00397	c6 44 24 62 01	 mov	 BYTE PTR tv212[rsp], 1
-  0039c	eb 05		 jmp	 SHORT $LN27@WinMain
-$LN26@WinMain:
-  0039e	c6 44 24 62 00	 mov	 BYTE PTR tv212[rsp], 0
-$LN27@WinMain:
-  003a3	0f b6 44 24 62	 movzx	 eax, BYTE PTR tv212[rsp]
-  003a8	88 84 24 8d 00
-	00 00		 mov	 BYTE PTR Left$9[rsp], al
-
-; 539  :                         bool Right = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
-
-  003af	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  003b4	0f b7 00	 movzx	 eax, WORD PTR [rax]
-  003b7	83 e0 08	 and	 eax, 8
-  003ba	85 c0		 test	 eax, eax
-  003bc	74 07		 je	 SHORT $LN28@WinMain
-  003be	c6 44 24 67 01	 mov	 BYTE PTR tv217[rsp], 1
-  003c3	eb 05		 jmp	 SHORT $LN29@WinMain
-$LN28@WinMain:
-  003c5	c6 44 24 67 00	 mov	 BYTE PTR tv217[rsp], 0
-$LN29@WinMain:
-  003ca	0f b6 44 24 67	 movzx	 eax, BYTE PTR tv217[rsp]
-  003cf	88 84 24 90 00
-	00 00		 mov	 BYTE PTR Right$12[rsp], al
-
-; 540  :                         bool Start = (Pad->wButtons & XINPUT_GAMEPAD_START);
-
-  003d6	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  003db	0f b7 00	 movzx	 eax, WORD PTR [rax]
-  003de	83 e0 10	 and	 eax, 16
-  003e1	85 c0		 test	 eax, eax
-  003e3	74 07		 je	 SHORT $LN30@WinMain
-  003e5	c6 44 24 64 01	 mov	 BYTE PTR tv222[rsp], 1
-  003ea	eb 05		 jmp	 SHORT $LN31@WinMain
-$LN30@WinMain:
-  003ec	c6 44 24 64 00	 mov	 BYTE PTR tv222[rsp], 0
-$LN31@WinMain:
-  003f1	0f b6 44 24 64	 movzx	 eax, BYTE PTR tv222[rsp]
-  003f6	88 84 24 a3 00
-	00 00		 mov	 BYTE PTR Start$20[rsp], al
-
-; 541  :                         bool Back = (Pad->wButtons & XINPUT_GAMEPAD_BACK);
-
-  003fd	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  00402	0f b7 00	 movzx	 eax, WORD PTR [rax]
-  00405	83 e0 20	 and	 eax, 32			; 00000020H
-  00408	85 c0		 test	 eax, eax
-  0040a	74 07		 je	 SHORT $LN32@WinMain
-  0040c	c6 44 24 68 01	 mov	 BYTE PTR tv227[rsp], 1
-  00411	eb 05		 jmp	 SHORT $LN33@WinMain
-$LN32@WinMain:
-  00413	c6 44 24 68 00	 mov	 BYTE PTR tv227[rsp], 0
-$LN33@WinMain:
-  00418	0f b6 44 24 68	 movzx	 eax, BYTE PTR tv227[rsp]
-  0041d	88 84 24 a1 00
-	00 00		 mov	 BYTE PTR Back$18[rsp], al
-
-; 542  :                         bool LeftShoulder = (Pad->wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER);
-
-  00424	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  00429	0f b7 00	 movzx	 eax, WORD PTR [rax]
-  0042c	25 00 01 00 00	 and	 eax, 256		; 00000100H
-  00431	85 c0		 test	 eax, eax
-  00433	74 07		 je	 SHORT $LN34@WinMain
-  00435	c6 44 24 66 01	 mov	 BYTE PTR tv232[rsp], 1
-  0043a	eb 05		 jmp	 SHORT $LN35@WinMain
-$LN34@WinMain:
-  0043c	c6 44 24 66 00	 mov	 BYTE PTR tv232[rsp], 0
-$LN35@WinMain:
-  00441	0f b6 44 24 66	 movzx	 eax, BYTE PTR tv232[rsp]
-  00446	88 84 24 8e 00
-	00 00		 mov	 BYTE PTR LeftShoulder$10[rsp], al
-
-; 543  :                         bool RightShoulder = (Pad->wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER);
-
-  0044d	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  00452	0f b7 00	 movzx	 eax, WORD PTR [rax]
-  00455	25 00 02 00 00	 and	 eax, 512		; 00000200H
-  0045a	85 c0		 test	 eax, eax
-  0045c	74 07		 je	 SHORT $LN36@WinMain
-  0045e	c6 44 24 6a 01	 mov	 BYTE PTR tv237[rsp], 1
-  00463	eb 05		 jmp	 SHORT $LN37@WinMain
-$LN36@WinMain:
-  00465	c6 44 24 6a 00	 mov	 BYTE PTR tv237[rsp], 0
-$LN37@WinMain:
-  0046a	0f b6 44 24 6a	 movzx	 eax, BYTE PTR tv237[rsp]
-  0046f	88 84 24 a0 00
-	00 00		 mov	 BYTE PTR RightShoulder$17[rsp], al
-
-; 544  :                         bool AButton = (Pad->wButtons & XINPUT_GAMEPAD_A);
-
-  00476	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  0047b	0f b7 00	 movzx	 eax, WORD PTR [rax]
-  0047e	25 00 10 00 00	 and	 eax, 4096		; 00001000H
-  00483	85 c0		 test	 eax, eax
-  00485	74 07		 je	 SHORT $LN38@WinMain
-  00487	c6 44 24 60 01	 mov	 BYTE PTR tv242[rsp], 1
-  0048c	eb 05		 jmp	 SHORT $LN39@WinMain
-$LN38@WinMain:
-  0048e	c6 44 24 60 00	 mov	 BYTE PTR tv242[rsp], 0
-$LN39@WinMain:
-  00493	0f b6 44 24 60	 movzx	 eax, BYTE PTR tv242[rsp]
-  00498	88 44 24 6b	 mov	 BYTE PTR AButton$1[rsp], al
-
-; 545  :                         bool BButton = (Pad->wButtons & XINPUT_GAMEPAD_B);
-
-  0049c	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  004a1	0f b7 00	 movzx	 eax, WORD PTR [rax]
-  004a4	25 00 20 00 00	 and	 eax, 8192		; 00002000H
-  004a9	85 c0		 test	 eax, eax
-  004ab	74 07		 je	 SHORT $LN40@WinMain
-  004ad	c6 44 24 61 01	 mov	 BYTE PTR tv247[rsp], 1
-  004b2	eb 05		 jmp	 SHORT $LN41@WinMain
-$LN40@WinMain:
-  004b4	c6 44 24 61 00	 mov	 BYTE PTR tv247[rsp], 0
-$LN41@WinMain:
-  004b9	0f b6 44 24 61	 movzx	 eax, BYTE PTR tv247[rsp]
-  004be	88 84 24 8f 00
-	00 00		 mov	 BYTE PTR BButton$11[rsp], al
-
-; 546  :                         bool XButton = (Pad->wButtons & XINPUT_GAMEPAD_X);
-
-  004c5	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  004ca	0f b7 00	 movzx	 eax, WORD PTR [rax]
-  004cd	25 00 40 00 00	 and	 eax, 16384		; 00004000H
-  004d2	85 c0		 test	 eax, eax
-  004d4	74 07		 je	 SHORT $LN42@WinMain
-  004d6	c6 44 24 63 01	 mov	 BYTE PTR tv252[rsp], 1
-  004db	eb 05		 jmp	 SHORT $LN43@WinMain
-$LN42@WinMain:
-  004dd	c6 44 24 63 00	 mov	 BYTE PTR tv252[rsp], 0
-$LN43@WinMain:
-  004e2	0f b6 44 24 63	 movzx	 eax, BYTE PTR tv252[rsp]
-  004e7	88 84 24 a2 00
-	00 00		 mov	 BYTE PTR XButton$19[rsp], al
-
-; 547  :                         bool YButton = (Pad->wButtons & XINPUT_GAMEPAD_Y);
-
-  004ee	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  004f3	0f b7 00	 movzx	 eax, WORD PTR [rax]
-  004f6	25 00 80 00 00	 and	 eax, 32768		; 00008000H
-  004fb	85 c0		 test	 eax, eax
-  004fd	74 07		 je	 SHORT $LN44@WinMain
-  004ff	c6 44 24 65 01	 mov	 BYTE PTR tv257[rsp], 1
-  00504	eb 05		 jmp	 SHORT $LN45@WinMain
-$LN44@WinMain:
-  00506	c6 44 24 65 00	 mov	 BYTE PTR tv257[rsp], 0
-$LN45@WinMain:
-  0050b	0f b6 44 24 65	 movzx	 eax, BYTE PTR tv257[rsp]
-  00510	88 84 24 91 00
-	00 00		 mov	 BYTE PTR YButton$13[rsp], al
-
-; 548  :                         
-; 549  :                         int16 StickX = Pad->sThumbLX;
-
-  00517	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  0051c	0f b7 40 04	 movzx	 eax, WORD PTR [rax+4]
-  00520	66 89 84 24 98
-	00 00 00	 mov	 WORD PTR StickX$15[rsp], ax
-
-; 550  :                         int16 StickY = Pad->sThumbLY;
-
-  00528	48 8b 44 24 70	 mov	 rax, QWORD PTR Pad$2[rsp]
-  0052d	0f b7 40 06	 movzx	 eax, WORD PTR [rax+6]
-  00531	66 89 84 24 80
-	00 00 00	 mov	 WORD PTR StickY$5[rsp], ax
-
-; 551  : 
-; 552  :                         if (AButton) {
-
-  00539	0f b6 44 24 6b	 movzx	 eax, BYTE PTR AButton$1[rsp]
-  0053e	85 c0		 test	 eax, eax
-  00540	74 55		 je	 SHORT $LN16@WinMain
-
-; 553  :                             SoundOutput.ToneHz = 512 + (int32)256*(((real32)StickY / 30000.0f));
-
-  00542	0f bf 84 24 80
-	00 00 00	 movsx	 eax, WORD PTR StickY$5[rsp]
-  0054a	f3 0f 2a c0	 cvtsi2ss xmm0, eax
-  0054e	f3 0f 5e 05 00
-	00 00 00	 divss	 xmm0, DWORD PTR __real@46ea6000
-  00556	f3 0f 10 0d 00
-	00 00 00	 movss	 xmm1, DWORD PTR __real@43800000
-  0055e	f3 0f 59 c8	 mulss	 xmm1, xmm0
-  00562	0f 28 c1	 movaps	 xmm0, xmm1
-  00565	f3 0f 10 0d 00
-	00 00 00	 movss	 xmm1, DWORD PTR __real@44000000
-  0056d	f3 0f 58 c8	 addss	 xmm1, xmm0
-  00571	0f 28 c1	 movaps	 xmm0, xmm1
-  00574	f3 0f 2c c0	 cvttss2si eax, xmm0
-  00578	89 84 24 f4 01
-	00 00		 mov	 DWORD PTR SoundOutput$42[rsp+4], eax
-
-; 554  :                             SoundOutput.WavePeriod = SoundOutput.SamplesPerSecond/SoundOutput.ToneHz;
-
-  0057f	8b 84 24 f0 01
-	00 00		 mov	 eax, DWORD PTR SoundOutput$42[rsp]
-  00586	99		 cdq
-  00587	f7 bc 24 f4 01
-	00 00		 idiv	 DWORD PTR SoundOutput$42[rsp+4]
-  0058e	89 84 24 00 02
-	00 00		 mov	 DWORD PTR SoundOutput$42[rsp+16], eax
-
-; 555  :                         }
-; 556  :                         else {
-
-  00595	eb 21		 jmp	 SHORT $LN17@WinMain
-$LN16@WinMain:
-
-; 557  :                             SoundOutput.ToneHz = 256;
-
-  00597	c7 84 24 f4 01
-	00 00 00 01 00
-	00		 mov	 DWORD PTR SoundOutput$42[rsp+4], 256 ; 00000100H
-
-; 558  :                             SoundOutput.WavePeriod = SoundOutput.SamplesPerSecond/SoundOutput.ToneHz;
-
-  005a2	8b 84 24 f0 01
-	00 00		 mov	 eax, DWORD PTR SoundOutput$42[rsp]
-  005a9	99		 cdq
-  005aa	f7 bc 24 f4 01
-	00 00		 idiv	 DWORD PTR SoundOutput$42[rsp+4]
-  005b1	89 84 24 00 02
-	00 00		 mov	 DWORD PTR SoundOutput$42[rsp+16], eax
-$LN17@WinMain:
-
-; 559  :                         }
-; 560  :                         // TODO Deadzones XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE
-; 561  :                         XOffset += StickX / 4096;
-
-  005b8	0f bf 84 24 98
-	00 00 00	 movsx	 eax, WORD PTR StickX$15[rsp]
-  005c0	99		 cdq
-  005c1	81 e2 ff 0f 00
-	00		 and	 edx, 4095		; 00000fffH
-  005c7	03 c2		 add	 eax, edx
-  005c9	c1 f8 0c	 sar	 eax, 12
-  005cc	8b 8c 24 9c 00
-	00 00		 mov	 ecx, DWORD PTR XOffset$16[rsp]
-  005d3	03 c8		 add	 ecx, eax
-  005d5	8b c1		 mov	 eax, ecx
-  005d7	89 84 24 9c 00
-	00 00		 mov	 DWORD PTR XOffset$16[rsp], eax
-
-; 562  :                         YOffset += StickY / 4096;
-
-  005de	0f bf 84 24 80
-	00 00 00	 movsx	 eax, WORD PTR StickY$5[rsp]
-  005e6	99		 cdq
-  005e7	81 e2 ff 0f 00
-	00		 and	 edx, 4095		; 00000fffH
-  005ed	03 c2		 add	 eax, edx
-  005ef	c1 f8 0c	 sar	 eax, 12
-  005f2	8b 8c 24 94 00
-	00 00		 mov	 ecx, DWORD PTR YOffset$14[rsp]
-  005f9	03 c8		 add	 ecx, eax
-  005fb	8b c1		 mov	 eax, ecx
-  005fd	89 84 24 94 00
-	00 00		 mov	 DWORD PTR YOffset$14[rsp], eax
+  00332	c7 84 24 98 00
+	00 00 04 00 00
+	00		 mov	 DWORD PTR MaxControllerCount$10[rsp], 4
 $LN14@WinMain:
 
-; 563  :                     }
-; 564  :                     else {
-; 565  :                         // NOTE Controller is not available
-; 566  :                     }
-; 567  :                 }
+; 514  :                 }
+; 515  :                 for(
+; 516  :                     DWORD ControllerIndex = 0;
 
-  00604	e9 fe fc ff ff	 jmp	 $LN6@WinMain
-$LN7@WinMain:
+  0033d	c7 44 24 7c 00
+	00 00 00	 mov	 DWORD PTR ControllerIndex$4[rsp], 0
+  00345	eb 0a		 jmp	 SHORT $LN8@WinMain
+$LN6@WinMain:
 
-; 568  :                 DWORD ByteToLock;
-; 569  :                 DWORD TargetCursor;
-; 570  :                 DWORD BytesToWrite;
-; 571  :                 DWORD PlayCursor;
-; 572  :                 DWORD WriteCursor;
-; 573  :                 bool32 SoundIsValid = false;
+; 518  :                     ++ControllerIndex
 
-  00609	c7 84 24 a8 00
-	00 00 00 00 00
-	00		 mov	 DWORD PTR SoundIsValid$22[rsp], 0
+  00347	8b 44 24 7c	 mov	 eax, DWORD PTR ControllerIndex$4[rsp]
+  0034b	ff c0		 inc	 eax
+  0034d	89 44 24 7c	 mov	 DWORD PTR ControllerIndex$4[rsp], eax
+$LN8@WinMain:
 
-; 574  :                 if(SUCCEEDED(GlobalSecondaryBuffer->GetCurrentPosition(&PlayCursor, &WriteCursor))) {
+; 517  :                     ControllerIndex < XUSER_MAX_COUNT;
 
-  00614	48 8b 05 00 00
-	00 00		 mov	 rax, QWORD PTR ?GlobalSecondaryBuffer@@3PEAUIDirectSoundBuffer@@EA
-  0061b	48 8b 00	 mov	 rax, QWORD PTR [rax]
-  0061e	4c 8d 84 24 10
-	01 00 00	 lea	 r8, QWORD PTR WriteCursor$33[rsp]
-  00626	48 8d 94 24 b8
-	00 00 00	 lea	 rdx, QWORD PTR PlayCursor$24[rsp]
-  0062e	48 8b 0d 00 00
-	00 00		 mov	 rcx, QWORD PTR ?GlobalSecondaryBuffer@@3PEAUIDirectSoundBuffer@@EA
-  00635	ff 50 20	 call	 QWORD PTR [rax+32]
-  00638	85 c0		 test	 eax, eax
-  0063a	0f 8c b2 00 00
-	00		 jl	 $LN18@WinMain
+  00351	83 7c 24 7c 04	 cmp	 DWORD PTR ControllerIndex$4[rsp], 4
+  00356	0f 83 a1 03 00
+	00		 jae	 $LN7@WinMain
 
-; 575  :                     ByteToLock = (SoundOutput.RunningSampleIndex*SoundOutput.BytesPerSample) % SoundOutput.SecondaryBufferSize;
+; 519  :                 ) {
+; 520  :                     game_controller_input *OldController = &OldInput->Controllers[ControllerIndex];
 
-  00640	8b 84 24 fc 01
-	00 00		 mov	 eax, DWORD PTR SoundOutput$42[rsp+12]
-  00647	0f af 84 24 04
-	02 00 00	 imul	 eax, DWORD PTR SoundOutput$42[rsp+20]
-  0064f	33 d2		 xor	 edx, edx
-  00651	f7 b4 24 08 02
-	00 00		 div	 DWORD PTR SoundOutput$42[rsp+24]
-  00658	8b c2		 mov	 eax, edx
-  0065a	89 44 24 7c	 mov	 DWORD PTR ByteToLock$4[rsp], eax
+  0035c	8b 44 24 7c	 mov	 eax, DWORD PTR ControllerIndex$4[rsp]
+  00360	48 6b c0 54	 imul	 rax, rax, 84		; 00000054H
+  00364	48 8b 8c 24 d8
+	00 00 00	 mov	 rcx, QWORD PTR OldInput$20[rsp]
+  0036c	48 03 c8	 add	 rcx, rax
+  0036f	48 8b c1	 mov	 rax, rcx
+  00372	48 89 84 24 90
+	00 00 00	 mov	 QWORD PTR OldController$9[rsp], rax
 
-; 576  :                     TargetCursor = (PlayCursor + (SoundOutput.LatencySampleCount*SoundOutput.BytesPerSample)) % SoundOutput.SecondaryBufferSize;
+; 521  :                     game_controller_input *NewController = &NewInput->Controllers[ControllerIndex];
 
-  0065e	8b 84 24 10 02
-	00 00		 mov	 eax, DWORD PTR SoundOutput$42[rsp+32]
-  00665	0f af 84 24 04
-	02 00 00	 imul	 eax, DWORD PTR SoundOutput$42[rsp+20]
-  0066d	8b 8c 24 b8 00
-	00 00		 mov	 ecx, DWORD PTR PlayCursor$24[rsp]
-  00674	03 c8		 add	 ecx, eax
-  00676	8b c1		 mov	 eax, ecx
-  00678	33 d2		 xor	 edx, edx
-  0067a	f7 b4 24 08 02
-	00 00		 div	 DWORD PTR SoundOutput$42[rsp+24]
-  00681	8b c2		 mov	 eax, edx
-  00683	89 84 24 84 00
-	00 00		 mov	 DWORD PTR TargetCursor$6[rsp], eax
+  0037a	8b 44 24 7c	 mov	 eax, DWORD PTR ControllerIndex$4[rsp]
+  0037e	48 6b c0 54	 imul	 rax, rax, 84		; 00000054H
+  00382	48 8b 8c 24 a8
+	00 00 00	 mov	 rcx, QWORD PTR NewInput$17[rsp]
+  0038a	48 03 c8	 add	 rcx, rax
+  0038d	48 8b c1	 mov	 rax, rcx
+  00390	48 89 44 24 70	 mov	 QWORD PTR NewController$2[rsp], rax
 
-; 577  :                     if(ByteToLock == TargetCursor) {
+; 522  : 
+; 523  : 
+; 524  :                     XINPUT_STATE ControllerState;
+; 525  :                     if(XInputGetState(ControllerIndex, &ControllerState) == ERROR_SUCCESS) {
 
-  0068a	8b 84 24 84 00
-	00 00		 mov	 eax, DWORD PTR TargetCursor$6[rsp]
-  00691	39 44 24 7c	 cmp	 DWORD PTR ByteToLock$4[rsp], eax
-  00695	75 08		 jne	 SHORT $LN19@WinMain
+  00395	48 8d 94 24 38
+	02 00 00	 lea	 rdx, QWORD PTR ControllerState$41[rsp]
+  0039d	8b 4c 24 7c	 mov	 ecx, DWORD PTR ControllerIndex$4[rsp]
+  003a1	ff 15 00 00 00
+	00		 call	 QWORD PTR ?XInputGetState_@@3P6AKKPEAU_XINPUT_STATE@@@ZEA
+  003a7	85 c0		 test	 eax, eax
+  003a9	0f 85 49 03 00
+	00		 jne	 $LN15@WinMain
 
-; 578  :                         BytesToWrite = 0;
+; 526  :                         // NOTE Controller is plugged in
+; 527  :                         // TODO See if ControllerState.dwPacketNumber increments
+; 528  :                         XINPUT_GAMEPAD *Pad = &ControllerState.Gamepad;
 
-  00697	c7 44 24 78 00
-	00 00 00	 mov	 DWORD PTR BytesToWrite$3[rsp], 0
-$LN19@WinMain:
+  003af	48 8d 84 24 3c
+	02 00 00	 lea	 rax, QWORD PTR ControllerState$41[rsp+4]
+  003b7	48 89 44 24 68	 mov	 QWORD PTR Pad$1[rsp], rax
 
-; 579  :                     }
-; 580  :                     if(ByteToLock > TargetCursor) {
+; 529  : 
+; 530  :                         // TODO DPad
+; 531  :                         bool Up = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_UP);
 
-  0069f	8b 84 24 84 00
-	00 00		 mov	 eax, DWORD PTR TargetCursor$6[rsp]
-  006a6	39 44 24 7c	 cmp	 DWORD PTR ByteToLock$4[rsp], eax
-  006aa	76 28		 jbe	 SHORT $LN20@WinMain
+  003bc	48 8b 44 24 68	 mov	 rax, QWORD PTR Pad$1[rsp]
+  003c1	0f b7 00	 movzx	 eax, WORD PTR [rax]
+  003c4	83 e0 01	 and	 eax, 1
+  003c7	88 84 24 9d 00
+	00 00		 mov	 BYTE PTR Up$12[rsp], al
 
-; 581  :                         BytesToWrite = (SoundOutput.SecondaryBufferSize - ByteToLock);
+; 532  :                         bool Down = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
 
-  006ac	8b 44 24 7c	 mov	 eax, DWORD PTR ByteToLock$4[rsp]
-  006b0	8b 8c 24 08 02
-	00 00		 mov	 ecx, DWORD PTR SoundOutput$42[rsp+24]
-  006b7	2b c8		 sub	 ecx, eax
-  006b9	8b c1		 mov	 eax, ecx
-  006bb	89 44 24 78	 mov	 DWORD PTR BytesToWrite$3[rsp], eax
+  003ce	48 8b 44 24 68	 mov	 rax, QWORD PTR Pad$1[rsp]
+  003d3	0f b7 00	 movzx	 eax, WORD PTR [rax]
+  003d6	83 e0 02	 and	 eax, 2
+  003d9	85 c0		 test	 eax, eax
+  003db	74 07		 je	 SHORT $LN27@WinMain
+  003dd	c6 44 24 62 01	 mov	 BYTE PTR tv223[rsp], 1
+  003e2	eb 05		 jmp	 SHORT $LN28@WinMain
+$LN27@WinMain:
+  003e4	c6 44 24 62 00	 mov	 BYTE PTR tv223[rsp], 0
+$LN28@WinMain:
+  003e9	0f b6 44 24 62	 movzx	 eax, BYTE PTR tv223[rsp]
+  003ee	88 84 24 9f 00
+	00 00		 mov	 BYTE PTR Down$14[rsp], al
 
-; 582  :                         BytesToWrite += TargetCursor;
+; 533  :                         bool Left = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
 
-  006bf	8b 84 24 84 00
-	00 00		 mov	 eax, DWORD PTR TargetCursor$6[rsp]
-  006c6	8b 4c 24 78	 mov	 ecx, DWORD PTR BytesToWrite$3[rsp]
-  006ca	03 c8		 add	 ecx, eax
-  006cc	8b c1		 mov	 eax, ecx
-  006ce	89 44 24 78	 mov	 DWORD PTR BytesToWrite$3[rsp], eax
+  003f5	48 8b 44 24 68	 mov	 rax, QWORD PTR Pad$1[rsp]
+  003fa	0f b7 00	 movzx	 eax, WORD PTR [rax]
+  003fd	83 e0 04	 and	 eax, 4
+  00400	85 c0		 test	 eax, eax
+  00402	74 07		 je	 SHORT $LN29@WinMain
+  00404	c6 44 24 60 01	 mov	 BYTE PTR tv228[rsp], 1
+  00409	eb 05		 jmp	 SHORT $LN30@WinMain
+$LN29@WinMain:
+  0040b	c6 44 24 60 00	 mov	 BYTE PTR tv228[rsp], 0
+$LN30@WinMain:
+  00410	0f b6 44 24 60	 movzx	 eax, BYTE PTR tv228[rsp]
+  00415	88 84 24 9e 00
+	00 00		 mov	 BYTE PTR Left$13[rsp], al
 
-; 583  :                     }
-; 584  :                     else {
+; 534  :                         bool Right = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
 
-  006d2	eb 13		 jmp	 SHORT $LN21@WinMain
-$LN20@WinMain:
+  0041c	48 8b 44 24 68	 mov	 rax, QWORD PTR Pad$1[rsp]
+  00421	0f b7 00	 movzx	 eax, WORD PTR [rax]
+  00424	83 e0 08	 and	 eax, 8
+  00427	85 c0		 test	 eax, eax
+  00429	74 07		 je	 SHORT $LN31@WinMain
+  0042b	c6 44 24 61 01	 mov	 BYTE PTR tv233[rsp], 1
+  00430	eb 05		 jmp	 SHORT $LN32@WinMain
+$LN31@WinMain:
+  00432	c6 44 24 61 00	 mov	 BYTE PTR tv233[rsp], 0
+$LN32@WinMain:
+  00437	0f b6 44 24 61	 movzx	 eax, BYTE PTR tv233[rsp]
+  0043c	88 84 24 9c 00
+	00 00		 mov	 BYTE PTR Right$11[rsp], al
 
-; 585  :                         BytesToWrite = TargetCursor - ByteToLock;
+; 535  : 
+; 536  :                         NewController->IsAnalogue = true;
 
-  006d4	8b 44 24 7c	 mov	 eax, DWORD PTR ByteToLock$4[rsp]
-  006d8	8b 8c 24 84 00
-	00 00		 mov	 ecx, DWORD PTR TargetCursor$6[rsp]
-  006df	2b c8		 sub	 ecx, eax
-  006e1	8b c1		 mov	 eax, ecx
-  006e3	89 44 24 78	 mov	 DWORD PTR BytesToWrite$3[rsp], eax
-$LN21@WinMain:
+  00443	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  00448	c7 00 01 00 00
+	00		 mov	 DWORD PTR [rax], 1
 
-; 586  :                     }
-; 587  : 
-; 588  :                     SoundIsValid = true;
+; 537  :                         real32 X;
+; 538  :                         if(Pad->sThumbLX < 0) {
 
-  006e7	c7 84 24 a8 00
-	00 00 01 00 00
-	00		 mov	 DWORD PTR SoundIsValid$22[rsp], 1
+  0044e	48 8b 44 24 68	 mov	 rax, QWORD PTR Pad$1[rsp]
+  00453	0f bf 40 04	 movsx	 eax, WORD PTR [rax+4]
+  00457	85 c0		 test	 eax, eax
+  00459	7d 20		 jge	 SHORT $LN17@WinMain
+
+; 539  :                             X = (real32)Pad->sThumbLX / 32768.0f; 
+
+  0045b	48 8b 44 24 68	 mov	 rax, QWORD PTR Pad$1[rsp]
+  00460	0f bf 40 04	 movsx	 eax, WORD PTR [rax+4]
+  00464	f3 0f 2a c0	 cvtsi2ss xmm0, eax
+  00468	f3 0f 5e 05 00
+	00 00 00	 divss	 xmm0, DWORD PTR __real@47000000
+  00470	f3 0f 11 84 24
+	88 00 00 00	 movss	 DWORD PTR X$7[rsp], xmm0
+
+; 540  :                         }
+; 541  :                         else {
+
+  00479	eb 1e		 jmp	 SHORT $LN18@WinMain
+$LN17@WinMain:
+
+; 542  :                             X = (real32)Pad->sThumbLX / 32767.0f;
+
+  0047b	48 8b 44 24 68	 mov	 rax, QWORD PTR Pad$1[rsp]
+  00480	0f bf 40 04	 movsx	 eax, WORD PTR [rax+4]
+  00484	f3 0f 2a c0	 cvtsi2ss xmm0, eax
+  00488	f3 0f 5e 05 00
+	00 00 00	 divss	 xmm0, DWORD PTR __real@46fffe00
+  00490	f3 0f 11 84 24
+	88 00 00 00	 movss	 DWORD PTR X$7[rsp], xmm0
 $LN18@WinMain:
 
-; 589  :                 }
-; 590  : 
-; 591  :                 
-; 592  :                 game_sound_output_buffer SoundBuffer = {};
+; 543  :                         }
+; 544  : 
+; 545  :                         real32 Y;
+; 546  :                         if(Pad->sThumbLX < 0) {
 
-  006f2	48 8d 84 24 d0
-	00 00 00	 lea	 rax, QWORD PTR SoundBuffer$27[rsp]
-  006fa	48 8b f8	 mov	 rdi, rax
-  006fd	33 c0		 xor	 eax, eax
-  006ff	b9 10 00 00 00	 mov	 ecx, 16
-  00704	f3 aa		 rep stosb
+  00499	48 8b 44 24 68	 mov	 rax, QWORD PTR Pad$1[rsp]
+  0049e	0f bf 40 04	 movsx	 eax, WORD PTR [rax+4]
+  004a2	85 c0		 test	 eax, eax
+  004a4	7d 20		 jge	 SHORT $LN19@WinMain
 
-; 593  :                 SoundBuffer.SamplesPerSecond = SoundOutput.SamplesPerSecond;
+; 547  :                             Y = (real32)Pad->sThumbLY / 32768.0f; 
 
-  00706	8b 84 24 f0 01
-	00 00		 mov	 eax, DWORD PTR SoundOutput$42[rsp]
-  0070d	89 84 24 d0 00
-	00 00		 mov	 DWORD PTR SoundBuffer$27[rsp], eax
+  004a6	48 8b 44 24 68	 mov	 rax, QWORD PTR Pad$1[rsp]
+  004ab	0f bf 40 06	 movsx	 eax, WORD PTR [rax+6]
+  004af	f3 0f 2a c0	 cvtsi2ss xmm0, eax
+  004b3	f3 0f 5e 05 00
+	00 00 00	 divss	 xmm0, DWORD PTR __real@47000000
+  004bb	f3 0f 11 84 24
+	8c 00 00 00	 movss	 DWORD PTR Y$8[rsp], xmm0
 
-; 594  :                 SoundBuffer.SampleCount = BytesToWrite / SoundOutput.BytesPerSample;
+; 548  :                         }
+; 549  :                         else {
 
-  00714	33 d2		 xor	 edx, edx
-  00716	8b 44 24 78	 mov	 eax, DWORD PTR BytesToWrite$3[rsp]
-  0071a	f7 b4 24 04 02
-	00 00		 div	 DWORD PTR SoundOutput$42[rsp+20]
-  00721	89 84 24 d4 00
-	00 00		 mov	 DWORD PTR SoundBuffer$27[rsp+4], eax
+  004c4	eb 1e		 jmp	 SHORT $LN20@WinMain
+$LN19@WinMain:
 
-; 595  :                 SoundBuffer.Samples = Samples;
+; 550  :                             Y = (real32)Pad->sThumbLY / 32767.0f;
 
-  00728	48 8b 84 24 28
-	01 00 00	 mov	 rax, QWORD PTR Samples$36[rsp]
-  00730	48 89 84 24 d8
-	00 00 00	 mov	 QWORD PTR SoundBuffer$27[rsp+8], rax
+  004c6	48 8b 44 24 68	 mov	 rax, QWORD PTR Pad$1[rsp]
+  004cb	0f bf 40 06	 movsx	 eax, WORD PTR [rax+6]
+  004cf	f3 0f 2a c0	 cvtsi2ss xmm0, eax
+  004d3	f3 0f 5e 05 00
+	00 00 00	 divss	 xmm0, DWORD PTR __real@46fffe00
+  004db	f3 0f 11 84 24
+	8c 00 00 00	 movss	 DWORD PTR Y$8[rsp], xmm0
+$LN20@WinMain:
 
-; 596  : 
-; 597  :                 game_offscreen_buffer Buffer = {};
+; 551  :                         }
+; 552  : 
+; 553  :                         NewController->StartX = OldController->EndX;
 
-  00738	48 8d 84 24 30
-	01 00 00	 lea	 rax, QWORD PTR Buffer$37[rsp]
-  00740	48 8b f8	 mov	 rdi, rax
-  00743	33 c0		 xor	 eax, eax
-  00745	b9 18 00 00 00	 mov	 ecx, 24
-  0074a	f3 aa		 rep stosb
+  004e4	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  004e9	48 8b 8c 24 90
+	00 00 00	 mov	 rcx, QWORD PTR OldController$9[rsp]
+  004f1	f3 0f 10 41 1c	 movss	 xmm0, DWORD PTR [rcx+28]
+  004f6	f3 0f 11 40 04	 movss	 DWORD PTR [rax+4], xmm0
 
-; 598  :                 Buffer.Memory = GlobalBackbuffer.Memory;
+; 554  :                         NewController->StartY = OldController->EndY;
 
-  0074c	48 8b 05 30 00
-	00 00		 mov	 rax, QWORD PTR ?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A+48
-  00753	48 89 84 24 30
-	01 00 00	 mov	 QWORD PTR Buffer$37[rsp], rax
+  004fb	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  00500	48 8b 8c 24 90
+	00 00 00	 mov	 rcx, QWORD PTR OldController$9[rsp]
+  00508	f3 0f 10 41 20	 movss	 xmm0, DWORD PTR [rcx+32]
+  0050d	f3 0f 11 40 08	 movss	 DWORD PTR [rax+8], xmm0
 
-; 599  :                 Buffer.Width = GlobalBackbuffer.Width;
+; 555  : 
+; 556  :                         // TODO Min/max macros
+; 557  :                         NewController->MinX = NewController->MaxX = NewController->EndX = X;
 
-  0075b	8b 05 38 00 00
-	00		 mov	 eax, DWORD PTR ?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A+56
-  00761	89 84 24 38 01
-	00 00		 mov	 DWORD PTR Buffer$37[rsp+8], eax
+  00512	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  00517	f3 0f 10 84 24
+	88 00 00 00	 movss	 xmm0, DWORD PTR X$7[rsp]
+  00520	f3 0f 11 40 1c	 movss	 DWORD PTR [rax+28], xmm0
+  00525	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  0052a	f3 0f 10 84 24
+	88 00 00 00	 movss	 xmm0, DWORD PTR X$7[rsp]
+  00533	f3 0f 11 40 14	 movss	 DWORD PTR [rax+20], xmm0
+  00538	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  0053d	f3 0f 10 84 24
+	88 00 00 00	 movss	 xmm0, DWORD PTR X$7[rsp]
+  00546	f3 0f 11 40 0c	 movss	 DWORD PTR [rax+12], xmm0
 
-; 600  :                 Buffer.Height = GlobalBackbuffer.Height;
+; 558  :                         NewController->MinY = NewController->MaxY = NewController->EndY = Y;
 
-  00768	8b 05 3c 00 00
-	00		 mov	 eax, DWORD PTR ?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A+60
-  0076e	89 84 24 3c 01
-	00 00		 mov	 DWORD PTR Buffer$37[rsp+12], eax
+  0054b	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  00550	f3 0f 10 84 24
+	8c 00 00 00	 movss	 xmm0, DWORD PTR Y$8[rsp]
+  00559	f3 0f 11 40 20	 movss	 DWORD PTR [rax+32], xmm0
+  0055e	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  00563	f3 0f 10 84 24
+	8c 00 00 00	 movss	 xmm0, DWORD PTR Y$8[rsp]
+  0056c	f3 0f 11 40 18	 movss	 DWORD PTR [rax+24], xmm0
+  00571	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  00576	f3 0f 10 84 24
+	8c 00 00 00	 movss	 xmm0, DWORD PTR Y$8[rsp]
+  0057f	f3 0f 11 40 10	 movss	 DWORD PTR [rax+16], xmm0
 
-; 601  :                 Buffer.Pitch = GlobalBackbuffer.Pitch;
+; 559  : 
+; 560  : 
+; 561  :                         // TODO Deadzones XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE
+; 562  : 
+; 563  :                         Win32ProcessXInputDigitalButton(Pad->wButtons, &OldController->Down, &NewController->Down, XINPUT_GAMEPAD_A);
 
-  00775	8b 05 40 00 00
-	00		 mov	 eax, DWORD PTR ?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A+64
-  0077b	89 84 24 40 01
-	00 00		 mov	 DWORD PTR Buffer$37[rsp+16], eax
+  00584	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  00589	48 83 c0 2c	 add	 rax, 44			; 0000002cH
+  0058d	48 8b 8c 24 90
+	00 00 00	 mov	 rcx, QWORD PTR OldController$9[rsp]
+  00595	48 83 c1 2c	 add	 rcx, 44			; 0000002cH
+  00599	48 8b 54 24 68	 mov	 rdx, QWORD PTR Pad$1[rsp]
+  0059e	0f b7 12	 movzx	 edx, WORD PTR [rdx]
+  005a1	89 94 24 d0 00
+	00 00		 mov	 DWORD PTR tv273[rsp], edx
+  005a8	41 b9 00 10 00
+	00		 mov	 r9d, 4096		; 00001000H
+  005ae	4c 8b c0	 mov	 r8, rax
+  005b1	48 8b d1	 mov	 rdx, rcx
+  005b4	8b 84 24 d0 00
+	00 00		 mov	 eax, DWORD PTR tv273[rsp]
+  005bb	8b c8		 mov	 ecx, eax
+  005bd	e8 00 00 00 00	 call	 ?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z ; Win32ProcessXInputDigitalButton
 
-; 602  :                 GameUpdateAndRender(&Buffer, XOffset, YOffset, &SoundBuffer, SoundOutput.ToneHz);
+; 564  :                         Win32ProcessXInputDigitalButton(Pad->wButtons, &OldController->Right, &NewController->Right, XINPUT_GAMEPAD_B);
 
-  00782	8b 84 24 f4 01
-	00 00		 mov	 eax, DWORD PTR SoundOutput$42[rsp+4]
-  00789	89 44 24 20	 mov	 DWORD PTR [rsp+32], eax
-  0078d	4c 8d 8c 24 d0
-	00 00 00	 lea	 r9, QWORD PTR SoundBuffer$27[rsp]
-  00795	44 8b 84 24 94
-	00 00 00	 mov	 r8d, DWORD PTR YOffset$14[rsp]
-  0079d	8b 94 24 9c 00
-	00 00		 mov	 edx, DWORD PTR XOffset$16[rsp]
-  007a4	48 8d 8c 24 30
-	01 00 00	 lea	 rcx, QWORD PTR Buffer$37[rsp]
-  007ac	e8 00 00 00 00	 call	 ?GameUpdateAndRender@@YAXPEAUgame_offscreen_buffer@@HHPEAUgame_sound_output_buffer@@H@Z ; GameUpdateAndRender
+  005c2	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  005c7	48 83 c0 3c	 add	 rax, 60			; 0000003cH
+  005cb	48 8b 8c 24 90
+	00 00 00	 mov	 rcx, QWORD PTR OldController$9[rsp]
+  005d3	48 83 c1 3c	 add	 rcx, 60			; 0000003cH
+  005d7	48 8b 54 24 68	 mov	 rdx, QWORD PTR Pad$1[rsp]
+  005dc	0f b7 12	 movzx	 edx, WORD PTR [rdx]
+  005df	89 94 24 b8 00
+	00 00		 mov	 DWORD PTR tv281[rsp], edx
+  005e6	41 b9 00 20 00
+	00		 mov	 r9d, 8192		; 00002000H
+  005ec	4c 8b c0	 mov	 r8, rax
+  005ef	48 8b d1	 mov	 rdx, rcx
+  005f2	8b 84 24 b8 00
+	00 00		 mov	 eax, DWORD PTR tv281[rsp]
+  005f9	8b c8		 mov	 ecx, eax
+  005fb	e8 00 00 00 00	 call	 ?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z ; Win32ProcessXInputDigitalButton
 
-; 603  : 
-; 604  :                 // directsound output test
-; 605  :                 if(SoundIsValid) {
+; 565  :                         Win32ProcessXInputDigitalButton(Pad->wButtons, &OldController->Left, &NewController->Left, XINPUT_GAMEPAD_X);
 
-  007b1	83 bc 24 a8 00
-	00 00 00	 cmp	 DWORD PTR SoundIsValid$22[rsp], 0
-  007b9	74 1e		 je	 SHORT $LN22@WinMain
+  00600	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  00605	48 83 c0 34	 add	 rax, 52			; 00000034H
+  00609	48 8b 8c 24 90
+	00 00 00	 mov	 rcx, QWORD PTR OldController$9[rsp]
+  00611	48 83 c1 34	 add	 rcx, 52			; 00000034H
+  00615	48 8b 54 24 68	 mov	 rdx, QWORD PTR Pad$1[rsp]
+  0061a	0f b7 12	 movzx	 edx, WORD PTR [rdx]
+  0061d	89 94 24 bc 00
+	00 00		 mov	 DWORD PTR tv289[rsp], edx
+  00624	41 b9 00 40 00
+	00		 mov	 r9d, 16384		; 00004000H
+  0062a	4c 8b c0	 mov	 r8, rax
+  0062d	48 8b d1	 mov	 rdx, rcx
+  00630	8b 84 24 bc 00
+	00 00		 mov	 eax, DWORD PTR tv289[rsp]
+  00637	8b c8		 mov	 ecx, eax
+  00639	e8 00 00 00 00	 call	 ?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z ; Win32ProcessXInputDigitalButton
 
-; 606  :                     
-; 607  :                     win32FillSoundBuffer(&SoundOutput, ByteToLock, BytesToWrite, &SoundBuffer);
+; 566  :                         Win32ProcessXInputDigitalButton(Pad->wButtons, &OldController->Up, &NewController->Up, XINPUT_GAMEPAD_Y);
 
-  007bb	4c 8d 8c 24 d0
-	00 00 00	 lea	 r9, QWORD PTR SoundBuffer$27[rsp]
-  007c3	44 8b 44 24 78	 mov	 r8d, DWORD PTR BytesToWrite$3[rsp]
-  007c8	8b 54 24 7c	 mov	 edx, DWORD PTR ByteToLock$4[rsp]
-  007cc	48 8d 8c 24 f0
-	01 00 00	 lea	 rcx, QWORD PTR SoundOutput$42[rsp]
-  007d4	e8 00 00 00 00	 call	 ?win32FillSoundBuffer@@YAXPEAUwin32_sound_output@@KKPEAUgame_sound_output_buffer@@@Z ; win32FillSoundBuffer
+  0063e	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  00643	48 83 c0 24	 add	 rax, 36			; 00000024H
+  00647	48 8b 8c 24 90
+	00 00 00	 mov	 rcx, QWORD PTR OldController$9[rsp]
+  0064f	48 83 c1 24	 add	 rcx, 36			; 00000024H
+  00653	48 8b 54 24 68	 mov	 rdx, QWORD PTR Pad$1[rsp]
+  00658	0f b7 12	 movzx	 edx, WORD PTR [rdx]
+  0065b	89 94 24 cc 00
+	00 00		 mov	 DWORD PTR tv297[rsp], edx
+  00662	41 b9 00 80 00
+	00		 mov	 r9d, 32768		; 00008000H
+  00668	4c 8b c0	 mov	 r8, rax
+  0066b	48 8b d1	 mov	 rdx, rcx
+  0066e	8b 84 24 cc 00
+	00 00		 mov	 eax, DWORD PTR tv297[rsp]
+  00675	8b c8		 mov	 ecx, eax
+  00677	e8 00 00 00 00	 call	 ?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z ; Win32ProcessXInputDigitalButton
+
+; 567  :                         Win32ProcessXInputDigitalButton(Pad->wButtons, &OldController->LeftShoulder, &NewController->LeftShoulder, XINPUT_GAMEPAD_LEFT_SHOULDER);
+
+  0067c	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  00681	48 83 c0 44	 add	 rax, 68			; 00000044H
+  00685	48 8b 8c 24 90
+	00 00 00	 mov	 rcx, QWORD PTR OldController$9[rsp]
+  0068d	48 83 c1 44	 add	 rcx, 68			; 00000044H
+  00691	48 8b 54 24 68	 mov	 rdx, QWORD PTR Pad$1[rsp]
+  00696	0f b7 12	 movzx	 edx, WORD PTR [rdx]
+  00699	89 94 24 c8 00
+	00 00		 mov	 DWORD PTR tv305[rsp], edx
+  006a0	41 b9 00 01 00
+	00		 mov	 r9d, 256		; 00000100H
+  006a6	4c 8b c0	 mov	 r8, rax
+  006a9	48 8b d1	 mov	 rdx, rcx
+  006ac	8b 84 24 c8 00
+	00 00		 mov	 eax, DWORD PTR tv305[rsp]
+  006b3	8b c8		 mov	 ecx, eax
+  006b5	e8 00 00 00 00	 call	 ?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z ; Win32ProcessXInputDigitalButton
+
+; 568  :                         Win32ProcessXInputDigitalButton(Pad->wButtons, &OldController->RightShoulder, &NewController->RightShoulder, XINPUT_GAMEPAD_RIGHT_SHOULDER);
+
+  006ba	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$2[rsp]
+  006bf	48 83 c0 4c	 add	 rax, 76			; 0000004cH
+  006c3	48 8b 8c 24 90
+	00 00 00	 mov	 rcx, QWORD PTR OldController$9[rsp]
+  006cb	48 83 c1 4c	 add	 rcx, 76			; 0000004cH
+  006cf	48 8b 54 24 68	 mov	 rdx, QWORD PTR Pad$1[rsp]
+  006d4	0f b7 12	 movzx	 edx, WORD PTR [rdx]
+  006d7	89 94 24 c4 00
+	00 00		 mov	 DWORD PTR tv313[rsp], edx
+  006de	41 b9 00 02 00
+	00		 mov	 r9d, 512		; 00000200H
+  006e4	4c 8b c0	 mov	 r8, rax
+  006e7	48 8b d1	 mov	 rdx, rcx
+  006ea	8b 84 24 c4 00
+	00 00		 mov	 eax, DWORD PTR tv313[rsp]
+  006f1	8b c8		 mov	 ecx, eax
+  006f3	e8 00 00 00 00	 call	 ?Win32ProcessXInputDigitalButton@@YAXKPEAUgame_button_state@@0K@Z ; Win32ProcessXInputDigitalButton
+$LN15@WinMain:
+
+; 569  : 
+; 570  :                         
+; 571  : 
+; 572  :                         // bool Start = (Pad->wButtons & XINPUT_GAMEPAD_START);
+; 573  :                         // bool Back = (Pad->wButtons & XINPUT_GAMEPAD_BACK);
+; 574  : 
+; 575  :                         // if (AButton) {
+; 576  :                         //     SoundOutput.ToneHz = 512 + (int32)256*(((real32)StickY / 30000.0f));
+; 577  :                         //     SoundOutput.WavePeriod = SoundOutput.SamplesPerSecond/SoundOutput.ToneHz;
+; 578  :                         // }
+; 579  :                         // else {
+; 580  :                         //     SoundOutput.ToneHz = 256;
+; 581  :                         //     SoundOutput.WavePeriod = SoundOutput.SamplesPerSecond/SoundOutput.ToneHz;
+; 582  :                         // }
+; 583  :                     }
+; 584  :                     else {
+; 585  :                         // NOTE Controller is not available
+; 586  :                     }
+; 587  :                 }
+
+  006f8	e9 4a fc ff ff	 jmp	 $LN6@WinMain
+$LN7@WinMain:
+
+; 588  : 
+; 589  :                 DWORD ByteToLock = 0;
+
+  006fd	c7 84 24 80 00
+	00 00 00 00 00
+	00		 mov	 DWORD PTR ByteToLock$5[rsp], 0
+
+; 590  :                 DWORD TargetCursor = 0;
+
+  00708	c7 84 24 84 00
+	00 00 00 00 00
+	00		 mov	 DWORD PTR TargetCursor$6[rsp], 0
+
+; 591  :                 DWORD BytesToWrite = 0;
+
+  00713	c7 44 24 78 00
+	00 00 00	 mov	 DWORD PTR BytesToWrite$3[rsp], 0
+
+; 592  :                 DWORD PlayCursor = 0;
+
+  0071b	c7 84 24 a0 00
+	00 00 00 00 00
+	00		 mov	 DWORD PTR PlayCursor$15[rsp], 0
+
+; 593  :                 DWORD WriteCursor = 0;
+
+  00726	c7 84 24 c0 00
+	00 00 00 00 00
+	00		 mov	 DWORD PTR WriteCursor$19[rsp], 0
+
+; 594  :                 bool32 SoundIsValid = false;
+
+  00731	c7 84 24 a4 00
+	00 00 00 00 00
+	00		 mov	 DWORD PTR SoundIsValid$16[rsp], 0
+
+; 595  :                 // TODO Tighten up sound logic so that we know where we should be 
+; 596  :                 // writing to and can anticipate the time spent in the game update
+; 597  :                 if(SUCCEEDED(GlobalSecondaryBuffer->GetCurrentPosition(&PlayCursor, &WriteCursor))) {
+
+  0073c	48 8b 05 00 00
+	00 00		 mov	 rax, QWORD PTR ?GlobalSecondaryBuffer@@3PEAUIDirectSoundBuffer@@EA
+  00743	48 8b 00	 mov	 rax, QWORD PTR [rax]
+  00746	4c 8d 84 24 c0
+	00 00 00	 lea	 r8, QWORD PTR WriteCursor$19[rsp]
+  0074e	48 8d 94 24 a0
+	00 00 00	 lea	 rdx, QWORD PTR PlayCursor$15[rsp]
+  00756	48 8b 0d 00 00
+	00 00		 mov	 rcx, QWORD PTR ?GlobalSecondaryBuffer@@3PEAUIDirectSoundBuffer@@EA
+  0075d	ff 50 20	 call	 QWORD PTR [rax+32]
+  00760	85 c0		 test	 eax, eax
+  00762	0f 8c c1 00 00
+	00		 jl	 $LN21@WinMain
+
+; 598  :                     ByteToLock = (SoundOutput.RunningSampleIndex*SoundOutput.BytesPerSample) % SoundOutput.SecondaryBufferSize;
+
+  00768	8b 84 24 24 02
+	00 00		 mov	 eax, DWORD PTR SoundOutput$40[rsp+4]
+  0076f	0f af 84 24 28
+	02 00 00	 imul	 eax, DWORD PTR SoundOutput$40[rsp+8]
+  00777	33 d2		 xor	 edx, edx
+  00779	f7 b4 24 2c 02
+	00 00		 div	 DWORD PTR SoundOutput$40[rsp+12]
+  00780	8b c2		 mov	 eax, edx
+  00782	89 84 24 80 00
+	00 00		 mov	 DWORD PTR ByteToLock$5[rsp], eax
+
+; 599  :                     TargetCursor = (PlayCursor + (SoundOutput.LatencySampleCount*SoundOutput.BytesPerSample)) % SoundOutput.SecondaryBufferSize;
+
+  00789	8b 84 24 34 02
+	00 00		 mov	 eax, DWORD PTR SoundOutput$40[rsp+20]
+  00790	0f af 84 24 28
+	02 00 00	 imul	 eax, DWORD PTR SoundOutput$40[rsp+8]
+  00798	8b 8c 24 a0 00
+	00 00		 mov	 ecx, DWORD PTR PlayCursor$15[rsp]
+  0079f	03 c8		 add	 ecx, eax
+  007a1	8b c1		 mov	 eax, ecx
+  007a3	33 d2		 xor	 edx, edx
+  007a5	f7 b4 24 2c 02
+	00 00		 div	 DWORD PTR SoundOutput$40[rsp+12]
+  007ac	8b c2		 mov	 eax, edx
+  007ae	89 84 24 84 00
+	00 00		 mov	 DWORD PTR TargetCursor$6[rsp], eax
+
+; 600  :                     if(ByteToLock == TargetCursor) {
+
+  007b5	8b 84 24 84 00
+	00 00		 mov	 eax, DWORD PTR TargetCursor$6[rsp]
+  007bc	39 84 24 80 00
+	00 00		 cmp	 DWORD PTR ByteToLock$5[rsp], eax
+  007c3	75 08		 jne	 SHORT $LN22@WinMain
+
+; 601  :                         BytesToWrite = 0;
+
+  007c5	c7 44 24 78 00
+	00 00 00	 mov	 DWORD PTR BytesToWrite$3[rsp], 0
 $LN22@WinMain:
 
-; 608  : 
-; 609  :                     // TODO More strenuous test
-; 610  :                 }
-; 611  : 
-; 612  :                 win32_window_dimension Dimension = Win32GetWindowDimension(Window);
+; 602  :                     }
+; 603  :                     if(ByteToLock > TargetCursor) {
 
-  007d9	48 8b 8c 24 b0
-	00 00 00	 mov	 rcx, QWORD PTR Window$23[rsp]
-  007e1	e8 00 00 00 00	 call	 ?Win32GetWindowDimension@@YA?AUwin32_window_dimension@@PEAUHWND__@@@Z ; Win32GetWindowDimension
-  007e6	48 89 84 24 20
-	01 00 00	 mov	 QWORD PTR $T35[rsp], rax
-  007ee	48 8b 84 24 20
-	01 00 00	 mov	 rax, QWORD PTR $T35[rsp]
-  007f6	48 89 84 24 c0
-	00 00 00	 mov	 QWORD PTR Dimension$25[rsp], rax
+  007cd	8b 84 24 84 00
+	00 00		 mov	 eax, DWORD PTR TargetCursor$6[rsp]
+  007d4	39 84 24 80 00
+	00 00		 cmp	 DWORD PTR ByteToLock$5[rsp], eax
+  007db	76 2b		 jbe	 SHORT $LN23@WinMain
 
-; 613  :                 Win32DisplayBufferInWindow(
+; 604  :                         BytesToWrite = (SoundOutput.SecondaryBufferSize - ByteToLock);
 
-  007fe	44 8b 8c 24 c4
-	00 00 00	 mov	 r9d, DWORD PTR Dimension$25[rsp+4]
-  00806	44 8b 84 24 c0
-	00 00 00	 mov	 r8d, DWORD PTR Dimension$25[rsp]
-  0080e	48 8b 94 24 08
-	01 00 00	 mov	 rdx, QWORD PTR DeviceContext$32[rsp]
-  00816	48 8d 0d 00 00
-	00 00		 lea	 rcx, OFFSET FLAT:?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A
-  0081d	e8 00 00 00 00	 call	 ?Win32DisplayBufferInWindow@@YAXPEAUwin32_offscreen_buffer@@PEAUHDC__@@HH@Z ; Win32DisplayBufferInWindow
+  007dd	8b 84 24 80 00
+	00 00		 mov	 eax, DWORD PTR ByteToLock$5[rsp]
+  007e4	8b 8c 24 2c 02
+	00 00		 mov	 ecx, DWORD PTR SoundOutput$40[rsp+12]
+  007eb	2b c8		 sub	 ecx, eax
+  007ed	8b c1		 mov	 eax, ecx
+  007ef	89 44 24 78	 mov	 DWORD PTR BytesToWrite$3[rsp], eax
 
-; 614  :                     &GlobalBackbuffer, DeviceContext,
-; 615  :                     Dimension.Width, Dimension.Height
-; 616  :                 );
-; 617  : 
-; 618  :                 int64 EndCycleCount = __rdtsc();
+; 605  :                         BytesToWrite += TargetCursor;
 
-  00822	0f 31		 rdtsc
-  00824	48 c1 e2 20	 shl	 rdx, 32			; 00000020H
-  00828	48 0b c2	 or	 rax, rdx
-  0082b	48 89 84 24 f0
-	00 00 00	 mov	 QWORD PTR EndCycleCount$30[rsp], rax
+  007f3	8b 84 24 84 00
+	00 00		 mov	 eax, DWORD PTR TargetCursor$6[rsp]
+  007fa	8b 4c 24 78	 mov	 ecx, DWORD PTR BytesToWrite$3[rsp]
+  007fe	03 c8		 add	 ecx, eax
+  00800	8b c1		 mov	 eax, ecx
+  00802	89 44 24 78	 mov	 DWORD PTR BytesToWrite$3[rsp], eax
+
+; 606  :                     }
+; 607  :                     else {
+
+  00806	eb 16		 jmp	 SHORT $LN24@WinMain
+$LN23@WinMain:
+
+; 608  :                         BytesToWrite = TargetCursor - ByteToLock;
+
+  00808	8b 84 24 80 00
+	00 00		 mov	 eax, DWORD PTR ByteToLock$5[rsp]
+  0080f	8b 8c 24 84 00
+	00 00		 mov	 ecx, DWORD PTR TargetCursor$6[rsp]
+  00816	2b c8		 sub	 ecx, eax
+  00818	8b c1		 mov	 eax, ecx
+  0081a	89 44 24 78	 mov	 DWORD PTR BytesToWrite$3[rsp], eax
+$LN24@WinMain:
+
+; 609  :                     }
+; 610  : 
+; 611  :                     SoundIsValid = true;
+
+  0081e	c7 84 24 a4 00
+	00 00 01 00 00
+	00		 mov	 DWORD PTR SoundIsValid$16[rsp], 1
+$LN21@WinMain:
+
+; 612  :                 }
+; 613  : 
+; 614  :                 
+; 615  :                 game_sound_output_buffer SoundBuffer = {};
+
+  00829	48 8d 84 24 f0
+	00 00 00	 lea	 rax, QWORD PTR SoundBuffer$23[rsp]
+  00831	48 8b f8	 mov	 rdi, rax
+  00834	33 c0		 xor	 eax, eax
+  00836	b9 10 00 00 00	 mov	 ecx, 16
+  0083b	f3 aa		 rep stosb
+
+; 616  :                 SoundBuffer.SamplesPerSecond = SoundOutput.SamplesPerSecond;
+
+  0083d	8b 84 24 20 02
+	00 00		 mov	 eax, DWORD PTR SoundOutput$40[rsp]
+  00844	89 84 24 f0 00
+	00 00		 mov	 DWORD PTR SoundBuffer$23[rsp], eax
+
+; 617  :                 SoundBuffer.SampleCount = BytesToWrite / SoundOutput.BytesPerSample;
+
+  0084b	33 d2		 xor	 edx, edx
+  0084d	8b 44 24 78	 mov	 eax, DWORD PTR BytesToWrite$3[rsp]
+  00851	f7 b4 24 28 02
+	00 00		 div	 DWORD PTR SoundOutput$40[rsp+8]
+  00858	89 84 24 f4 00
+	00 00		 mov	 DWORD PTR SoundBuffer$23[rsp+4], eax
+
+; 618  :                 SoundBuffer.Samples = Samples;
+
+  0085f	48 8b 84 24 40
+	01 00 00	 mov	 rax, QWORD PTR Samples$31[rsp]
+  00867	48 89 84 24 f8
+	00 00 00	 mov	 QWORD PTR SoundBuffer$23[rsp+8], rax
 
 ; 619  : 
-; 620  :                 LARGE_INTEGER EndCounter;
-; 621  :                 QueryPerformanceCounter(&EndCounter);
+; 620  :                 game_offscreen_buffer Buffer = {};
 
-  00833	48 8d 8c 24 c8
-	00 00 00	 lea	 rcx, QWORD PTR EndCounter$26[rsp]
-  0083b	ff 15 00 00 00
+  0086f	48 8d 84 24 50
+	01 00 00	 lea	 rax, QWORD PTR Buffer$33[rsp]
+  00877	48 8b f8	 mov	 rdi, rax
+  0087a	33 c0		 xor	 eax, eax
+  0087c	b9 18 00 00 00	 mov	 ecx, 24
+  00881	f3 aa		 rep stosb
+
+; 621  :                 Buffer.Memory = GlobalBackbuffer.Memory;
+
+  00883	48 8b 05 30 00
+	00 00		 mov	 rax, QWORD PTR ?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A+48
+  0088a	48 89 84 24 50
+	01 00 00	 mov	 QWORD PTR Buffer$33[rsp], rax
+
+; 622  :                 Buffer.Width = GlobalBackbuffer.Width;
+
+  00892	8b 05 38 00 00
+	00		 mov	 eax, DWORD PTR ?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A+56
+  00898	89 84 24 58 01
+	00 00		 mov	 DWORD PTR Buffer$33[rsp+8], eax
+
+; 623  :                 Buffer.Height = GlobalBackbuffer.Height;
+
+  0089f	8b 05 3c 00 00
+	00		 mov	 eax, DWORD PTR ?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A+60
+  008a5	89 84 24 5c 01
+	00 00		 mov	 DWORD PTR Buffer$33[rsp+12], eax
+
+; 624  :                 Buffer.Pitch = GlobalBackbuffer.Pitch;
+
+  008ac	8b 05 40 00 00
+	00		 mov	 eax, DWORD PTR ?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A+64
+  008b2	89 84 24 60 01
+	00 00		 mov	 DWORD PTR Buffer$33[rsp+16], eax
+
+; 625  :                 GameUpdateAndRender(NewInput, &Buffer, &SoundBuffer);
+
+  008b9	4c 8d 84 24 f0
+	00 00 00	 lea	 r8, QWORD PTR SoundBuffer$23[rsp]
+  008c1	48 8d 94 24 50
+	01 00 00	 lea	 rdx, QWORD PTR Buffer$33[rsp]
+  008c9	48 8b 8c 24 a8
+	00 00 00	 mov	 rcx, QWORD PTR NewInput$17[rsp]
+  008d1	e8 00 00 00 00	 call	 ?GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z ; GameUpdateAndRender
+
+; 626  : 
+; 627  :                 // directsound output test
+; 628  :                 if(SoundIsValid) {
+
+  008d6	83 bc 24 a4 00
+	00 00 00	 cmp	 DWORD PTR SoundIsValid$16[rsp], 0
+  008de	74 21		 je	 SHORT $LN25@WinMain
+
+; 629  :                     
+; 630  :                     win32FillSoundBuffer(&SoundOutput, ByteToLock, BytesToWrite, &SoundBuffer);
+
+  008e0	4c 8d 8c 24 f0
+	00 00 00	 lea	 r9, QWORD PTR SoundBuffer$23[rsp]
+  008e8	44 8b 44 24 78	 mov	 r8d, DWORD PTR BytesToWrite$3[rsp]
+  008ed	8b 94 24 80 00
+	00 00		 mov	 edx, DWORD PTR ByteToLock$5[rsp]
+  008f4	48 8d 8c 24 20
+	02 00 00	 lea	 rcx, QWORD PTR SoundOutput$40[rsp]
+  008fc	e8 00 00 00 00	 call	 ?win32FillSoundBuffer@@YAXPEAUwin32_sound_output@@KKPEAUgame_sound_output_buffer@@@Z ; win32FillSoundBuffer
+$LN25@WinMain:
+
+; 631  : 
+; 632  :                     // TODO More strenuous test
+; 633  :                 }
+; 634  : 
+; 635  :                 win32_window_dimension Dimension = Win32GetWindowDimension(Window);
+
+  00901	48 8b 8c 24 b0
+	00 00 00	 mov	 rcx, QWORD PTR Window$18[rsp]
+  00909	e8 00 00 00 00	 call	 ?Win32GetWindowDimension@@YA?AUwin32_window_dimension@@PEAUHWND__@@@Z ; Win32GetWindowDimension
+  0090e	48 89 84 24 70
+	01 00 00	 mov	 QWORD PTR $T34[rsp], rax
+  00916	48 8b 84 24 70
+	01 00 00	 mov	 rax, QWORD PTR $T34[rsp]
+  0091e	48 89 84 24 18
+	01 00 00	 mov	 QWORD PTR Dimension$26[rsp], rax
+
+; 636  :                 Win32DisplayBufferInWindow(
+
+  00926	44 8b 8c 24 1c
+	01 00 00	 mov	 r9d, DWORD PTR Dimension$26[rsp+4]
+  0092e	44 8b 84 24 18
+	01 00 00	 mov	 r8d, DWORD PTR Dimension$26[rsp]
+  00936	48 8b 94 24 28
+	01 00 00	 mov	 rdx, QWORD PTR DeviceContext$28[rsp]
+  0093e	48 8d 0d 00 00
+	00 00		 lea	 rcx, OFFSET FLAT:?GlobalBackbuffer@@3Uwin32_offscreen_buffer@@A
+  00945	e8 00 00 00 00	 call	 ?Win32DisplayBufferInWindow@@YAXPEAUwin32_offscreen_buffer@@PEAUHDC__@@HH@Z ; Win32DisplayBufferInWindow
+
+; 637  :                     &GlobalBackbuffer, DeviceContext,
+; 638  :                     Dimension.Width, Dimension.Height
+; 639  :                 );
+; 640  : 
+; 641  :                 int64 EndCycleCount = __rdtsc();
+
+  0094a	0f 31		 rdtsc
+  0094c	48 c1 e2 20	 shl	 rdx, 32			; 00000020H
+  00950	48 0b c2	 or	 rax, rdx
+  00953	48 89 84 24 e0
+	00 00 00	 mov	 QWORD PTR EndCycleCount$21[rsp], rax
+
+; 642  : 
+; 643  :                 LARGE_INTEGER EndCounter;
+; 644  :                 QueryPerformanceCounter(&EndCounter);
+
+  0095b	48 8d 8c 24 00
+	01 00 00	 lea	 rcx, QWORD PTR EndCounter$24[rsp]
+  00963	ff 15 00 00 00
 	00		 call	 QWORD PTR __imp_QueryPerformanceCounter
 
-; 622  : 
-; 623  :                 uint64 CyclesElapsed = EndCycleCount - LastCycleCount;
+; 645  : 
+; 646  :                 uint64 CyclesElapsed = EndCycleCount - LastCycleCount;
 
-  00841	48 8b 84 24 00
-	01 00 00	 mov	 rax, QWORD PTR LastCycleCount$31[rsp]
-  00849	48 8b 8c 24 f0
-	00 00 00	 mov	 rcx, QWORD PTR EndCycleCount$30[rsp]
-  00851	48 2b c8	 sub	 rcx, rax
-  00854	48 8b c1	 mov	 rax, rcx
-  00857	48 89 84 24 18
-	01 00 00	 mov	 QWORD PTR CyclesElapsed$34[rsp], rax
+  00969	48 8b 84 24 20
+	01 00 00	 mov	 rax, QWORD PTR LastCycleCount$27[rsp]
+  00971	48 8b 8c 24 e0
+	00 00 00	 mov	 rcx, QWORD PTR EndCycleCount$21[rsp]
+  00979	48 2b c8	 sub	 rcx, rax
+  0097c	48 8b c1	 mov	 rax, rcx
+  0097f	48 89 84 24 38
+	01 00 00	 mov	 QWORD PTR CyclesElapsed$30[rsp], rax
 
-; 624  :                 int64 CounterElapsed = EndCounter.QuadPart - LastCounter.QuadPart;
+; 647  :                 int64 CounterElapsed = EndCounter.QuadPart - LastCounter.QuadPart;
 
-  0085f	48 8b 84 24 e0
-	00 00 00	 mov	 rax, QWORD PTR LastCounter$28[rsp]
-  00867	48 8b 8c 24 c8
-	00 00 00	 mov	 rcx, QWORD PTR EndCounter$26[rsp]
-  0086f	48 2b c8	 sub	 rcx, rax
-  00872	48 8b c1	 mov	 rax, rcx
-  00875	48 89 84 24 e8
-	00 00 00	 mov	 QWORD PTR CounterElapsed$29[rsp], rax
+  00987	48 8b 84 24 10
+	01 00 00	 mov	 rax, QWORD PTR LastCounter$25[rsp]
+  0098f	48 8b 8c 24 00
+	01 00 00	 mov	 rcx, QWORD PTR EndCounter$24[rsp]
+  00997	48 2b c8	 sub	 rcx, rax
+  0099a	48 8b c1	 mov	 rax, rcx
+  0099d	48 89 84 24 e8
+	00 00 00	 mov	 QWORD PTR CounterElapsed$22[rsp], rax
 
-; 625  :                 real64 MSPerFrame = (((1000.0f*(real64)CounterElapsed) / (real64)PerfCountFrequency));
+; 648  :                 real64 MSPerFrame = (((1000.0f*(real64)CounterElapsed) / (real64)PerfCountFrequency));
 
-  0087d	f2 48 0f 2a 84
-	24 e8 00 00 00	 cvtsi2sd xmm0, QWORD PTR CounterElapsed$29[rsp]
-  00887	f2 0f 10 0d 00
+  009a5	f2 48 0f 2a 84
+	24 e8 00 00 00	 cvtsi2sd xmm0, QWORD PTR CounterElapsed$22[rsp]
+  009af	f2 0f 10 0d 00
 	00 00 00	 movsd	 xmm1, QWORD PTR __real@408f400000000000
-  0088f	f2 0f 59 c8	 mulsd	 xmm1, xmm0
-  00893	0f 28 c1	 movaps	 xmm0, xmm1
-  00896	f2 48 0f 2a 8c
-	24 f8 00 00 00	 cvtsi2sd xmm1, QWORD PTR PerfCountFrequency$[rsp]
-  008a0	f2 0f 5e c1	 divsd	 xmm0, xmm1
-  008a4	f2 0f 11 84 24
-	58 01 00 00	 movsd	 QWORD PTR MSPerFrame$39[rsp], xmm0
+  009b7	f2 0f 59 c8	 mulsd	 xmm1, xmm0
+  009bb	0f 28 c1	 movaps	 xmm0, xmm1
+  009be	f2 48 0f 2a 8c
+	24 08 01 00 00	 cvtsi2sd xmm1, QWORD PTR PerfCountFrequency$[rsp]
+  009c8	f2 0f 5e c1	 divsd	 xmm0, xmm1
+  009cc	f2 0f 11 84 24
+	90 01 00 00	 movsd	 QWORD PTR MSPerFrame$38[rsp], xmm0
 
-; 626  :                 real64 FPS = (real64)PerfCountFrequency / (real64)CounterElapsed;
+; 649  :                 real64 FPS = (real64)PerfCountFrequency / (real64)CounterElapsed;
 
-  008ad	f2 48 0f 2a 84
-	24 f8 00 00 00	 cvtsi2sd xmm0, QWORD PTR PerfCountFrequency$[rsp]
-  008b7	f2 48 0f 2a 8c
-	24 e8 00 00 00	 cvtsi2sd xmm1, QWORD PTR CounterElapsed$29[rsp]
-  008c1	f2 0f 5e c1	 divsd	 xmm0, xmm1
-  008c5	f2 0f 11 84 24
-	60 01 00 00	 movsd	 QWORD PTR FPS$40[rsp], xmm0
+  009d5	f2 48 0f 2a 84
+	24 08 01 00 00	 cvtsi2sd xmm0, QWORD PTR PerfCountFrequency$[rsp]
+  009df	f2 48 0f 2a 8c
+	24 e8 00 00 00	 cvtsi2sd xmm1, QWORD PTR CounterElapsed$22[rsp]
+  009e9	f2 0f 5e c1	 divsd	 xmm0, xmm1
+  009ed	f2 0f 11 84 24
+	80 01 00 00	 movsd	 QWORD PTR FPS$36[rsp], xmm0
 
-; 627  :                 real64 MCPF = ((real64)CyclesElapsed / (1000.0f * 1000.0f));
+; 650  :                 real64 MCPF = ((real64)CyclesElapsed / (1000.0f * 1000.0f));
 
-  008ce	48 8b 84 24 18
-	01 00 00	 mov	 rax, QWORD PTR CyclesElapsed$34[rsp]
-  008d6	f2 48 0f 2a c0	 cvtsi2sd xmm0, rax
-  008db	48 85 c0	 test	 rax, rax
-  008de	7d 08		 jge	 SHORT $LN46@WinMain
-  008e0	f2 0f 58 05 00
+  009f6	48 8b 84 24 38
+	01 00 00	 mov	 rax, QWORD PTR CyclesElapsed$30[rsp]
+  009fe	f2 48 0f 2a c0	 cvtsi2sd xmm0, rax
+  00a03	48 85 c0	 test	 rax, rax
+  00a06	7d 08		 jge	 SHORT $LN33@WinMain
+  00a08	f2 0f 58 05 00
 	00 00 00	 addsd	 xmm0, QWORD PTR __real@43f0000000000000
-$LN46@WinMain:
-  008e8	f2 0f 5e 05 00
+$LN33@WinMain:
+  00a10	f2 0f 5e 05 00
 	00 00 00	 divsd	 xmm0, QWORD PTR __real@412e848000000000
-  008f0	f2 0f 11 84 24
-	50 01 00 00	 movsd	 QWORD PTR MCPF$38[rsp], xmm0
+  00a18	f2 0f 11 84 24
+	88 01 00 00	 movsd	 QWORD PTR MCPF$37[rsp], xmm0
 
-; 628  :                 
-; 629  : 
-; 630  :                 // char Buffer[256];
-; 631  :                 // sprintf(Buffer, "%.02fms/f,  %.02ff/s,  %.02fmc/f\n", MSPerFrame, FPS, MCPF);
-; 632  :                 // OutputDebugStringA(Buffer);
-; 633  : 
-; 634  :                 // TODO print it
-; 635  :                 LastCounter = EndCounter;
+; 651  :                 
+; 652  : 
+; 653  :                 // char Buffer[256];
+; 654  :                 // sprintf(Buffer, "%.02fms/f,  %.02ff/s,  %.02fmc/f\n", MSPerFrame, FPS, MCPF);
+; 655  :                 // OutputDebugStringA(Buffer);
+; 656  : 
+; 657  :                 // TODO print it
+; 658  :                 LastCounter = EndCounter;
 
-  008f9	48 8b 84 24 c8
-	00 00 00	 mov	 rax, QWORD PTR EndCounter$26[rsp]
-  00901	48 89 84 24 e0
-	00 00 00	 mov	 QWORD PTR LastCounter$28[rsp], rax
+  00a21	48 8b 84 24 00
+	01 00 00	 mov	 rax, QWORD PTR EndCounter$24[rsp]
+  00a29	48 89 84 24 10
+	01 00 00	 mov	 QWORD PTR LastCounter$25[rsp], rax
 
-; 636  :                 LastCycleCount = EndCycleCount;
+; 659  :                 LastCycleCount = EndCycleCount;
 
-  00909	48 8b 84 24 f0
-	00 00 00	 mov	 rax, QWORD PTR EndCycleCount$30[rsp]
-  00911	48 89 84 24 00
-	01 00 00	 mov	 QWORD PTR LastCycleCount$31[rsp], rax
+  00a31	48 8b 84 24 e0
+	00 00 00	 mov	 rax, QWORD PTR EndCycleCount$21[rsp]
+  00a39	48 89 84 24 20
+	01 00 00	 mov	 QWORD PTR LastCycleCount$27[rsp], rax
 
-; 637  :             }
+; 660  : 
+; 661  :                 game_input *Temp = NewInput;
 
-  00919	e9 7c f9 ff ff	 jmp	 $LN2@WinMain
+  00a41	48 8b 84 24 a8
+	00 00 00	 mov	 rax, QWORD PTR NewInput$17[rsp]
+  00a49	48 89 84 24 48
+	01 00 00	 mov	 QWORD PTR Temp$32[rsp], rax
+
+; 662  :                 NewInput = OldInput;
+
+  00a51	48 8b 84 24 d8
+	00 00 00	 mov	 rax, QWORD PTR OldInput$20[rsp]
+  00a59	48 89 84 24 a8
+	00 00 00	 mov	 QWORD PTR NewInput$17[rsp], rax
+
+; 663  :                 OldInput = Temp;
+
+  00a61	48 8b 84 24 48
+	01 00 00	 mov	 rax, QWORD PTR Temp$32[rsp]
+  00a69	48 89 84 24 d8
+	00 00 00	 mov	 QWORD PTR OldInput$20[rsp], rax
+
+; 664  :                 // TODO Clear?
+; 665  :             }
+
+  00a71	e9 3c f8 ff ff	 jmp	 $LN2@WinMain
 $LN3@WinMain:
 $LN11@WinMain:
 $LN9@WinMain:
 
-; 638  :             //game loop end
-; 639  :         }
-; 640  :         else {
-; 641  :             // TODO Logging
-; 642  :         }
-; 643  :     }
-; 644  :     else{
-; 645  :         // TODO Logging
-; 646  :     }
-; 647  :     return(0); 
+; 666  :             //game loop end
+; 667  :         }
+; 668  :         else {
+; 669  :             // TODO Logging
+; 670  :         }
+; 671  :     }
+; 672  :     else{
+; 673  :         // TODO Logging
+; 674  :     }
+; 675  :     return(0); 
 
-  0091e	33 c0		 xor	 eax, eax
+  00a76	33 c0		 xor	 eax, eax
 
-; 648  : }
+; 676  : }
 
-  00920	48 8b 8c 24 28
-	02 00 00	 mov	 rcx, QWORD PTR __$ArrayPad$[rsp]
-  00928	48 33 cc	 xor	 rcx, rsp
-  0092b	e8 00 00 00 00	 call	 __security_check_cookie
-  00930	48 81 c4 30 02
-	00 00		 add	 rsp, 560		; 00000230H
-  00937	5f		 pop	 rdi
-  00938	c3		 ret	 0
+  00a78	48 8b 8c 24 f0
+	04 00 00	 mov	 rcx, QWORD PTR __$ArrayPad$[rsp]
+  00a80	48 33 cc	 xor	 rcx, rsp
+  00a83	e8 00 00 00 00	 call	 __security_check_cookie
+  00a88	48 81 c4 00 05
+	00 00		 add	 rsp, 1280		; 00000500H
+  00a8f	5f		 pop	 rdi
+  00a90	c3		 ret	 0
 WinMain	ENDP
 _TEXT	ENDS
 ; Function compile flags: /Odtp
@@ -3230,39 +3446,110 @@ _TEXT	ENDS
 ; Function compile flags: /Odtp
 ; File p:\handmade\code\handmade.cpp
 _TEXT	SEGMENT
-Buffer$ = 48
-XOffset$ = 56
-YOffset$ = 64
-SoundBuffer$ = 72
-ToneHz$ = 80
-?GameUpdateAndRender@@YAXPEAUgame_offscreen_buffer@@HHPEAUgame_sound_output_buffer@@H@Z PROC ; GameUpdateAndRender
+Input0$ = 32
+Input$ = 64
+Buffer$ = 72
+SoundBuffer$ = 80
+?GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z PROC ; GameUpdateAndRender
 
-; 44   : GameUpdateAndRender(game_offscreen_buffer *Buffer, int XOffset, int YOffset, game_sound_output_buffer *SoundBuffer, int ToneHz) {
+; 46   : GameUpdateAndRender(game_input *Input, game_offscreen_buffer *Buffer, game_sound_output_buffer *SoundBuffer) {
 
-  00000	4c 89 4c 24 20	 mov	 QWORD PTR [rsp+32], r9
-  00005	44 89 44 24 18	 mov	 DWORD PTR [rsp+24], r8d
-  0000a	89 54 24 10	 mov	 DWORD PTR [rsp+16], edx
-  0000e	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
-  00013	48 83 ec 28	 sub	 rsp, 40			; 00000028H
+  00000	4c 89 44 24 18	 mov	 QWORD PTR [rsp+24], r8
+  00005	48 89 54 24 10	 mov	 QWORD PTR [rsp+16], rdx
+  0000a	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
+  0000f	48 83 ec 38	 sub	 rsp, 56			; 00000038H
 
-; 45   :     // TODO Allow sample offsets here for more robust platform
-; 46   :     GameOutputSound(SoundBuffer, ToneHz);
+; 47   :     local_persist int XOffset = 0;
+; 48   :     local_persist int YOffset = 0;
+; 49   :     local_persist int ToneHz = 256;
+; 50   : 
+; 51   :     game_controller_input *Input0 = &Input->Controllers[0];
 
-  00017	8b 54 24 50	 mov	 edx, DWORD PTR ToneHz$[rsp]
-  0001b	48 8b 4c 24 48	 mov	 rcx, QWORD PTR SoundBuffer$[rsp]
-  00020	e8 00 00 00 00	 call	 ?GameOutputSound@@YAXPEAUgame_sound_output_buffer@@H@Z ; GameOutputSound
+  00013	b8 54 00 00 00	 mov	 eax, 84			; 00000054H
+  00018	48 6b c0 00	 imul	 rax, rax, 0
+  0001c	48 8b 4c 24 40	 mov	 rcx, QWORD PTR Input$[rsp]
+  00021	48 03 c8	 add	 rcx, rax
+  00024	48 8b c1	 mov	 rax, rcx
+  00027	48 89 44 24 20	 mov	 QWORD PTR Input0$[rsp], rax
 
-; 47   :     RenderWeirdGradient(Buffer, XOffset, YOffset);
+; 52   :     if(Input0->IsAnalogue) {
 
-  00025	44 8b 44 24 40	 mov	 r8d, DWORD PTR YOffset$[rsp]
-  0002a	8b 54 24 38	 mov	 edx, DWORD PTR XOffset$[rsp]
-  0002e	48 8b 4c 24 30	 mov	 rcx, QWORD PTR Buffer$[rsp]
-  00033	e8 00 00 00 00	 call	 ?RenderWeirdGradient@@YAXPEAUgame_offscreen_buffer@@HH@Z ; RenderWeirdGradient
+  0002c	48 8b 44 24 20	 mov	 rax, QWORD PTR Input0$[rsp]
+  00031	83 38 00	 cmp	 DWORD PTR [rax], 0
+  00034	74 47		 je	 SHORT $LN2@GameUpdate
 
-; 48   : }
+; 53   :         // Use analogue movement tuning
+; 54   :         XOffset += (int)(4.0f*(Input0->EndX));
 
-  00038	48 83 c4 28	 add	 rsp, 40			; 00000028H
-  0003c	c3		 ret	 0
-?GameUpdateAndRender@@YAXPEAUgame_offscreen_buffer@@HHPEAUgame_sound_output_buffer@@H@Z ENDP ; GameUpdateAndRender
+  00036	48 8b 44 24 20	 mov	 rax, QWORD PTR Input0$[rsp]
+  0003b	f3 0f 10 05 00
+	00 00 00	 movss	 xmm0, DWORD PTR __real@40800000
+  00043	f3 0f 59 40 1c	 mulss	 xmm0, DWORD PTR [rax+28]
+  00048	f3 0f 2c c0	 cvttss2si eax, xmm0
+  0004c	8b 0d 00 00 00
+	00		 mov	 ecx, DWORD PTR ?XOffset@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA
+  00052	03 c8		 add	 ecx, eax
+  00054	8b c1		 mov	 eax, ecx
+  00056	89 05 00 00 00
+	00		 mov	 DWORD PTR ?XOffset@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA, eax
+
+; 55   :         ToneHz = 256 + (int)(128.0f*(Input0->EndY));
+
+  0005c	48 8b 44 24 20	 mov	 rax, QWORD PTR Input0$[rsp]
+  00061	f3 0f 10 05 00
+	00 00 00	 movss	 xmm0, DWORD PTR __real@43000000
+  00069	f3 0f 59 40 20	 mulss	 xmm0, DWORD PTR [rax+32]
+  0006e	f3 0f 2c c0	 cvttss2si eax, xmm0
+  00072	05 00 01 00 00	 add	 eax, 256		; 00000100H
+  00077	89 05 00 00 00
+	00		 mov	 DWORD PTR ?ToneHz@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA, eax
+$LN2@GameUpdate:
+
+; 56   :     }
+; 57   :     else {
+; 58   :         // Use digital movement tuning
+; 59   :     }
+; 60   : 
+; 61   :     if(Input0->Down.EndedDown) {
+
+  0007d	48 8b 44 24 20	 mov	 rax, QWORD PTR Input0$[rsp]
+  00082	83 78 30 00	 cmp	 DWORD PTR [rax+48], 0
+  00086	74 0e		 je	 SHORT $LN4@GameUpdate
+
+; 62   :         YOffset += 1;
+
+  00088	8b 05 00 00 00
+	00		 mov	 eax, DWORD PTR ?YOffset@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA
+  0008e	ff c0		 inc	 eax
+  00090	89 05 00 00 00
+	00		 mov	 DWORD PTR ?YOffset@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA, eax
+$LN4@GameUpdate:
+
+; 63   :     }
+; 64   : 
+; 65   : 
+; 66   : 
+; 67   :     // TODO Allow sample offsets here for more robust platform
+; 68   :     GameOutputSound(SoundBuffer, ToneHz);
+
+  00096	8b 15 00 00 00
+	00		 mov	 edx, DWORD PTR ?ToneHz@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA
+  0009c	48 8b 4c 24 50	 mov	 rcx, QWORD PTR SoundBuffer$[rsp]
+  000a1	e8 00 00 00 00	 call	 ?GameOutputSound@@YAXPEAUgame_sound_output_buffer@@H@Z ; GameOutputSound
+
+; 69   :     RenderWeirdGradient(Buffer, XOffset, YOffset);
+
+  000a6	44 8b 05 00 00
+	00 00		 mov	 r8d, DWORD PTR ?YOffset@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA
+  000ad	8b 15 00 00 00
+	00		 mov	 edx, DWORD PTR ?XOffset@?1??GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z@4HA
+  000b3	48 8b 4c 24 48	 mov	 rcx, QWORD PTR Buffer$[rsp]
+  000b8	e8 00 00 00 00	 call	 ?RenderWeirdGradient@@YAXPEAUgame_offscreen_buffer@@HH@Z ; RenderWeirdGradient
+
+; 70   : }
+
+  000bd	48 83 c4 38	 add	 rsp, 56			; 00000038H
+  000c1	c3		 ret	 0
+?GameUpdateAndRender@@YAXPEAUgame_input@@PEAUgame_offscreen_buffer@@PEAUgame_sound_output_buffer@@@Z ENDP ; GameUpdateAndRender
 _TEXT	ENDS
 END
