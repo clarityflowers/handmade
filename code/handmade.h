@@ -1,7 +1,15 @@
 #if !defined(HANDMADE_H)
 
-void PlatformLoadFile(char *FileName);
+#if HANDMADE_SLOW
+#define Assert(Expression) \
+    if(!(Expression)) {*(int *)0 = 0;}
+#else
+#define Assert(Expression)
+#endif
 
+#define Kilobytes(Value) (Value*1024)
+#define Megabytes(Value) (Kilobytes(Value)*1024)
+#define Gigabytes(Value) (Megabytes(Value)*1024)
 #define ArrayCount(Array) (sizeof(Array) / sizeof((Array)[0]))
 
 // TODO swap, min, max ... macros?
@@ -64,8 +72,36 @@ struct game_input {
     game_controller_input Controllers[4];
 };
 
+struct game_memory {
+    bool32 IsInitialized;
+
+    uint64 PermanentStorageSize;
+    void *PermanentStorage; // NOTE(casey): REQUIRED to be cleared to zero at startup
+
+    uint64 TransientStorageSize;
+    void *TransientStorage; // NOTE(casey): REQUIRED to be cleared to zero at startup
+};
+
 // FOUR THINGS - timing, controller/keyboard input, bitmap buffer to use, sound buffer to use
-internal void GameUpdateAndRender(game_input *Input, game_offscreen_buffer *Buffer, game_sound_output_buffer *SoundBuffer);
+internal void GameUpdateAndRender(
+    game_memory *Memory, 
+    game_input *Input, 
+    game_offscreen_buffer *Buffer, 
+    game_sound_output_buffer *SoundBuffer
+);
+
+//
+//
+//
+
+
+struct game_state {
+    int ToneHz;
+    int XOffset;
+    int YOffset;
+};
+
+
 
 #define HANDMADE_H
 #endif

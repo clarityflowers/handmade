@@ -40,31 +40,39 @@ RenderWeirdGradient(game_offscreen_buffer *Buffer, int XOffset, int YOffset) {
 
 
 
-
-
 void
-GameUpdateAndRender(game_input *Input, game_offscreen_buffer *Buffer, game_sound_output_buffer *SoundBuffer) {
-    local_persist int XOffset = 0;
-    local_persist int YOffset = 0;
-    local_persist int ToneHz = 256;
+GameUpdateAndRender(
+    game_memory *Memory,
+    game_input *Input, 
+    game_offscreen_buffer *Buffer, 
+    game_sound_output_buffer *SoundBuffer
+) {
+    Assert(sizeof(game_state) <= Memory->PermanentStorageSize);
+    game_state *GameState = (game_state *)Memory->PermanentStorage;
+    if (!Memory->IsInitialized) {
+        GameState->ToneHz = 256;
+
+        // TODO This may be more appropriate to do in the platform layer
+        Memory->IsInitialized = true;
+    }
 
     game_controller_input *Input0 = &Input->Controllers[0];
     if(Input0->IsAnalogue) {
         // Use analogue movement tuning
-        XOffset += (int)(4.0f*(Input0->EndX));
-        ToneHz = 256 + (int)(128.0f*(Input0->EndY));
+        GameState->XOffset += (int)(4.0f*(Input0->EndX));
+        GameState->ToneHz = 256 + (int)(128.0f*(Input0->EndY));
     }
     else {
         // Use digital movement tuning
     }
 
     if(Input0->Down.EndedDown) {
-        YOffset += 1;
+        GameState->YOffset += 1;
     }
 
 
 
     // TODO Allow sample offsets here for more robust platform
-    GameOutputSound(SoundBuffer, ToneHz);
-    RenderWeirdGradient(Buffer, XOffset, YOffset);
+    GameOutputSound(SoundBuffer, GameState->ToneHz);
+    RenderWeirdGradient(Buffer, GameState->XOffset, GameState->YOffset);
 }
