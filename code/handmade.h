@@ -1,5 +1,16 @@
 #if !defined(HANDMADE_H)
 
+/*
+    NOTE
+
+    HANDMADE_INTERNAL
+        0 - Build for public release
+        1 - Build for developer only
+    HANDMADE_SLOW
+        0 - No slow code allowed!
+        1 - Slow code welcome
+*/
+
 #if HANDMADE_SLOW
 #define Assert(Expression) \
     if(!(Expression)) {*(int *)0 = 0;}
@@ -7,9 +18,11 @@
 #define Assert(Expression)
 #endif
 
-#define Kilobytes(Value) (Value*1024)
-#define Megabytes(Value) (Kilobytes(Value)*1024)
-#define Gigabytes(Value) (Megabytes(Value)*1024)
+// TODO Should these always use 64-bit?
+#define Kilobytes(Value) (Value*1024LL)
+#define Megabytes(Value) (Kilobytes(Value)*1024LL)
+#define Gigabytes(Value) (Megabytes(Value)*1024LL)
+#define Terabytes(Value) (Gigabytes(Value)*1024LL)
 #define ArrayCount(Array) (sizeof(Array) / sizeof((Array)[0]))
 
 // TODO swap, min, max ... macros?
@@ -69,6 +82,7 @@ struct game_controller_input {
 };
 
 struct game_input {
+    // TODO Insert clock value here
     game_controller_input Controllers[4];
 };
 
@@ -89,6 +103,7 @@ internal void GameUpdateAndRender(
     game_offscreen_buffer *Buffer, 
     game_sound_output_buffer *SoundBuffer
 );
+
 
 //
 //
