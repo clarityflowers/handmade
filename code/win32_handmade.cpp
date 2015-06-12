@@ -84,6 +84,97 @@ global_variable x_input_set_state *XInputSetState_ = XInputSetStateStub;
 typedef DIRECT_SOUND_CREATE(direct_sound_create);
 
 
+inline uint32
+SafeTruncateUInt64(uint64 Value) {
+    Assert(Value <= 0xFFFFFFFF);
+    uint32 Result = (uint32)Value;
+    return(Result);
+}
+
+internal debug_read_file_result
+DEBUGPlatformReadEntireFile(char *Filename) {
+    debug_read_file_result Result = {};
+
+    HANDLE FileHandle = CreateFile(Filename, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);
+
+    if (FileHandle != INVALID_HANDLE_VALUE) {
+        LARGE_INTEGER FileSize;
+
+        if(GetFileSizeEx(FileHandle, &FileSize)) {
+            // TODO Defines for maximum values
+            uint32 FileSize32 = SafeTruncateUInt64(FileSize.QuadPart);
+            Result.Contents = VirtualAlloc(0, FileSize32, MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
+
+            if(Result.Contents) {
+                DWORD BytesRead;
+                
+                if(ReadFile(FileHandle, Result.Contents, FileSize.QuadPart, &BytesRead, 0) && (FileSize32 == BytesRead)) {
+                    // NOTE File read successfully
+                    Result.ContentsSize = FileSize32;
+                }
+                else {
+                    DEBUGPlatformFreeFileMemory(Result.Contents);
+                    Result.Contents = 0;
+                }
+            }
+            else {
+                // TODO logging
+            }
+        }
+        else {
+            // TODO logging
+        }
+
+        CloseHandle(FileHandle);
+    }
+    else {
+        // TODO logging
+    }
+
+    return(Result);
+
+}
+
+
+
+internal void 
+DEBUGPlatformFreeFileMemory(void *Memory) {
+    if(Memory) {
+        VirtualFree(Memory, 0, MEM_RELEASE);
+    }
+}
+
+
+
+internal bool32 
+DEBUGPlatformWriteEntireFile(char *Filename, uint32 MemorySize, void *Memory) {
+    bool32 Result = false;
+
+    HANDLE FileHandle = CreateFile(Filename, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, 0, 0);
+
+    if (FileHandle != INVALID_HANDLE_VALUE) {
+        DWORD BytesWritten;
+                
+        if(WriteFile(FileHandle, Memory, MemorySize, &BytesWritten, 0)) {
+            // NOTE File read successfully
+            Result = (BytesWritten == MemorySize);
+        }
+        else {
+            // TODO logging
+        }
+
+        CloseHandle(FileHandle);
+    }
+    else {
+        // TODO logging
+    }
+
+    return(Result);
+
+
+}
+
+
 
 internal void
 Wind32LoadXInput(void) {
@@ -115,11 +206,9 @@ Wind32LoadXInput(void) {
 
 internal void
 Win32InitDSound(HWND Window, int32 SamplesPerSecond, int32 BufferSize) {
-    // load the library
     HMODULE DSoundLibrary = LoadLibraryA("dsound.dll");
 
     if(DSoundLibrary) {
-        // get a DirectSound object
         direct_sound_create *DirectSoundCreate = (direct_sound_create *)GetProcAddress(DSoundLibrary, "DirectSoundCreate");
         // TODO double-check that this works on XP -- 7 or 8?
         LPDIRECTSOUND DirectSound;
@@ -157,7 +246,6 @@ Win32InitDSound(HWND Window, int32 SamplesPerSecond, int32 BufferSize) {
             else {
                 // TODO Diagnostic
             }
-            // create a secondary buffer
             // TODO DSBCAPS_GETCURENTPOSITION2?
             DSBUFFERDESC BufferDescription = {0};
             BufferDescription.dwSize = sizeof(BufferDescription);
@@ -214,7 +302,7 @@ Win32ResizeDIBSection(win32_offscreen_buffer *Buffer, int Width, int Height) {
     Buffer->Info.bmiHeader.biBitCount = 32;
     Buffer->Info.bmiHeader.biCompression = BI_RGB;
 
-    // NOTE: Thanks Chris Hecker for clarifying StretchDIBits/BitBlt
+    // NOTE Thanks Chris Hecker for clarifying StretchDIBits/BitBlt
     int BitmapMemorySize = (Buffer->Width*Buffer->Height)*Buffer->BytesPerPixel;
     Buffer->Memory = VirtualAlloc(0, BitmapMemorySize, MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
 

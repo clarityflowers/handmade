@@ -11,6 +11,8 @@
         1 - Slow code welcome
 */
 
+
+
 #if HANDMADE_SLOW
 #define Assert(Expression) \
     if(!(Expression)) {*(int *)0 = 0;}
@@ -29,10 +31,19 @@
 
 // TODO Services that the platform layer provides to the game
 
-/* NOTE
-Services that the game provides to the platform layer.
-This may expand in the future - sound of separate thread, ect.
-*/
+#if HANDMADE_INTERNAL
+// IMPORTANT
+// THese are NOT for doing anything in the shipping game - they are
+// blocking and the write doesn't protect against lost data!
+
+struct debug_read_file_result {
+    uint32 ContentsSize;
+    void *Contents;
+};
+internal debug_read_file_result DEBUGPlatformReadEntireFile(char *Filename);
+internal void DEBUGPlatformFreeFileMemory(void *Memory);
+internal bool32 DEBUGPlatformWriteEntireFile(char *Filename, uint32 MemorySize, void *Memory);
+#endif
 
 // TODO In the future, rendering _specifically_ will become a three-tiered abstraction
 struct game_offscreen_buffer {
