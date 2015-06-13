@@ -29,9 +29,9 @@ RenderWeirdGradient(game_offscreen_buffer *Buffer, int XOffset, int YOffset) {
     for( int Y = 0 ; Y < Buffer->Height ; ++Y ) {
         uint32 *Pixel = (uint32 *)Row;
         for( int X = 0 ; X < Buffer->Width ; ++X ) {
-            uint8 Blue = (X - XOffset);
-            uint8 Green = (Y + YOffset);
-            uint8 Red = ((X - (XOffset/4))*(Y + (YOffset/4))/8);
+            uint8 Blue = (uint8)(X - XOffset);
+            uint8 Green = (uint8)(Y + YOffset);
+            uint8 Red = (uint8)((X - (XOffset/4))*(Y + (YOffset/4))/8);
             *Pixel++ = ((Red << 16) | (Green << 8) | Blue);
         }
         Row += Buffer->Pitch;
@@ -76,7 +76,6 @@ GameUpdateAndRender(
     if(Input0->Down.EndedDown) {
         GameState->YOffset += 1;
     }
-
 
 
     // TODO Allow sample offsets here for more robust platform
