@@ -47,6 +47,7 @@ GameUpdateAndRender(
     game_offscreen_buffer *Buffer, 
     game_sound_output_buffer *SoundBuffer
 ) {
+    Assert((&Input->Controllers[0].Start - &Input->Controllers[0].Buttons[0]) == (ArrayCount(Input->Controllers[0].Buttons) - 1));
     Assert(sizeof(game_state) <= Memory->PermanentStorageSize);
     game_state *GameState = (game_state *)Memory->PermanentStorage;
     if (!Memory->IsInitialized) {
@@ -63,18 +64,32 @@ GameUpdateAndRender(
         Memory->IsInitialized = true;
     }
 
-    game_controller_input *Input0 = &Input->Controllers[0];
-    if(Input0->IsAnalogue) {
-        // Use analogue movement tuning
-        GameState->XOffset += (int)(4.0f*(Input0->EndX));
-        GameState->ToneHz = 256 + (int)(128.0f*(Input0->EndY));
-    }
-    else {
-        // Use digital movement tuning
-    }
+    GameState->ToneHz = 256;
+    for( int ControllerIndex = 0 ; ControllerIndex < ArrayCount(Input->Controllers) ; ++ControllerIndex) {
+        game_controller_input *Controller = GetController(Input, ControllerIndex);
+        if(Controller->IsAnalogue) {
+            // Use analogue movement tuning
+            GameState->XOffset += (int)(4.0f*(Controller->StickAverageX));
+            GameState->ToneHz += (int)(GameState->ToneHz/2.0f*(Controller->StickAverageY));
+        }
+        else {
+            if(Controller->MoveLeft.EndedDown) {
+                GameState->XOffset -= 1;
+            }
+            else if(Controller->MoveRight.EndedDown) {
+                GameState->XOffset += 1;
+            }
+            if(Controller->MoveUp.EndedDown) {
+                GameState->ToneHz = (int)(GameState->ToneHz*1.5f);
+            }
+            else if(Controller->MoveDown.EndedDown) {
+                GameState->ToneHz = (int)(GameState->ToneHz/2.0f);
+            }
+        }
 
-    if(Input0->Down.EndedDown) {
-        GameState->YOffset += 1;
+        if(Controller->ActionDown.EndedDown) {
+            GameState->YOffset += 1;
+        }
     }
 
 
