@@ -48,7 +48,7 @@ GameUpdateAndRender(
     game_sound_output_buffer *SoundBuffer
 ) {
     Assert((&Input->Controllers[0].Start - &Input->Controllers[0].Buttons[0]) == (ArrayCount(Input->Controllers[0].Buttons) - 1));
-    Assert(sizeof(game_state) <= Memory->PermanentStorageSize);
+    Assert(sizeof(game_state) <= Memory->PermanentStorageSize);  
     game_state *GameState = (game_state *)Memory->PermanentStorage;
     if (!Memory->IsInitialized) {
         char *Filename = __FILE__;
