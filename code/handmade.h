@@ -117,9 +117,11 @@ struct game_memory {
 internal void GameUpdateAndRender(
     game_memory *Memory, 
     game_input *Input, 
-    game_offscreen_buffer *Buffer, 
+    game_offscreen_buffer *Buffer 
 );
 
+// At the moment, this has to be a very fast function, it cannot be more than a millisecond or so
+// TODO reduce the pressure on this function's performance by measuring it or asking about it, etc.
 internal void GameGetSoundSamples(
     game_memory *Memory, 
     game_sound_output_buffer *SoundBuffer
