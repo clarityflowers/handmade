@@ -554,7 +554,7 @@ $LN4@Win32Proce:
 ; 530  :             }
 ; 531  :         }
 ; 532  : 
-; 533  :         // TODO Should we poll this more frequently
+; 533  :         // TODO: Should we poll this more frequently
 ; 534  : 
 ; 535  :     }
 
@@ -723,8 +723,8 @@ SourceBuffer$ = 168
 ; 430  :         &Region2, &Region2Size,
 ; 431  :         0
 ; 432  :     ))) {
-; 433  :         //TODO Assert that Region1Size/Region2Size is valid
-; 434  :         //TODO Collapse these to loops
+; 433  :         //TODO: Assert that Region1Size/Region2Size is valid
+; 434  :         //TODO: Collapse these to loops
 ; 435  :         DWORD Region1SampleCount = Region1Size/SoundOutput->BytesPerSample;
 
   00070	33 d2		 xor	 edx, edx
@@ -948,7 +948,7 @@ SoundOutput$ = 128
 ; 403  :         &Region2, &Region2Size,
 ; 404  :         0
 ; 405  :     ))) {
-; 406  :         // TODO Assert that Region1Size/Region2Sizse is valid
+; 406  :         // TODO: Assert that Region1Size/Region2Sizse is valid
 ; 407  :         uint8 *DestSample = (uint8 *)Region1;
 
   0005e	48 8b 44 24 60	 mov	 rax, QWORD PTR Region1$[rsp]
@@ -1120,7 +1120,7 @@ $LN5@Win32MainW:
 
 ; 354  : 
 ; 355  :         case WM_CLOSE: {
-; 356  :             // TODO Handle this with a message to the user?
+; 356  :             // TODO: Handle this with a message to the user?
 ; 357  :             GlobalRunning = false;
 
   000ad	c7 05 00 00 00
@@ -1147,7 +1147,7 @@ $LN7@Win32MainW:
 
 ; 363  : 
 ; 364  :         case WM_DESTROY: {
-; 365  :             // TODO Handle this as an error - recreate window?
+; 365  :             // TODO: Handle this as an error - recreate window?
 ; 366  :             GlobalRunning = false;
 
   000ce	c7 05 00 00 00
@@ -1281,7 +1281,7 @@ WindowHeight$ = 152
   0000f	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
   00014	48 83 ec 78	 sub	 rsp, 120		; 00000078H
 
-; 324  :     // TODO aspect ration correction
+; 324  :     // TODO: aspect ration correction
 ; 325  :     StretchDIBits(
 
   00018	48 8b 84 24 80
@@ -1348,7 +1348,7 @@ Height$ = 80
   00009	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
   0000e	48 83 ec 38	 sub	 rsp, 56			; 00000038H
 
-; 289  :     // TODO Bulletproof this
+; 289  :     // TODO: Bulletproof this
 ; 290  :     // Maybe don't free first, free after, then free first if that fails
 ; 291  : 
 ; 292  :     if(Buffer->Memory) {
@@ -1455,7 +1455,7 @@ $LN2@Win32Resiz:
   000ed	48 89 41 30	 mov	 QWORD PTR [rcx+48], rax
 
 ; 310  : 
-; 311  :     // TODO probably clear to black
+; 311  :     // TODO: probably clear to black
 ; 312  : 
 ; 313  :     Buffer->Pitch = Width*Buffer->BytesPerPixel;
 
@@ -1587,7 +1587,7 @@ BufferSize$ = 224
 	00		 call	 QWORD PTR __imp_GetProcAddress
   00058	48 89 44 24 30	 mov	 QWORD PTR DirectSoundCreate$4[rsp], rax
 
-; 215  :         // TODO double-check that this works on XP -- 7 or 8?
+; 215  :         // TODO: double-check that this works on XP -- 7 or 8?
 ; 216  :         LPDIRECTSOUND DirectSound;
 ; 217  :         if(DirectSoundCreate && SUCCEEDED(DirectSoundCreate(0, &DirectSound, 0))) {
 
@@ -1696,7 +1696,7 @@ BufferSize$ = 224
 	00 00 01 00 00
 	00		 mov	 DWORD PTR BufferDescription$8[rsp+4], 1
 
-; 231  :                 // TODO DSBCAPS_GLOBALFOCUS?
+; 231  :                 // TODO: DSBCAPS_GLOBALFOCUS?
 ; 232  : 
 ; 233  :                 LPDIRECTSOUNDBUFFER PrimaryBuffer;
 ; 234  : 
@@ -1739,17 +1739,17 @@ $LN5@Win32InitD:
 
 ; 239  :                     }
 ; 240  :                     else {
-; 241  :                         // TODO Diagnostic
+; 241  :                         // TODO: Diagnostic
 ; 242  :                     }
 ; 243  :                 }
 ; 244  :                 else {
-; 245  :                     // TODO Diagnostic
+; 245  :                     // TODO: Diagnostic
 ; 246  :                 }
 ; 247  :             }
 ; 248  :             else {
-; 249  :                 // TODO Diagnostic
+; 249  :                 // TODO: Diagnostic
 ; 250  :             }
-; 251  :             // TODO DSBCAPS_GETCURENTPOSITION2?
+; 251  :             // TODO: DSBCAPS_GETCURENTPOSITION2?
 ; 252  :             DSBUFFERDESC BufferDescription = {0};
 
   0019c	c7 44 24 48 00
@@ -1812,7 +1812,7 @@ $LN2@Win32InitD:
 ; 261  :             }
 ; 262  :         }
 ; 263  :         else {
-; 264  :             // TODO Diagnositc
+; 264  :             // TODO: Diagnositc
 ; 265  :         }
 ; 266  :     }
 ; 267  : }
@@ -1837,7 +1837,7 @@ XInputLibrary$ = 32
 
   00000	48 83 ec 38	 sub	 rsp, 56			; 00000038H
 
-; 183  :     // TODO Test on windows 8
+; 183  :     // TODO: Test on windows 8
 ; 184  :     HMODULE XInputLibrary = LoadLibraryA("xinput1_4.dll");
 
   00004	48 8d 0d 00 00
@@ -1870,7 +1870,7 @@ $LN2@Wind32Load:
 	00		 cmp	 QWORD PTR XInputLibrary$[rsp], 0
   00036	75 12		 jne	 SHORT $LN3@Wind32Load
 
-; 191  :         // TODO Diagnostic
+; 191  :         // TODO: Diagnostic
 ; 192  :         XInputLibrary = LoadLibraryA("xinput1_3.dll");
 
   00038	48 8d 0d 00 00
@@ -1931,10 +1931,10 @@ $LN7@Wind32Load:
 $LN4@Wind32Load:
 
 ; 199  : 
-; 200  :         // TODO Diagnostic
+; 200  :         // TODO: Diagnostic
 ; 201  :     }
 ; 202  :     else {
-; 203  :         // TODO Diagnostic
+; 203  :         // TODO: Diagnostic
 ; 204  :     }
 ; 205  : }
 
@@ -2330,7 +2330,7 @@ $LN27:
 	00 01 00 00 00	 mov	 DWORD PTR ?GlobalRunning@@3HA, 1
 
 ; 594  : 
-; 595  :             // TODO Pool with bitmap VirtualAlloc
+; 595  :             // TODO: Pool with bitmap VirtualAlloc
 ; 596  :             int16 *Samples = (int16 *)VirtualAlloc(0, SoundOutput.SecondaryBufferSize, MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
 
   00214	48 63 84 24 4c
@@ -2490,8 +2490,8 @@ $LN2@WinMain:
   00372	0f 84 7f 07 00
 	00		 je	 $LN3@WinMain
 
-; 626  :                     // TODO Zeroing macro
-; 627  :                     // TODO We can't zero everything because the up/down state will be wrong
+; 626  :                     // TODO: Zeroing macro
+; 627  :                     // TODO: We can't zero everything because the up/down state will be wrong
 ; 628  : 
 ; 629  :                     game_controller_input *KeyboardController = &NewInput->Controllers[0];
 
@@ -2627,7 +2627,7 @@ $LN6@WinMain:
 	00		 jne	 $LN14@WinMain
 
 ; 653  :                             // NOTE Controller is plugged in
-; 654  :                             // TODO See if ControllerState.dwPacketNumber increments
+; 654  :                             // TODO: See if ControllerState.dwPacketNumber increments
 ; 655  :                             XINPUT_GAMEPAD *Pad = &ControllerState.Gamepad;
 
   0048e	48 8d 84 24 5c
@@ -2635,7 +2635,7 @@ $LN6@WinMain:
   00496	48 89 44 24 60	 mov	 QWORD PTR Pad$1[rsp], rax
 
 ; 656  : 
-; 657  :                             // TODO DPad
+; 657  :                             // TODO: DPad
 ; 658  :                             bool32 Up = (Pad->wButtons & XINPUT_GAMEPAD_DPAD_UP);
 
   0049b	48 8b 44 24 60	 mov	 rax, QWORD PTR Pad$1[rsp]
@@ -2766,8 +2766,8 @@ $LN19@WinMain:
   005ad	f3 0f 11 40 08	 movss	 DWORD PTR [rax+8], xmm0
 
 ; 682  : 
-; 683  :                             // TODO Deadzones XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE
-; 684  :                             // TODO Min/max macros
+; 683  :                             // TODO: Deadzones XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE
+; 684  :                             // TODO: Min/max macros
 ; 685  :                             NewController->MinX = NewController->MaxX = NewController->EndX = X;
 
   005b2	48 8b 44 24 70	 mov	 rax, QWORD PTR NewController$3[rsp]
@@ -2965,7 +2965,7 @@ $LN5@WinMain:
 	00 00 00 00 00
 	00		 mov	 DWORD PTR SoundIsValid$14[rsp], 0
 
-; 708  :                     // TODO Tighten up sound logic so that we know where we should be 
+; 708  :                     // TODO: Tighten up sound logic so that we know where we should be 
 ; 709  :                     // writing to and can anticipate the time spent in the game update
 ; 710  :                     if(SUCCEEDED(GlobalSecondaryBuffer->GetCurrentPosition(&PlayCursor, &WriteCursor))) {
 
@@ -3177,7 +3177,7 @@ $LN20@WinMain:
 $LN24@WinMain:
 
 ; 744  : 
-; 745  :                         // TODO More strenuous test
+; 745  :                         // TODO: More strenuous test
 ; 746  :                     }
 ; 747  : 
 ; 748  :                     win32_window_dimension Dimension = Win32GetWindowDimension(Window);
@@ -3293,7 +3293,7 @@ $LN26@WinMain:
 ; 767  :                     // sprintf(Buffer, "%.02fms/f,  %.02ff/s,  %.02fmc/f\n", MSPerFrame, FPS, MCPF);
 ; 768  :                     // OutputDebugStringA(Buffer);
 ; 769  : 
-; 770  :                     // TODO print it
+; 770  :                     // TODO: print it
 ; 771  :                     LastCounter = EndCounter;
 
   00aa2	48 8b 84 24 08
@@ -3330,7 +3330,7 @@ $LN26@WinMain:
   00aea	48 89 84 24 c0
 	00 00 00	 mov	 QWORD PTR OldInput$16[rsp], rax
 
-; 777  :                     // TODO Clear?
+; 777  :                     // TODO: Clear?
 ; 778  :                 }
 
   00af2	e9 74 f8 ff ff	 jmp	 $LN2@WinMain
@@ -3342,15 +3342,15 @@ $LN7@WinMain:
 ; 779  :                 //game loop end
 ; 780  :             }
 ; 781  :             else {
-; 782  :                 // TODO Logging
+; 782  :                 // TODO: Logging
 ; 783  :             }
 ; 784  :         }
 ; 785  :         else {
-; 786  :             // TODO Logging
+; 786  :             // TODO: Logging
 ; 787  :         }
 ; 788  :     }
 ; 789  :     else{
-; 790  :         // TODO Logging
+; 790  :         // TODO: Logging
 ; 791  :     }
 ; 792  :     return(0); 
 
@@ -3392,7 +3392,7 @@ YOffset$ = 64
   00009	48 89 4c 24 08	 mov	 QWORD PTR [rsp+8], rcx
   0000e	48 83 ec 28	 sub	 rsp, 40			; 00000028H
 
-; 27   :     // TODO lets see which is better
+; 27   :     // TODO: lets see which is better
 ; 28   :     uint8 *Row = (uint8 *)Buffer->Memory;
 
   00012	48 8b 44 24 30	 mov	 rax, QWORD PTR Buffer$[rsp]
@@ -3744,7 +3744,7 @@ $LN4@GameUpdate:
 	00		 mov	 DWORD PTR [rax], 256	; 00000100H
 
 ; 61   : 
-; 62   :         // TODO This may be more appropriate to do in the platform layer
+; 62   :         // TODO: This may be more appropriate to do in the platform layer
 ; 63   :         Memory->IsInitialized = true;
 
   000cc	48 8b 84 24 90
@@ -3819,7 +3819,7 @@ $LN7@GameUpdate:
 ; 78   :     }
 ; 79   : 
 ; 80   : 
-; 81   :     // TODO Allow sample offsets here for more robust platform
+; 81   :     // TODO: Allow sample offsets here for more robust platform
 ; 82   :     GameOutputSound(SoundBuffer, GameState->ToneHz);
 
   00165	48 8b 44 24 20	 mov	 rax, QWORD PTR GameState$[rsp]
@@ -3929,7 +3929,7 @@ $LN4@DEBUGPlatf:
 
 ; 163  :         }
 ; 164  :         else {
-; 165  :             // TODO logging
+; 165  :             // TODO: logging
 ; 166  :         }
 ; 167  : 
 ; 168  :         CloseHandle(FileHandle);
@@ -3941,7 +3941,7 @@ $LN2@DEBUGPlatf:
 
 ; 169  :     }
 ; 170  :     else {
-; 171  :         // TODO logging
+; 171  :         // TODO: logging
 ; 172  :     }
 ; 173  : 
 ; 174  :     return(Result);
@@ -4057,7 +4057,7 @@ Filename$ = 152
   00079	0f 84 83 00 00
 	00		 je	 $LN4@DEBUGPlatf
 
-; 107  :             // TODO Defines for maximum values
+; 107  :             // TODO: Defines for maximum values
 ; 108  :             uint32 FileSize32 = SafeTruncateUInt64(FileSize.QuadPart);
 
   0007f	48 8b 4c 24 50	 mov	 rcx, QWORD PTR FileSize$3[rsp]
@@ -4130,11 +4130,11 @@ $LN4@DEBUGPlatf:
 ; 121  :                 }
 ; 122  :             }
 ; 123  :             else {
-; 124  :                 // TODO logging
+; 124  :                 // TODO: logging
 ; 125  :             }
 ; 126  :         }
 ; 127  :         else {
-; 128  :             // TODO logging
+; 128  :             // TODO: logging
 ; 129  :         }
 ; 130  : 
 ; 131  :         CloseHandle(FileHandle);
@@ -4146,7 +4146,7 @@ $LN2@DEBUGPlatf:
 
 ; 132  :     }
 ; 133  :     else {
-; 134  :         // TODO logging
+; 134  :         // TODO: logging
 ; 135  :     }
 ; 136  : 
 ; 137  :     return(Result);

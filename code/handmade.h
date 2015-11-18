@@ -11,7 +11,29 @@
         1 - Slow code welcome
 */
 
+// TODO: Implement sine ourselves
+#include <math.h>
+#include <stdint.h>
 
+#define Pi32 3.1415926539f
+#define internal static
+#define local_persist static
+#define global_variable static
+
+typedef int8_t int8;
+typedef int16_t int16;
+typedef int32_t int32;
+typedef int64_t int64;
+
+typedef int32 bool32;
+
+typedef uint8_t uint8;
+typedef uint16_t uint16;
+typedef uint32_t uint32;
+typedef uint64_t uint64;
+
+typedef float real32;
+typedef double real64;
 
 #if HANDMADE_SLOW
 #define Assert(Expression) \
@@ -20,16 +42,16 @@
 #define Assert(Expression)
 #endif
 
-// TODO Should these always use 64-bit?
+// TODO: Should these always use 64-bit?
 #define Kilobytes(Value) (Value*1024LL)
 #define Megabytes(Value) (Kilobytes(Value)*1024LL)
 #define Gigabytes(Value) (Megabytes(Value)*1024LL)
 #define Terabytes(Value) (Gigabytes(Value)*1024LL)
 #define ArrayCount(Array) (sizeof(Array) / sizeof((Array)[0]))
 
-// TODO swap, min, max ... macros?
+// TODO: swap, min, max ... macros?
 
-// TODO Services that the platform layer provides to the game
+// TODO: Services that the platform layer provides to the game
 
 #if HANDMADE_INTERNAL
 // IMPORTANT
@@ -40,12 +62,18 @@ struct debug_read_file_result {
     uint32 ContentsSize;
     void *Contents;
 };
-internal debug_read_file_result DEBUGPlatformReadEntireFile(char *Filename);
-internal void DEBUGPlatformFreeFileMemory(void *Memory);
-internal bool32 DEBUGPlatformWriteEntireFile(char *Filename, uint32 MemorySize, void *Memory);
+
+#define DEBUG_PLATFORM_READ_ENTIRE_FILE(name) debug_read_file_result name(char *Filename)
+typedef DEBUG_PLATFORM_READ_ENTIRE_FILE(debug_platform_read_entire_file);
+
+#define DEBUG_PLATFORM_FREE_FILE_MEMORY(name) void name(void *Memory)
+typedef DEBUG_PLATFORM_FREE_FILE_MEMORY(debug_platform_free_file_memory);
+
+#define DEBUG_PLATFORM_WRITE_ENTIRE_FILE(name) bool32 name(char *Filename, uint32 MemorySize, void *Memory)
+typedef DEBUG_PLATFORM_WRITE_ENTIRE_FILE(debug_platform_write_entire_file);
 #endif
 
-// TODO In the future, rendering _specifically_ will become a three-tiered abstraction
+// TODO: In the future, rendering _specifically_ will become a three-tiered abstraction
 struct game_offscreen_buffer {
     void *Memory;
     int Width;
@@ -94,7 +122,7 @@ struct game_controller_input {
 };
 
 struct game_input {
-    // TODO Insert clock value here
+    // TODO: Insert clock value here
     game_controller_input Controllers[5];
 };
 
@@ -111,21 +139,33 @@ struct game_memory {
 
     uint64 TransientStorageSize;
     void *TransientStorage; // NOTE(casey): REQUIRED to be cleared to zero at startup
+
+    debug_platform_read_entire_file *DEBUGPlatformReadEntireFile;
+    debug_platform_free_file_memory *DEBUGPlatformFreeFileMemory;
+    debug_platform_write_entire_file *DEBUGPlatformWriteEntireFile;
 };
 
+#define GAME_UPDATE_AND_RENDER(name) void name( game_memory *Memory, game_input *Input, game_offscreen_buffer *Buffer )
+typedef GAME_UPDATE_AND_RENDER(game_update_and_render);
+GAME_UPDATE_AND_RENDER(GameUpdateAndRenderStub) {}
+
+#define GAME_GET_SOUND_SAMPLES(name) void name( game_memory *Memory, game_sound_output_buffer *SoundBuffer )
+typedef GAME_GET_SOUND_SAMPLES(game_get_sound_samples);
+GAME_GET_SOUND_SAMPLES(GameGetSoundSamplesStub) {}
+
 // FOUR THINGS - timing, controller/keyboard input, bitmap buffer to use, sound buffer to use
-internal void GameUpdateAndRender(
-    game_memory *Memory, 
-    game_input *Input, 
-    game_offscreen_buffer *Buffer 
-);
+// void GameUpdateAndRender(
+//     game_memory *Memory, 
+//     game_input *Input, 
+//     game_offscreen_buffer *Buffer 
+// );
 
 // At the moment, this has to be a very fast function, it cannot be more than a millisecond or so
-// TODO reduce the pressure on this function's performance by measuring it or asking about it, etc.
-internal void GameGetSoundSamples(
-    game_memory *Memory, 
-    game_sound_output_buffer *SoundBuffer
-);
+// TODO: reduce the pressure on this function's performance by measuring it or asking about it, etc.
+// void GameGetSoundSamples(
+//     game_memory *Memory, 
+//     game_sound_output_buffer *SoundBuffer
+// );
 
 //
 //
@@ -136,6 +176,8 @@ struct game_state {
     int ToneHz;
     int XOffset;
     int YOffset;
+
+    real32 tSine;
 };
 
 
