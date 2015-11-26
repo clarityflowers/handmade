@@ -5,7 +5,7 @@
 void
 GameOutputSound(game_state *GameState, game_sound_output_buffer *SoundBuffer, int ToneHz) {
     // local_persist real32 tSine;
-    int16 ToneVolume = 3000;
+    int16 ToneVolume = 500;
     // int ToneHz = 256;
     int WavePeriod = SoundBuffer->SamplesPerSecond/ToneHz;
 
@@ -42,14 +42,17 @@ GameOutputSound(game_state *GameState, game_sound_output_buffer *SoundBuffer, in
 // }
 
 void
-RenderWeirdGradient(game_offscreen_buffer *Buffer, int XOffset, int YOffset) {
+RenderWeirdGradient(game_offscreen_buffer *Buffer, int XOffset, int YOffset)
+{
     // TODO: lets see which is better
     uint8 *Row = (uint8 *)Buffer->Memory;
-    for( int Y = 0 ; Y < Buffer->Height ; ++Y ) {
+    for( int Y = 0 ; Y < Buffer->Height ; ++Y )
+	{
         uint32 *Pixel = (uint32 *)Row;
-        for( int X = 0 ; X < Buffer->Width ; ++X ) {
+        for( int X = 0 ; X < Buffer->Width ; ++X )
+		{
             uint8 Blue = 255;
-            uint8 Red = 0; //(uint8)(X + XOffset)
+            uint8 Red = (uint8)(X + XOffset);
             uint8 Green = (uint8)(Y + YOffset);
             *Pixel++ = ((Red << 16) | (Green << 8) | Blue);
         }
@@ -118,14 +121,3 @@ GAME_GET_SOUND_SAMPLES(GameGetSoundSamples) {
 
     GameOutputSound(GameState, SoundBuffer, GameState->ToneHz);
 }
-
-#if HANDMADE_WIN32
-#include "windows.h"
-BOOL WINAPI DllMain(
-  _In_ HINSTANCE hinstDLL, 
-  _In_ DWORD fdwReason, 
-  _In_ LPVOID lpvReserved) 
-{
-    return(TRUE);
-}
-#endif

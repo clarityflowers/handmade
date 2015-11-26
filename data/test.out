@@ -42,15 +42,18 @@ GameOutputSound(game_state *GameState, game_sound_output_buffer *SoundBuffer, in
 // }
 
 void
-RenderWeirdGradient(game_offscreen_buffer *Buffer, int XOffset, int YOffset) {
+RenderWeirdGradient(game_offscreen_buffer *Buffer, int XOffset, int YOffset)
+{
     // TODO: lets see which is better
     uint8 *Row = (uint8 *)Buffer->Memory;
-    for( int Y = 0 ; Y < Buffer->Height ; ++Y ) {
+    for( int Y = 0 ; Y < Buffer->Height ; ++Y )
+	{
         uint32 *Pixel = (uint32 *)Row;
-        for( int X = 0 ; X < Buffer->Width ; ++X ) {
-            uint8 Blue = (uint8)(X - XOffset);
+        for( int X = 0 ; X < Buffer->Width ; ++X )
+		{
+            uint8 Blue = 255;
+            uint8 Red = (uint8)(X + XOffset);
             uint8 Green = (uint8)(Y + YOffset);
-            uint8 Red = (uint8)((X - (XOffset/4))*(Y + (YOffset/4))/8);
             *Pixel++ = ((Red << 16) | (Green << 8) | Blue);
         }
         Row += Buffer->Pitch;
@@ -77,10 +80,10 @@ GAME_UPDATE_AND_RENDER(GameUpdateAndRender) {
 
         // TODO: This may be more appropriate to do in the platform layer
         Memory->IsInitialized = true;
-        GameState->tSine = 0.0f;
+        // GameState->tSine = 0.0f;
     }
 
-    GameState->ToneHz = 512;
+    GameState->ToneHz = 220;
 
     for( int ControllerIndex = 0 ; ControllerIndex < ArrayCount(Input->Controllers) ; ++ControllerIndex) {
         game_controller_input *Controller = GetController(Input, ControllerIndex);
@@ -118,14 +121,3 @@ GAME_GET_SOUND_SAMPLES(GameGetSoundSamples) {
 
     GameOutputSound(GameState, SoundBuffer, GameState->ToneHz);
 }
-
-#if HANDMADE_WIN32
-#include "windows.h"
-BOOL WINAPI DllMain(
-  _In_ HINSTANCE hinstDLL, 
-  _In_ DWORD fdwReason, 
-  _In_ LPVOID lpvReserved) 
-{
-    return(TRUE);
-}
-#endif
