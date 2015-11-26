@@ -63,13 +63,13 @@ struct debug_read_file_result {
     void *Contents;
 };
 
-#define DEBUG_PLATFORM_READ_ENTIRE_FILE(name) debug_read_file_result name(char *Filename)
+#define DEBUG_PLATFORM_READ_ENTIRE_FILE(name) debug_read_file_result name(char *FileName)
 typedef DEBUG_PLATFORM_READ_ENTIRE_FILE(debug_platform_read_entire_file);
 
 #define DEBUG_PLATFORM_FREE_FILE_MEMORY(name) void name(void *Memory)
 typedef DEBUG_PLATFORM_FREE_FILE_MEMORY(debug_platform_free_file_memory);
 
-#define DEBUG_PLATFORM_WRITE_ENTIRE_FILE(name) bool32 name(char *Filename, uint32 MemorySize, void *Memory)
+#define DEBUG_PLATFORM_WRITE_ENTIRE_FILE(name) bool32 name(char *FileName, uint32 MemorySize, void *Memory)
 typedef DEBUG_PLATFORM_WRITE_ENTIRE_FILE(debug_platform_write_entire_file);
 #endif
 
@@ -79,6 +79,7 @@ struct game_offscreen_buffer {
     int Width;
     int Height;
     int Pitch;
+	int BytesPerPixel;
 };
 
 struct game_sound_output_buffer {
@@ -128,7 +129,7 @@ struct game_input {
 
 inline game_controller_input *GetController(game_input *Input, int ControllerIndex) {
     Assert(ControllerIndex < ArrayCount(Input->Controllers));
-    return &Input->Controllers[ControllerIndex]; 
+    return &Input->Controllers[ControllerIndex];
 }
 
 struct game_memory {
@@ -155,15 +156,15 @@ GAME_GET_SOUND_SAMPLES(GameGetSoundSamplesStub) {}
 
 // FOUR THINGS - timing, controller/keyboard input, bitmap buffer to use, sound buffer to use
 // void GameUpdateAndRender(
-//     game_memory *Memory, 
-//     game_input *Input, 
-//     game_offscreen_buffer *Buffer 
+//     game_memory *Memory,
+//     game_input *Input,
+//     game_offscreen_buffer *Buffer
 // );
 
 // At the moment, this has to be a very fast function, it cannot be more than a millisecond or so
 // TODO: reduce the pressure on this function's performance by measuring it or asking about it, etc.
 // void GameGetSoundSamples(
-//     game_memory *Memory, 
+//     game_memory *Memory,
 //     game_sound_output_buffer *SoundBuffer
 // );
 
@@ -178,6 +179,10 @@ struct game_state {
     int YOffset;
 
     real32 tSine;
+
+	int PlayerX;
+	int PlayerY;
+	real32 tJump;
 };
 
 
