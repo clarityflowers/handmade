@@ -88,15 +88,15 @@ GAME_UPDATE_AND_RENDER(GameUpdateAndRender)
     if (!Memory->IsInitialized)
 	{
         char *FileName = __FILE__;
-        debug_read_file_result File = Memory->DEBUGPlatformReadEntireFile(FileName);
+        debug_read_file_result File = Memory->DEBUGPlatformReadEntireFile(Thread, FileName);
         if(File.Contents)
 		{
-            Memory->DEBUGPlatformWriteEntireFile("test.out", File.ContentsSize, File.Contents);
-            Memory->DEBUGPlatformFreeFileMemory(File.Contents);
+            Memory->DEBUGPlatformWriteEntireFile(Thread, "test.out", File.ContentsSize, File.Contents);
+            Memory->DEBUGPlatformFreeFileMemory(Thread, File.Contents);
         }
 		GameState->tSine = 0.0f;
-		GameState->PlayerX = 100;
-		GameState->PlayerY = 100;
+		GameState->PlayerX = 10;
+		GameState->PlayerY = 10;
         // TODO: This may be more appropriate to do in the platform layer
         Memory->IsInitialized = true;
         // GameState->tSine = 0.0f;
@@ -143,6 +143,11 @@ GAME_UPDATE_AND_RENDER(GameUpdateAndRender)
 		GameState->tJump -= 0.033f;
     }
     RenderWeirdGradient(Buffer, GameState->XOffset, GameState->YOffset);
+	for(int ButtonIndex = 0; ButtonIndex < ArrayCount(Input->MouseButtons); ButtonIndex++)
+	if(Input->MouseButtons[ButtonIndex].EndedDown)
+	{
+		RenderPlayer(Buffer, Input->MouseX + (ButtonIndex*10), Input->MouseY);
+	}
 	RenderPlayer(Buffer, GameState->PlayerX, GameState->PlayerY);
 }
 
