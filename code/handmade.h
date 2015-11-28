@@ -58,7 +58,8 @@ typedef double real64;
 // THese are NOT for doing anything in the shipping game - they are
 // blocking and the write doesn't protect against lost data!
 
-struct debug_read_file_result {
+struct debug_read_file_result
+{
     uint32 ContentsSize;
     void *Contents;
 };
@@ -74,7 +75,8 @@ typedef DEBUG_PLATFORM_WRITE_ENTIRE_FILE(debug_platform_write_entire_file);
 #endif
 
 // TODO: In the future, rendering _specifically_ will become a three-tiered abstraction
-struct game_offscreen_buffer {
+struct game_offscreen_buffer
+{
     void *Memory;
     int Width;
     int Height;
@@ -82,27 +84,32 @@ struct game_offscreen_buffer {
 	int BytesPerPixel;
 };
 
-struct game_sound_output_buffer {
+struct game_sound_output_buffer
+{
     int SamplesPerSecond;
     int SampleCount;
     int16 *Samples;
 };
 
-struct game_button_state {
+struct game_button_state
+{
     int HalfTransitionCount;
     bool32 EndedDown;
 };
 
-struct game_controller_input {
+struct game_controller_input
+{
     bool32 IsConnected;
     bool32 IsAnalogue;
 
     real32 StickAverageX;
     real32 StickAverageY;
 
-    union {
+    union
+	{
         game_button_state Buttons[12];
-        struct {
+        struct
+		{
             game_button_state MoveUp;
             game_button_state MoveDown;
             game_button_state MoveLeft;
@@ -122,17 +129,20 @@ struct game_controller_input {
     };
 };
 
-struct game_input {
+struct game_input
+{
     // TODO: Insert clock value here
     game_controller_input Controllers[5];
 };
 
-inline game_controller_input *GetController(game_input *Input, int ControllerIndex) {
+inline game_controller_input *GetController(game_input *Input, int ControllerIndex)
+{
     Assert(ControllerIndex < ArrayCount(Input->Controllers));
     return &Input->Controllers[ControllerIndex];
 }
 
-struct game_memory {
+struct game_memory
+{
     bool32 IsInitialized;
 
     uint64 PermanentStorageSize;
@@ -148,32 +158,12 @@ struct game_memory {
 
 #define GAME_UPDATE_AND_RENDER(name) void name( game_memory *Memory, game_input *Input, game_offscreen_buffer *Buffer )
 typedef GAME_UPDATE_AND_RENDER(game_update_and_render);
-GAME_UPDATE_AND_RENDER(GameUpdateAndRenderStub) {}
 
 #define GAME_GET_SOUND_SAMPLES(name) void name( game_memory *Memory, game_sound_output_buffer *SoundBuffer )
 typedef GAME_GET_SOUND_SAMPLES(game_get_sound_samples);
-GAME_GET_SOUND_SAMPLES(GameGetSoundSamplesStub) {}
 
-// FOUR THINGS - timing, controller/keyboard input, bitmap buffer to use, sound buffer to use
-// void GameUpdateAndRender(
-//     game_memory *Memory,
-//     game_input *Input,
-//     game_offscreen_buffer *Buffer
-// );
-
-// At the moment, this has to be a very fast function, it cannot be more than a millisecond or so
-// TODO: reduce the pressure on this function's performance by measuring it or asking about it, etc.
-// void GameGetSoundSamples(
-//     game_memory *Memory,
-//     game_sound_output_buffer *SoundBuffer
-// );
-
-//
-//
-//
-
-
-struct game_state {
+struct game_state
+{
     int ToneHz;
     int XOffset;
     int YOffset;
@@ -184,8 +174,6 @@ struct game_state {
 	int PlayerY;
 	real32 tJump;
 };
-
-
 
 #define HANDMADE_H
 #endif

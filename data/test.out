@@ -1,51 +1,41 @@
 #include "handmade.h"
 
-
-
 void
-GameOutputSound(game_state *GameState, game_sound_output_buffer *SoundBuffer, int ToneHz) {
+GameOutputSound(game_state *GameState, game_sound_output_buffer *SoundBuffer, int ToneHz)
+{
     // local_persist real32 tSine;
     int16 ToneVolume = 500;
     // int ToneHz = 256;
     int WavePeriod = SoundBuffer->SamplesPerSecond/ToneHz;
 
     int16 *SampleOut = SoundBuffer->Samples;
-    for(int SampleIndex = 0; SampleIndex < SoundBuffer->SampleCount; ++SampleIndex) {
-#if 0
+    for(int SampleIndex = 0; SampleIndex < SoundBuffer->SampleCount; ++SampleIndex)
+	{
+
+#if 1
+
         real32 SineValue = sinf(GameState->tSine);
         int16 SampleValue = (int16)(SineValue * ToneVolume);
+
 #else
+
         int16 SampleValue = 0;
 
 #endif
 
         *SampleOut++ = SampleValue;
         *SampleOut++ = SampleValue;
-
         GameState->tSine += 2.0f*Pi32*1.0f/(real32)WavePeriod;
-        if(GameState->tSine > 2.0f*Pi32) {
+        if(GameState->tSine > 2.0f*Pi32)
+		{
         	GameState->tSine -= 2.0f*Pi32;
         }
     }
 }
 
-
-
-// internal void
-// RenderWeirdGradient(game_offscreen_buffer *Buffer, int XOffset, int YOffset) {
-//     // TODO: lets see which is better
-//     uint8 *Row = (uint8 *)Buffer->Memory;
-//     for( int Y = 0 ; Y < Buffer->Height ; ++Y ) {
-//         uint32 *Pixel = (uint32 *)Row;
-//         for( int X = 0 ; X < Buffer->Width ; ++X ) {
 //             uint8 Blue = (uint8)(X - XOffset);
 //             uint8 Green = (uint8)(Y + YOffset);
 //             uint8 Red = (uint8)((X - (XOffset/4))*(Y + (YOffset/4))/8);
-//             *Pixel++ = ((Red << 16) | (Green << 8) | Blue);
-//         }
-//         Row += Buffer->Pitch;
-//     }
-// }
 
 void
 RenderWeirdGradient(game_offscreen_buffer *Buffer, int XOffset, int YOffset)
@@ -88,8 +78,6 @@ RenderPlayer(game_offscreen_buffer *Buffer, int PlayerX, int PlayerY)
     	}
     }
 }
-
-
 
 extern "C"
 GAME_UPDATE_AND_RENDER(GameUpdateAndRender)
@@ -144,7 +132,8 @@ GAME_UPDATE_AND_RENDER(GameUpdateAndRender)
         }
 		GameState->PlayerX += (int)(4.0f*Controller->StickAverageX);
 		GameState->PlayerY -= (int)(4.0f*Controller->StickAverageY);
-		if(GameState->tJump > 0) {
+		if(GameState->tJump > 0)
+		{
 			GameState->PlayerY += (int)(10.0f*sinf(Pi32*GameState->tJump));
 		}
         if(Controller->ActionDown.EndedDown)
